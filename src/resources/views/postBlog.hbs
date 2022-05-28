@@ -124,7 +124,13 @@
 <script src="https://cdn.tiny.cloud/1/2f03u9d8k3bfqttf9dac5pmhdc50rnspe3xpee2cfn8a7plx/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
 
 <script>
-
+  tinymce.init({
+    selector: 'textarea#editor',
+    skin: 'bootstrap',
+    plugins: 'lists, link, image, media',
+    toolbar: 'h1 h2 bold italic strikethrough blockquote bullist numlist backcolor | link image media | removeformat help',
+    menubar: false
+  });
     
 </script>
 
