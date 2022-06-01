@@ -21,9 +21,12 @@ const verifyCache = (req, res, next) => {
 
 /* const detailCache = (req, res, next) => {
     try {
+
         if (serviceListcache.has("serviceList")) {
+
             var objectId = mongoose.Types.ObjectId(req.params.code);
             const service = serviceListcache.get("serviceList").find(({ _id }) => _id === objectId);
+
             if(service){
                 console.log("have service");
                 return  res.render('detailservice', { service: service });

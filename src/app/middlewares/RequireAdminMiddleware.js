@@ -1,4 +1,5 @@
 
+
 const requireAdmin = (req, res, next) => {
     try {
         if (res.locals.user && res.locals.user.role == 'admin') {
