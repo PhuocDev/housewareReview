@@ -1,0 +1,28 @@
+.account-info-container {
+    padding: 100px 0 50px 0;
+}
+
+a {
+    color: #212529;
+}
+
+a:hover {
+    color: rgb(255, 101, 80);
+}
+
+.btn-send{
+    background-color: rgb(255, 101, 80);
+    color: white;
+    width: 100px;
+    border-bottom-right-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+}
+.btn-send:hover{
+    background-color: rgba(255, 100, 80, 0.537);
+}
+
+.img-fb {
+    font-size: 24px;
+    color: rgb(255, 101, 80);
+}

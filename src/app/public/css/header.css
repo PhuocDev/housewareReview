@@ -1,0 +1,73 @@
+.chicpet-alert {
+  /* display: block; */
+  position: absolute;
+  z-index: 9999;
+  margin-top: 75px;
+  margin-right: 30px;
+}
+
+.alert--success {
+  color: #0f5132;
+  background-color: #d1e7dd;
+  border-color: #badbcc;
+}
+
+.header {
+  background-color: rgb(255, 101, 80);
+  /* border-top-left-radius: 15px; */
+  /* border-top-right-radius: 15px; */
+}
+.hd1 {
+  background-color: transparent;
+  height: 30px;
+  color: white;
+  font-size: small;
+}
+.hd2 {
+  background-color: white;
+}
+.nav-link {
+  color: black !important;
+  padding-right: 16px !important;
+  padding-left: 16px !important;
+}
+.navbar-nav li a:hover {
+  background-color: rgb(220, 220, 220);
+  color: rgb(255, 101, 80) !important;
+  font-weight: 500;
+}
+.navbar-brand:hover {
+  color: rgb(255, 101, 80) !important;
+}
+.nav-item {
+  height: 100%;
+  /* width: 90px; */
+  text-align: center;
+}
+
+.nav-item-account {
+  height: 100%;
+  width: auto;
+  min-width: 120px;
+  text-align: center;
+}
+
+.navbar-collapse .active {
+  font-weight: bolder;
+  color: rgb(255, 101, 80) !important;
+}
+
+.btn-search {
+  cursor: pointer;
+}
+
+.search-form {
+  border-radius: 6px;
+  background: white;
+  padding: 12px;
+  position: absolute;
+  bottom: -68px;
+  right: 82px;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+  width: 320px;
+}
