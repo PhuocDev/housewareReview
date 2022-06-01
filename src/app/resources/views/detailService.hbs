@@ -1,0 +1,50 @@
+<link rel="stylesheet" href="/css/detailService.css">
+
+<title>{{service.name}}</title>
+
+<div class="container px-5">
+    <div class="service-header mb-5">
+        <div class="service-category">
+            <p>{{service.category}}</p>
+        </div>
+        <div>
+            <h2>{{service.name}}</h2>
+        </div>
+        <hr>
+    </div>
+
+
+    <div class="service-body mb-5">
+        <div class="service-description ">
+            <h5>{{service.description}}</h5>
+        </div>
+        <div class="service-img d-flex justify-content-center mb-5">
+            <img src="{{service.img}}" alt="" height="380">
+        </div>
+        <div class="mb-4">
+            <h4>Service Price</h4>
+            {{#each service.prices}}
+            <div class="row">
+                <div class="col-3">
+                    <h5>{{this.type}}:</h5>
+                </div>
+                <div class="col-3">
+                    <h5>{{this.price}} VND</h5>
+                </div>
+                <hr>
+            </div>
+            {{/each}}
+        </div>
+        <div class="service-content"  id = "{{service.contentCode}}">
+        </div>
+    </div>
+</div>
+
+<script>
+        const serviceContent = document.querySelector('.service-content');
+        var html = `` + serviceContent.id;
+        serviceContent.innerHTML = html;
+</script>
+    <script>
+        document.getElementById("nav-services").classList.add("active");
+    </script>

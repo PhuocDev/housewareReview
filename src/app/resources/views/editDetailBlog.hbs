@@ -1,65 +1,74 @@
-<link rel="stylesheet" href="/css/postBlog.css">
+<link rel="stylesheet" href="/css/editDetailBlog.css">
 <title>Post</title>
 
-<div class="container">
+<div class="container px-5 mb-4">
     <div class="row flex-nowrap content mx-0">
         <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 menu-bar">
             <div class="d-flex flex-column align-items-center align-items-sm-start pt-2 list-item">
                 
                 <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
                     <li class="nav-item">
-                        <button class="nav-link align-middle px-0 btn btn-new">
-                            <i class="far fa-calendar-plus"></i> New 
-                        </button>
-                    </li>
-                    <li class="nav-item">
                         <button class="nav-link align-middle px-0 btn btn-preview"> 
-                            <i class="fas fa-chalkboard-teacher"></i> Preview
+                            <i class="fas fa-chalkboard-teacher ms-2"></i> Xem Trước
                         </button>
                     </li>
                     <li class="nav-item">
                         <button class="nav-link align-middle px-0 btn btn-post" type="submit">
-                            <i class="far fa-paper-plane"></i> Post
+                            <i class="far fa-paper-plane ms-2"></i> Cập Nhật
                         </button>
                     </li>
 
                 </ul>    
 
             </div>
+
         </div>
 
         <div class="col py-3 post-content">
             <form action="/uploadSingle" method="post" enctype="multipart/form-data" class="form-post">
                 <div class="input-group input-group-sm">
-                    <span class="input-group-text" id="inputGroup-sizing-sm">Title</span>
-                    <input type="text" class="form-control title-blog" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                    <span class="input-group-text" id="inputGroup-sizing-sm">Tiêu Đề</span>
+                    <input type="text" class="form-control title-blog" id="{{blog._id}}" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="{{blog.title}}">
                 </div>
                 <div class="title-error error-text"></div>
 
                 <div class="input-group input-group-sm mt-3">
-
-                    <input type="file" class="form-control form-control-sm  blog-img" name="blog-img" accept="image/png, image/jpeg">
+                    <input type="file" class="form-control form-control-sm  blog-img" name="{{blog.img}}" accept="image/png, image/jpeg">
                     <button class="btn btn-outline-secondary" type="button" onclick="uploadPicture()">Upload</button>
 
-                    <span class="input-group-text">Category</span>
+                    <span class="input-group-text ms-2">Danh Mục</span>
                     <select class="form-select form-select-sm category-blog" aria-label=".form-select-sm example">
-                        <option selected value="Các giống chó">Các giống chó</option>
-                        <option value="Các giống mèo">Các giống mèo</option>
-                        <option value="Chăm sóc chó">Chăm sóc chó</option>
-                        <option value="Chăm sóc mèo">Chăm sóc mèo</option>
+                        <option {{#ifCond blog.category '==' 'Làm đẹp'}} selected {{/ifCond}} value="Làm đẹp">Làm đẹp</option>
+                        <option {{#ifCond blog.category '==' 'Đồ chơi công nghệ'}} selected {{/ifCond}} value="Đồ chơi công nghệ">Đồ chơi công nghệ</option>
+                        <option {{#ifCond blog.category '==' 'Điện gia dụng'}} selected {{/ifCond}} value="Điện gia dụng">Điện gia dụng</option>
                     </select>
                 </div>
+                {{!-- --------------------------------------------- --}}
                 <div class="img-error error-text"></div>
 
                 <div class="input-group input-group-sm mt-3">
-                    <span class="input-group-text" id="inputGroup-sizing-sm">Description</span>
-                    <input type="text" class="form-control description-blog" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                    <span class="input-group-text" id="inputGroup-sizing-sm">Mô Tả</span>
+                    <input type="text" class="form-control description-blog" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="{{blog.description}}">
                 </div>
                 <div class="description-error error-text"></div>
+
+                {{#ifCond userRole '==' 'admin'}}
+                <div class="input-group input-group-sm mt-3">
+                    <span class="input-group-text" id="inputGroup-sizing-sm">Trạng Thái</span>
+                    <select class="form-select form-select-sm status-blog" aria-label=".form-select-sm example">
+                        <option selected value="draft">Chưa được duyệt</option>
+                        <option value="published">Đã được duyệt</option>
+                    </select>
+                </div>
+                <div class="description-error error-text"></div>
+                {{/ifCond}}
 
                 <div class="row justify-content-md-center mt-3">
                     <div class="form-group">
                         <textarea id="editor"></textarea>
+                    </div>
+                    <div class="contentCode-div">
+                        <input type="text" value="{{blog.contentCode}}" id="inputContentCode">
                     </div>
                 </div>
                 <div class="content-error error-text"></div>
@@ -68,21 +77,20 @@
     </div>
 </div>
 
-
 <!-- Modal -->
     <div class="modal fade" tabindex="-1" id="modal-inform">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title">Post blog</h5>
+            <h5 class="modal-title">Update blog</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            <p>Post successful!</p>
+            <p>Update successful!</p>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-closeModal" data-bs-dismiss="modal">Close</button>
-            <a class="btn btn-viewBlog" type="button" href="./../blog">View blog</a>
+            <a class="btn btn-viewBlog" type="button" href="/blog">View blog</a>
         </div>
         </div>
     </div>
@@ -100,12 +108,13 @@
         </div>
         <div class="previewModal-body"></div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-post" data-bs-dismiss="modal" onclick="postBlog()">Post now</button>
+            <button type="button" class="btn btn-closeModal" onclick="updateBlog()" data-bs-dismiss="modal">Update</button>
             <button type="button" class="btn btn-closeModal" data-bs-dismiss="modal">Close</button>
         </div>
         </div>
     </div>
 </div>
+
 {{!-- -----------toast-img--------------- --}}
 
 <div class="toast align-items-center hide position-fixed top-0 end-0 me-1" role="alert" aria-live="assertive" aria-atomic="true" style="z-index: 10000; margin-top: 100px">
@@ -129,11 +138,17 @@
     skin: 'bootstrap',
     plugins: 'lists, link, image, media',
     toolbar: 'h1 h2 bold italic strikethrough blockquote bullist numlist backcolor | link image media | removeformat help',
-    menubar: false
+    menubar: false,
+    setup: editor => {
+            editor.on('init', () => {
+                editor.setContent(document.getElementById('inputContentCode').value);
+                const divContent = document.querySelector('.contentCode-div');
+                divContent.innerHTML = ``;
+            });
+        }
   });
     
 </script>
-
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 <script>
@@ -151,6 +166,7 @@
         formData.append("upload_preset", "moriisotre");
         try{
             const res = await axios.post(`https://api.cloudinary.com/v1_1/tanthanh0805/image/upload`, formData)
+
             if(res.data){
                 document.querySelector('.blog-img').name = res.data.url;
                 var myToastEl = document.querySelector('.toast');
@@ -162,26 +178,31 @@
             console.log(err);
         }
     }
-    async function postBlog(){
+    async function updateBlog(){
         btnPost.click();
     }
+
     btnPost.addEventListener('click', async ()=> {
-        const inputTitle = document.querySelector('.title-blog').value;
+        const inputTitle = document.querySelector('.title-blog');
         const inputCategory = document.querySelector('.category-blog').value;
-        const inputDescription = document.querySelector('.description-blog').value
+        const inputDescription = document.querySelector('.description-blog').value;
         var myContent = tinymce.get("editor").getContent();
-        var inputImg = document.querySelector('.blog-img').name;
-        if(inputImg ==  "blog-img") inputImg = "";
+
         console.log('btn-post clicked');
         try {
-            const title = inputTitle;
-            const img = inputImg;
+        //--------------------------------------------------
+            const id = inputTitle.id;
+            const title = inputTitle.value;
+            const img = document.querySelector('.blog-img').name;
             const category = inputCategory;
             const description = inputDescription;
             const contentCode = myContent;
-            const res = await fetch('/blog/postBlog/uploadSingle', {
+
+            const url = '/Blog/editBlog/' + id;
+
+            const res = await fetch(url , {
                 method: 'POST',
-                body: JSON.stringify({ title, img, category, description, contentCode }),
+                body: JSON.stringify({ id, title, img, category, description, contentCode }),
                 headers: {'Content-Type': 'application/json'}
             });
             const data = await res.json();
@@ -194,7 +215,7 @@
             }else if (data) {
                 var myModal = new bootstrap.Modal(document.getElementById('modal-inform'));
                 myModal.show();
-                console.log("Post Thanh Cong");
+                console.log("Update thanh Cong");
                 document.querySelector('.blog-img').name = "blog-img";
             }
         }
@@ -202,13 +223,10 @@
             console.log(err);
         }
     });
-    const btnNew = document.querySelector('.btn-new');
-    const formPost = document.querySelector('.form-post')
-    btnNew.addEventListener('click', ()=>{
-        formPost.reset();
-    })
+
     const btnPreview = document.querySelector('.btn-preview');
     const bodyPreview = document.querySelector('.previewModal-body');
+
     btnPreview.addEventListener('click', ()=>{
         const inputTitle = document.querySelector('.title-blog').value;
         const inputImg = document.querySelector('.blog-img').name;
@@ -231,6 +249,8 @@
                             </div>
                             <hr>
                         </div>
+
+
                         <div class="blog-body mb-5">
                             <div class="blog-description ">
                                 <p>${inputDescription}</p>
@@ -238,13 +258,16 @@
                             <div class="blog-img d-flex justify-content-center mb-5">
                                 <img src="${inputImg}" alt="" height="380">
                             </div>
-                        </div>` + `${myContent}` + `</div>`;
+                        </div>` + `${myContent}` + `</div>`
         bodyPreview.innerHTML = html;
         
+
         const modalPreview = new bootstrap.Modal(document.getElementById('modal-preview'));
         modalPreview.show();
     })
+
 </script>
+
 <script>
     document.getElementById("nav-blog").classList.add("active");
 </script>

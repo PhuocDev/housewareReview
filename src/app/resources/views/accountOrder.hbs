@@ -1,0 +1,116 @@
+<title>Orders</title>
+<link rel="stylesheet" href="/css/general.css">
+<link rel="stylesheet" href="/css/accountOrder.css">
+
+
+<div class="container-xl account-order-container">
+    <div class="row">
+        <div class="col-12 col-md-4 col-lg-3 my-3">
+            {{> customerAccountSidebar}}
+        </div>
+        <div class="col-12 col-md-8 col-lg-9 my-3">
+            <h4 class="text-uppercase mb-4 mt-4">Danh sách đơn hàng</h4>
+            <div class="order-card-list">
+                {{#each orders }}
+                    <div class="order-card">
+                        <a href="/account/get-order/{{this.orderCode}}" class="order-card-header d-inline-flex d-flex justify-content-between">
+                            <div class="col">
+                                <div class="order-code text--primary">#{{this.orderCode}}</div>
+                                <span class="order-date ">{{toDateTimeString this.createdAt}}</span>
+                            </div>
+                            {{#ifCond this.status '==' 'Chờ xác nhận'}}
+                                <div class="order-status order-status--confirming align-self-center">
+                                    <span>Chờ xác nhận</span>
+                                </div>
+                            {{/ifCond}}
+                            {{#ifCond this.status '==' 'Đã xác nhận'}}
+                                <div class="order-status order-status--confirmed align-self-center">
+                                    <span>Đã xác nhận</span>
+                                </div>
+                            {{/ifCond}}
+                            {{#ifCond this.status '==' 'Đã hoàn thành'}}
+                                <div class="order-status order-status--completed align-self-center">
+                                    <span>Đã hoàn thành</span>
+                                </div>
+                            {{/ifCond}}
+                            {{#ifCond this.status '==' 'Đã hủy'}}
+                                <div class="order-status order-status--canceled align-self-center">
+                                    <span>Đã hủy</span>
+                                </div>
+                            {{/ifCond}}
+                        </a>
+                        <div class="col service-list">
+                            {{#each this.serviceList}}
+                                <div class="row service-item">
+                                    <div class="service-item__image">
+                                            <img src="{{this.service.img}}" class="img-fluid img-thumbnail" alt="">
+                                    </div>
+                                    <span class="col service-item__content">
+                                        <a href="#" class="service-item__name">{{this.service.name}}</a>
+                                        <div class="service-item__type">{{this.type}}</div>
+                                        <div class="service-item__quantity">x {{this.quantity}}</div>
+                                    </span>
+                                </div>
+                            {{/each}}
+                        </div>
+                        <div class="order-card-total d-flex justify-content-end">
+                            <div class="total">
+                                Tổng đơn hàng: 
+                                <span class="total__amount">{{this.total}}đ</span>
+                            </div>
+                        </div>
+                    </div>
+                {{/each}}
+
+
+                {{!-- <div class="order-card">
+                    <a href="/account/get-order" class="order-card-header d-inline-flex d-flex justify-content-between">
+                        <div class="col">
+                            <div class="order-code text--primary">#123456789</div>
+                            <span class="order-date">01/01/2021</span>
+                        </div>
+                        <div class="order-status order-status--completed align-self-center">
+                            <span>Đã hoàn thành</span>
+                        </div>
+                    </a>
+                    <div class="col service-list">
+                        <div class="row service-item">
+                            <div class="service-item__image">
+                                    
+                            </div>
+                            <span class="col service-item__content">
+                                <a href="#" class="service-item__name">Cắt tỉa lông chó</a>
+                                <div class="service-item__quantity">x 2</div>
+                                <div class="service-item__type">M</div>
+                            </span>
+                        </div>
+                        <div class="row service-item">
+                            <div class="service-item__image">
+                                    
+                            </div>
+                            <span class="col service-item__content">
+                                <a href="#" class="service-item__name">Spa cho chó</a>
+                                <div class="service-item__quantity">x 2</div>
+                                <div class="service-item__type">M</div>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="order-card-total d-flex justify-content-end">
+                        <div class="total">
+                            Tổng đơn hàng: 
+                            <span class="total__amount">500.000đ</span>
+                        </div>
+                    </div>
+                </div> --}}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const sidebarItemOrder = document.getElementById('account_sidebar__order');
+    sidebarItemOrder.classList.add('account-sidebar__item--active');
+</script>
+<script>
+    document.getElementById("navbarDropdownMenuLink").classList.add("active");
+</script>

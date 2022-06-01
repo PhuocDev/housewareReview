@@ -1,0 +1,1360 @@
+<title>Orders</title>
+<link rel="stylesheet" href="/css/general.css">
+<link rel="stylesheet" href="/css/adminOrder.css">
+
+<div class="container-xl account-order-container">
+    <div class="row">
+        <div class="col-12 col-md-4 col-lg-3 my-3">
+            {{> adminAccountSidebar}}
+        </div>
+        <div class="col-12 col-md-8 col-lg-9 my-3">
+            <div class="row justify-content-between">
+                <h4 class="text-uppercase mb-4 mt-4 w-auto">Danh sách đơn hàng</h4>
+                <button type="button" class="btn btn-search">Tìm kiếm</button>
+            </div>
+            <div class="admin-order-search-container">
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-1"></div>
+                            <label for="inputOrderCode" class="col-3 col-form-label">Mã đơn</label>
+                            <div class="col-7">
+                                <input type="text" class="form-control col-form-label" id="inputOrderCode">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-1"></div>
+                            <label for="inputOrderCustomerCode" class="col-3 col-form-label">Mã KH</label>
+                            <div class="col-7">
+                                <input type="text" class="form-control" id="inputOrderCustomerCode">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-1"></div>
+                            <label for="inputOrderCustomerName" class="col-3 col-form-label">Tên KH</label>
+                            <div class="col-7">
+                                <input type="text" class="form-control col-form-label" id="inputOrderCustomerName">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-1"></div>
+                            <label for="dropdownStatusSearch" class="col-3 col-form-label">Trạng thái</label>
+                            <div class="col-7">
+                                <div class="dropdown dropdown-status-search-container">
+                                    <button class="btn btn-dropdown-status-search dropdown-toggle" type="button" id="dropdownStatusSearch" data-bs-toggle="dropdown" aria-expanded="false">Tất cả</button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownOrderPayment">
+                                        <li><div class="dropdown-item dropdown-status-search-item" onclick="updateDropdownStatusSearchBtn('Tất cả')">Tất cả</div></li>
+                                        <li><div class="dropdown-item dropdown-status-search-item" onclick="updateDropdownStatusSearchBtn('Chờ xác nhận')">Chờ xác nhận</div></li>
+                                        <li><div class="dropdown-item dropdown-status-search-item" onclick="updateDropdownStatusSearchBtn('Đã xác nhận')">Đã xác nhận</div></li>
+                                        <li><div class="dropdown-item dropdown-status-search-item" onclick="updateDropdownStatusSearchBtn('Đã hoàn thành')">Đã hoàn thành</div></li>
+                                        <li><div class="dropdown-item dropdown-status-search-item" onclick="updateDropdownStatusSearchBtn('Đã hủy')">Đã hủy</div></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-1"></div>
+                            <label for="inputOrderFromDay" class="col-3 col-form-label">Từ ngày</label>
+                            <div class="col-7">
+                                <input type="date" class="form-control col-form-label" id="inputOrderFromDay">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-1"></div>
+                            <label for="inputOrderToDay" class="col-3 col-form-label">Đến ngày</label>
+                            <div class="col-7">
+                                <input type="date" class="form-control col-form-label" id="inputOrderToDay">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="admin-order-table-container">
+                <table class="table table-hover order-table text-center">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Mã đơn</th>
+                            <th scope="col">Mã KH</th>
+                            <th scope="col">Thời gian tạo</th>
+                            <th scope="col">Thời gian hẹn</th>
+                            <th scope="col">Khách hàng</th>
+                            <th scope="col">Thành tiền</th>
+                            <th scope="col">Trạng thái</th>
+                        </tr>
+                    </thead>
+                    <tbody class="order-table-body">
+
+
+                       
+                    </tbody>
+                </table>
+            </div>
+            <div class="order-option-container" id="orderOptionContainer">
+                <div class="row">
+                    <button type="button" class="btn btn-option-info btn-order-option btn-order-option--active">Thông tin hóa đơn</button>
+                    <button type="button" class="btn btn-option-create btn-order-option">Tạo hóa đơn</button>
+                </div>
+            </div>
+            <div class="option-order-detail-container">
+                <div class="admin-order-detail-container d-none">
+                    <div class="order-detail-header text-center">
+                        <h2 class="text-uppercase order-detail-header__title">Thông tin đơn hàng</h2>
+                        <div class="my-3">
+                            Dưới đây là thông tin đơn hàng 
+                            <span class="order-detail-header__order-code"></span>
+                            <span class="order-detail-header__order-time"></span>
+                        </div>
+                        <div class="my-3">
+                            Thời gian hẹn: 
+                            {{!-- <span class="order-detail-header__order-meeting-time d-none">Tue Dec 14 2021 21:15</span> --}}
+                            <input type="datetime-local" class="order-detail-header__appointment-input ms-2" id="orderDetailAppointment" name="appointment">
+                        </div>
+                        <div class="mb-4">
+                            <div class="order-detail-header__order-status-title mb-3">Trạng thái đơn hàng:</div>
+                            <div class="dropdown">
+                                <button class="btn btn-dropdown-status dropdown-toggle" type="button" id="dropdownOrderStatusButton" data-bs-toggle="dropdown" aria-expanded="false"></button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownOrderStatusButton">
+                                    <li><div class="dropdown-item dropdown-status-item" onclick="updateDropdownStatusBtn('Chờ xác nhận')">Chờ xác nhận</div></li>
+                                    <li><div class="dropdown-item dropdown-status-item" onclick="updateDropdownStatusBtn('Đã xác nhận')">Đã xác nhận</div></li>
+                                    <li><div class="dropdown-item dropdown-status-item" onclick="updateDropdownStatusBtn('Đã hoàn thành')">Đã hoàn thành</div></li>
+                                    <li><div class="dropdown-item dropdown-status-item" onclick="updateDropdownStatusBtn('Đã hủy')">Đã hủy</div></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="order-detail-service-table text-center">
+                        <table class="table service-table table-borderless">
+                            <thead>
+                                <tr>
+                                    <th scope="col-4" class="text-start align-middle" >Tên dịch vụ</th>
+                                    <th scope="col-2" class="align-middle">Số lượng</th>
+                                    <th scope="col-2" class="align-middle">Đơn giá</th>
+                                    <th scope="col-2" class="align-middle">Biến thể</th>
+                                    <th scope="col-2" class="align-middle">Thành tiền</th>
+                                </tr>
+                            </thead>
+                            <tbody class="service-table-body">
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="order-detail-check-voucher" style="padding-bottom: 8px">
+                        <div class="row d-flex justify-content-between">
+                            <label for="inputVoucher" style="width: 140px; margin-left: 12px;" class="col-form-label">Mã Voucher</label>
+                            <span class="row w-auto">
+                                <input type="text" class="form-control col-form-label" style="width: 190px;" id="inputVoucher">
+                                <button type="button" class="btn btn-check-voucher" style="margin: 0 12px 0 20px;">Kiểm tra</button>
+                            </span>
+                        </div>
+                        <div class="text-end check-voucher-result" style="padding-right: 120px;"></div>
+                    </div>
+                    <div class="order-detail-total-table">
+                        <table class="table total-table table-bordered border-white">
+                            <tbody>
+                                <tr>
+                                    <td class="text-start table-light">Tổng giá trị sản phẩm</td>
+                                    <td class="text-end table-light total-table__sum"></td>
+                                </tr>
+                                <tr>
+                                    <td class="text-start table-light">Số tiền giảm giá</td>
+                                    <td class="text-end table-light total-table__discount"></td>
+                                </tr>
+                                <tr>
+                                    <td class="text-start fw-bold">Tổng thanh toán</td>
+                                    <td class="text-end fw-bold total-table__total"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="order-detail-customer-info mt-4">
+                        <p class="fw-bold my-3">
+                            Thông tin khách hàng
+                        </p>
+                        <div class="row my-3">
+                            <label for="customerCode" class="col-3 col-form-label">Mã khách hàng:</label>
+                            <div class="col-9">
+                                <div id="customerCode" class="customer-info__customer-code"></div>
+                            </div>
+                        </div>
+                        <div class="row my-3">
+                            <label for="inputCustomerName" class="col-3 col-form-label">Tên khách hàng:</label>
+                            <div class="col-6">
+                                <input type="text" class="col-6 form-control col-form-label" id="inputCustomerName" value="">
+                            </div>
+                        </div>
+                        <div class="row my-3">
+                            <label for="inputCustomerMail" class="col-3 col-form-label">Địa chỉ Email:</label>
+                            <div class="col-6">
+                                <input type="text" class="col-6 form-control col-form-label" id="inputCustomerMail" value="">
+                            </div>
+                        </div>
+                        <div class="row my-3">
+                            <label for="inputCustomerPhone" class="col-3 col-form-label">Số điện thoại:</label>
+                            <div class="col-6">
+                                <input type="text" class="col-6 form-control col-form-label" id="inputCustomerPhone" value="">
+                            </div>
+                        </div>
+                        <div class="row my-3">
+                            <label for="dropdownOrderPayment" class="col-3 col-form-label">Hình thức thanh toán:</label>
+                            <div class="dropdown col-6">
+                                <button class="btn btn-dropdown-payment dropdown-toggle" type="button" id="dropdownOrderPayment" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Tiền mặt
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownOrderPayment">
+                                    <li><div class="dropdown-item dropdown-payment-item" onclick="updateDropdownOrderPaymentBtn('Tiền mặt')">Tiền mặt</div></li>
+                                    <li><div class="dropdown-item dropdown-payment-item" onclick="updateDropdownOrderPaymentBtn('MoMo')">MoMo</div></li>
+                                    <li><div class="dropdown-item dropdown-payment-item" onclick="updateDropdownOrderPaymentBtn('ZaloPay')">ZaloPay</div></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-floating my-3">
+                        <textarea class="form-control" id="inputNote" style="height: 100px"></textarea>
+                        <label for="inputNote">Ghi chú</label>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <button type="button" class="btn btn-save">Lưu</button>
+                        <button type="button" class="btn btn-delete ms-4">Xóa</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="option-create-order-container d-none">
+                <div class="book-service-container">
+                    <p class="fw-bold my-3">
+                        Danh sách dịch vụ
+                    </p>
+                    <div class="d-flex align-items-start">
+                        <div class="col-1"></div>
+                        <div class="nav col-2 flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                            <button class="nav-link active" id="v-pills-dog-tab" onclick="renderDropdownServiceName()" data-bs-toggle="pill" data-bs-target="#v-pills-dog" type="button" role="tab" aria-controls="v-pills-dog" aria-selected="true">Dog</button>
+                            <button class="nav-link" id="v-pills-cat-tab" onclick="renderDropdownServiceName()" data-bs-toggle="pill" data-bs-target="#v-pills-cat" type="button" role="tab" aria-controls="v-pills-cat" aria-selected="false">Cat</button>
+                            <button class="nav-link" id="v-pills-other-tab" onclick="renderDropdownServiceName()" data-bs-toggle="pill" data-bs-target="#v-pills-other" type="button" role="tab" aria-controls="v-pills-other" aria-selected="false">Other Pets</button>
+                        </div>
+                        <div class="col-1"></div>
+                        <div class="col-6">
+                            <div class="pb-2">
+                                <label for="dropdownServiceName" class="col-form-label">Tên dịch vụ</label>
+
+                                <div class="dropdown">
+                                    <button class="btn dropdown-service-name dropdown-toggle w-100" type="button" id="dropdownServiceName" data-bs-toggle="dropdown" aria-expanded="false"></button>
+                                    <ul class="dropdown-menu dropdown-service-name-menu w-100">
+
+                                    </ul>
+                                </div>
+                                <div class="dropdownServiceNameError text-error"></div>
+                            </div>
+                            
+                            <div class="pb-2">
+                                <label for="dropdownServiceType" class="col-form-label">Tên dịch vụ</label>
+
+                                <div class="dropdown">
+                                    <button class="btn dropdown-service-type dropdown-toggle w-100" type="button" id="dropdownServiceType" data-bs-toggle="dropdown" aria-expanded="false"></button>
+                                    <ul class="dropdown-menu dropdown-service-type-menu w-100">
+                                        
+                                    </ul>
+                                </div>
+                                <div class="dropdownServiceTypeError text-error"></div>
+                            </div>
+
+                            <div class="d-flex justify-content-end pt-3">
+                                <button type="button" class="btn btn-add-service">Thêm</button>
+                            </div>
+                        </div>
+                        <div class="col-2"></div>
+                    </div>
+                </div>
+                <div class="book-form-container">
+                    <p class="fw-bold my-3">
+                        Tạo hóa đơn
+                    </p>
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <div class="row">
+                                <div class="col-1"></div>
+                                <label for="userCode" class="col-3 col-form-label">Mã KH</label>
+                                <div class="col-7">
+                                    <input class="form-control" id="userCode" name="userCode" placeholder="Code" type="text" value="">
+                                    <div class="inputUserCodeError text-error"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <button type="button" class="btn btn-check-user-code">Kiểm tra</button>
+                        </div>
+                        <div class="col-2">
+                            
+                        </div>
+                        <div class="col-2"></div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <div class="row">
+                                <div class="col-1"></div>
+                                <label for="name" class="col-3 col-form-label">Họ tên</label>
+                                <div class="col-7">
+                                    <input class="form-control" id="name" name="name" placeholder="Name " type="text" value="">
+                                    <div class="inputNameError text-error"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="row">
+                                <div class="col-1"></div>
+                                <label for="phone" class="col-3 col-form-label">Số điện thoại</label>
+                                <div class="col-7">
+                                    <input class="form-control" id="phone" name="phone" placeholder="Phone" type="text" value="" onkeypress="return isNumber(event)" onpaste="return false;">
+                                    <div class="inputPhoneError text-error"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <div class="row">
+                                <div class="col-1"></div>
+                                <label for="email" class="col-3 col-form-label">Email</label>
+                                <div class="col-7">
+                                    <input class="form-control" id="email" name="email" placeholder="Email" type="email" value="">
+                                    <div class="inputMailError text-error"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="row">
+                                <div class="col-1"></div>
+                                <label for="appointment" class="col-3 col-form-label">Thời gian hẹn</label>
+                                <div class="col-7">
+                                    <input type="datetime-local" class="book-form__appointment-input" id="appointment" name="appointment">
+                                    <div class="inputAppointmentError text-error"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table mt-3 book-service-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col" class="text-start align-middle" >Tên dịch vụ</th>
+                                <th scope="col" class="align-middle">Biến thể</th>
+                                <th scope="col" class="align-middle">Số lượng</th>
+                                <th scope="col" class="align-middle">Đơn giá</th>
+                                <th scope="col" class="align-middle">Thành tiền</th>
+                            </tr>
+                        </thead>
+                        <tbody class="book-service-table-body">
+
+                        </tbody>
+                    </table>
+                    <div class="row">
+                        <div class="col-6 fw-bold text-start ps-5">Tổng thanh toán</div>
+                        <div class="col-6 allServiceTotal fw-bold text-end pe-5">0</div>
+                    </div>
+                    <div class="serviceTableError text-error text-end"></div>
+                    <div>
+                        <textarea class="form-control mt-3" id="comments" name="note" placeholder="Note" rows="4"></textarea><br>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <button type="button" class="btn btn-book" >Tạo hóa đơn</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const sidebarItemOrder = document.getElementById('account_sidebar__order');
+    sidebarItemOrder.classList.add('account-sidebar__item--active');
+
+    const dropdownStatusSearch = document.getElementById('dropdownStatusSearch');
+    function updateDropdownStatusSearchBtn(payment) {
+        dropdownStatusSearch.textContent = payment;
+    }
+    const dropdownStatusButton = document.querySelector('.btn-dropdown-status');
+    function updateDropdownStatusBtn(status) {
+        dropdownStatusButton.textContent = status;
+    };
+    const dropdownOrderPayment = document.getElementById('dropdownOrderPayment');
+    function updateDropdownOrderPaymentBtn(payment) {
+        dropdownOrderPayment.textContent = payment;
+    }
+</script>
+<script>
+    const inputOrderCode = document.getElementById('inputOrderCode');
+    const inputOrderCustomerCode = document.getElementById('inputOrderCustomerCode');
+    const inputOrderCustomerName = document.getElementById('inputOrderCustomerName');
+    const dropdownOrderStatusSearch = document.getElementById('dropdownStatusSearch');
+    const inputOrderFromDay = document.getElementById('inputOrderFromDay');
+    const inputOrderToDay = document.getElementById('inputOrderToDay');
+    const btnSearch = document.querySelector('.btn-search');
+
+    const orderTable = document.querySelector('.order-table');
+    const orderTableBody = document.querySelector('.order-table-body');
+
+    const optionOrderDetailContainer = document.querySelector('.option-order-detail-container');
+    const optionCreateOrderContainer = document.querySelector('.option-create-order-container');
+
+    const orderDetailContainer = document.querySelector('.admin-order-detail-container');
+    const orderDetailCode = document.querySelector('.order-detail-header__order-code');
+    const orderDetailTime = document.querySelector('.order-detail-header__order-time');
+    {{!-- const orderDetailMeetingTime = document.querySelector('.order-detail-header__order-meeting-time'); --}}
+    const orderDetailMeetingTimeInput = document.querySelector('.order-detail-header__appointment-input');
+    const orderDetailDropdownStatus = document.getElementById('dropdownOrderStatusButton');
+    const orderDetailServiceTableBody = document.querySelector('.service-table-body');
+    const orderDetailInputVoucher = document.getElementById('inputVoucher');
+    const orderDetailVoucherResult = document.querySelector('.check-voucher-result');
+    const orderDetailTotalTableSum = document.querySelector('.total-table__sum');
+    const orderDetailTotalTableDiscount = document.querySelector('.total-table__discount');
+    const orderDetailTotalTableTotal = document.querySelector('.total-table__total');
+    const orderDetailCustomerCode = document.getElementById('customerCode');
+    const orderDetailCustomerName = document.getElementById('inputCustomerName');
+    const orderDetailCustomerMail = document.getElementById('inputCustomerMail');
+    const orderDetailCustomerPhone = document.getElementById('inputCustomerPhone');
+    const orderDetailPayment = document.getElementById('dropdownOrderPayment');
+    const orderDetailNote = document.getElementById('inputNote');
+
+    var data = [];
+    var currentIndex = 0;
+
+    btnSearchOnClick();
+    if (orderTable.rows.length > 1) orderTable.rows[1].classList.add('table-active');
+
+    const btnOptionInfo = document.querySelector('.btn-option-info');
+    btnOptionInfo.addEventListener('click', btnOptionInfoOnClick);
+    function btnOptionInfoOnClick() {
+        btnOptionInfo.classList.add('btn-order-option--active');
+        btnOptionCreate.classList.remove('btn-order-option--active');
+        optionOrderDetailContainer.classList.remove('d-none');
+        optionCreateOrderContainer.classList.add('d-none');
+    };
+
+    const btnOptionCreate = document.querySelector('.btn-option-create');
+    btnOptionCreate.addEventListener('click', btnOptionCreateOnClick);
+    function btnOptionCreateOnClick() {
+        btnOptionInfo.classList.remove('btn-order-option--active');
+        btnOptionCreate.classList.add('btn-order-option--active');
+        optionOrderDetailContainer.classList.add('d-none');
+        optionCreateOrderContainer.classList.remove('d-none');
+    };
+
+    function orderTableRowClick(rowIndex) {
+        console.log('table row ', rowIndex, ' clicked');
+        btnOptionInfoOnClick();
+        for (i = 1; i < orderTable.rows.length; i++) {
+            if (orderTable.rows[i].classList.contains('table-active')) {
+                orderTable.rows[i].classList.remove('table-active');
+            }
+        }
+        orderTable.rows[rowIndex].classList.add('table-active');
+        currentIndex = rowIndex - 1;
+        console.log(data.orderList[currentIndex]);
+        var orderDate = new Date(data.orderList[currentIndex].createdAt);
+        var orderMeetingTimeInputValue = '';
+
+        if (data.orderList[currentIndex].meetingTime) {
+            var orderMeetingTime = new Date(data.orderList[currentIndex].meetingTime);
+            orderMeetingTimeInputValue = orderMeetingTime.getFullYear() + '-' + (orderMeetingTime.getMonth() + 1).toString() + '-' + orderMeetingTime.getDate() + 'T' + orderMeetingTime.toTimeString().substring(0, 5);
+            console.log(orderMeetingTimeInputValue);
+        }
+        
+
+
+        orderDetailCode.textContent = data.orderList[currentIndex].orderCode;
+        orderDetailTime.textContent = ' - ' + orderDate.toDateString() + ' ' + orderDate.toTimeString().substring(0, 5);
+        {{!-- orderDetailMeetingTime.textContent = orderMeetingTime.toDateString() + ' ' + orderMeetingTime.toTimeString().substring(0, 5); --}}
+        orderDetailMeetingTimeInput.value = orderMeetingTimeInputValue;
+        orderDetailDropdownStatus.textContent = data.orderList[currentIndex].status;
+        orderDetailCustomerCode.textContent = data.orderList[currentIndex].userCode;
+        orderDetailCustomerName.value = data.orderList[currentIndex].fullname;
+        orderDetailCustomerMail.value = data.orderList[currentIndex].mail;
+        orderDetailCustomerPhone.value = data.orderList[currentIndex].phone;
+        orderDetailPayment.textContent = data.orderList[currentIndex].payment;
+        orderDetailNote.value = data.orderList[currentIndex].note;
+        var serviceTableBody = '';
+
+        for (i = 0; i < data.orderList[currentIndex].serviceList.length; i++) {
+            var row = '<tr>'
+                        + '<td class="text-start" style="width: 40%;">' + data.orderList[currentIndex].serviceList[i].service.name + '</td>'
+                        //+ '<td style="width: 15%;"">' + data.orderList[currentIndex].serviceList[i].quantity + '</td>'
+                        + '<td class="service-table__service-quantity-' + i + '">' + data.orderList[currentIndex].serviceList[i].quantity + '</td>'
+                        + '<td class="service-table__service-price-' + i + '" style="width: 15%;">' + data.orderList[currentIndex].serviceList[i].price + '</td>'
+                        + '<td style="width: 15%;">'
+                            + '<div class="dropdown">'
+                                + '<button class="btn btn-dropdown-service-type dropdown-toggle pt-0" type="button" id="dropdown-service-type-' + i +'" data-bs-toggle="dropdown" aria-expanded="false">' + data.orderList[currentIndex].serviceList[i].type + '</button>'
+                                + '<ul class="dropdown-menu dropdown-menu-service-type text-center" aria-labelledby="dropdown-service-type-' + i +'">';
+
+            for (j = 0; j < data.orderList[currentIndex].serviceList[i].service.prices.length; j++) {
+                row += '<li><div class="dropdown-item dropdown-service-type-item" onclick="updateDropdownServiceType(' + i + ', ' + j + ')">' + data.orderList[currentIndex].serviceList[i].service.prices[j].type + '</div></li>'
+            }
+            row += '</ul>'
+                        + '</div>'
+                    + '</td>'
+                    + '<td class="service-table__service-total-' + i +'" style="width: 15%;">' + data.orderList[currentIndex].serviceList[i].total + '</td>'
+                    + '</tr>';
+            serviceTableBody += row;
+        }
+
+        orderDetailServiceTableBody.innerHTML = serviceTableBody;
+        orderDetailInputVoucher.value = data.orderList[currentIndex].voucher;
+        orderDetailTotalTableSum.textContent = data.orderList[currentIndex].sum;
+        orderDetailTotalTableDiscount.textContent = data.orderList[currentIndex].discount;
+        orderDetailTotalTableTotal.textContent = data.orderList[currentIndex].total;
+        
+        window.location.href = "#orderOptionContainer";
+    }
+
+    function updateDropdownServiceType(indexService, indexType) {
+        const serviceQuantity = document.querySelector('.service-table__service-quantity-' + indexService);
+        const servicePrice = document.querySelector('.service-table__service-price-' + indexService);
+        const serviceType = document.getElementById('dropdown-service-type-' + indexService);
+        const serviceTotal = document.querySelector('.service-table__service-total-' + indexService);
+
+        servicePrice.textContent = data.orderList[currentIndex].serviceList[indexService].service.prices[indexType].price;
+        serviceType.textContent = data.orderList[currentIndex].serviceList[indexService].service.prices[indexType].type;
+        serviceTotal.textContent = Number(servicePrice.textContent) * Number(serviceQuantity.textContent);
+
+        var sum = 0;
+        for (i = 0; i < data.orderList[currentIndex].serviceList.length; i++) {
+            const serviceTotalTemp = document.querySelector('.service-table__service-total-' + i);
+            sum += Number(serviceTotalTemp.textContent);
+        }
+        orderDetailTotalTableSum.textContent = sum;
+        orderDetailTotalTableDiscount.textContent = 0;
+        orderDetailTotalTableTotal.textContent = sum;
+    };
+       
+    btnSearch.addEventListener('click', btnSearchOnClick);
+    async function btnSearchOnClick() {
+        try {
+            var orderCodeSearch = inputOrderCode.value;
+            var orderCustomerCodeSearch = inputOrderCustomerCode.value;
+            var orderCustomerNameSearch = inputOrderCustomerName.value;
+            var orderStatusSearch = dropdownOrderStatusSearch.textContent;
+            var orderFromDaySearch = inputOrderFromDay.value;
+            var orderToDaySearch = inputOrderToDay.value;
+
+            console.log(orderCodeSearch);
+            console.log(orderCustomerCodeSearch);
+            console.log(orderCustomerNameSearch);
+            console.log(orderStatusSearch);
+            console.log(orderFromDaySearch);
+            console.log(orderToDaySearch);
+
+
+            const res = await fetch('/account/admin-get-order', {
+                method: 'POST',
+                body: JSON.stringify({ orderCodeSearch, orderCustomerCodeSearch, orderCustomerNameSearch, orderStatusSearch, orderFromDaySearch, orderToDaySearch }),
+                headers: {'Content-Type': 'application/json'}
+            });
+            data = await res.json();
+            if (data) {
+                console.log('Search successful');
+                console.log(data);
+                var tableBody = '';
+                for (i = 0; i < data.orderList.length; i++) {
+                    var date = new Date(data.orderList[i].createdAt);
+                    var dateString = (date.getDate() < 10 ? ('0' + date.getDate().toString()) : date.getDate().toString()) + '/' + (date.getMonth() < 9 ? ('0' + (date.getMonth() + 1).toString()) : (date.getMonth() + 1).toString()) + '/' + date.getFullYear().toString() + ' ' + date.toTimeString().substring(0, 5);
+                    var appointment = new Date(data.orderList[i].meetingTime);
+                    var appointmentString = (appointment.getDate() < 10 ? ('0' + appointment.getDate().toString()) : appointment.getDate().toString()) + '/' + (appointment.getMonth() < 9 ? ('0' + (appointment.getMonth() + 1).toString()) : (appointment.getMonth() + 1).toString()) + '/' + appointment.getFullYear().toString() + ' ' + appointment.toTimeString().substring(0, 5);
+                    var row = '<tr class="" onclick="orderTableRowClick(' + (i + 1) + ')">'
+                                + '<th scope="row">' + (i + 1) + '</th>'
+                                + '<td>' + data.orderList[i].orderCode + '</td>'
+                                + '<td>' + data.orderList[i].userCode + '</td>'
+                                + '<td>' + dateString + '</td>'
+                                + '<td id="order-table__appointment-' + i + '"">' + appointmentString + '</td>'
+                                + '<td id="order-table__customer-name-' + i + '">' + data.orderList[i].fullname + '</td>'
+                                + '<td id="order-table__order-total-' + i + '">' + data.orderList[i].total + '</td>'
+                                + '<td id="order-table__order-status-' + i + '">' + data.orderList[i].status + '</td>'
+                            + '</tr>';
+                    tableBody += row;
+                }
+                orderTableBody.innerHTML = tableBody;
+                if (data.orderList.length > 0) {
+                    orderTableRowClick(1);
+                    if (orderDetailContainer.classList.contains('d-none')) {
+                        orderDetailContainer.classList.remove('d-none');
+                    }
+                    window.location.href = "#";
+                }
+                else {
+                    if (!orderDetailContainer.classList.contains('d-none')) {
+                        orderDetailContainer.classList.add('d-none');
+                    }
+                    btnOptionCreateOnClick();
+                }
+            }
+        }
+        catch(err) {
+            console.log('Search failed');
+            console.log(err);
+        }
+    }
+
+    const btnCheckVoucher = document.querySelector('.btn-check-voucher');
+    btnCheckVoucher.addEventListener('click', async () => {
+        orderDetailVoucherResult.textContent = '';
+        orderDetailVoucherResult.classList.remove('text-error');
+        if (orderDetailInputVoucher.value === '') {
+            orderDetailVoucherResult.textContent = 'Vui lòng nhập mã Voucher';
+            orderDetailVoucherResult.classList.add('text-error');
+        }
+        else {
+            try {
+                const voucherCode = orderDetailInputVoucher.value;
+                const res = await fetch('/account/order-check-voucher', {
+                    method: 'POST',
+                    body: JSON.stringify({ voucherCode }),
+                    headers: {'Content-Type': 'application/json'}
+                });
+                voucherData = await res.json();
+                if (voucherData) {
+                    if (voucherData.voucher) {
+                        console.log('check voucher successful');
+                        if (voucherData.voucher.type === 'Mức tiền') {
+                            orderDetailVoucherResult.textContent = 'Voucher ' + voucherData.voucher.value;
+
+                            var total = Number(orderDetailTotalTableSum.textContent);
+                            total -= voucherData.voucher.value;
+                            if (total < 0) total = 0;
+                            orderDetailTotalTableDiscount.textContent = (-1) * voucherData.voucher.value;
+                            orderDetailTotalTableTotal.textContent = total;
+                        }
+                        else if (voucherData.voucher.type === 'Phần trăm') {
+                            orderDetailVoucherResult.textContent = 'Voucher ' + voucherData.voucher.value + '% (Tối đa ' + voucherData.voucher.max + ')';
+
+                            var total = Number(orderDetailTotalTableSum.textContent);
+                            var discount = total * voucherData.voucher.value / 100;
+                            if (discount > voucherData.voucher.max) discount = voucherData.voucher.max;
+                            total -= discount;
+                            if (total < 0) total = 0;
+                            orderDetailTotalTableDiscount.textContent = (-1) * discount;
+                            orderDetailTotalTableTotal.textContent = total;
+                        }
+                    }
+                    else if (voucherData.error) {
+                        if (voucherData.error === 'voucher already used') {
+                            console.log('check voucher successful');
+                            orderDetailVoucherResult.textContent = 'Voucher đã được sử dụng';
+                            orderDetailVoucherResult.classList.add('text-error');
+                            
+                            var sum = 0;
+                            for (i = 0; i < data.orderList[currentIndex].serviceList.length; i++) {
+                                const serviceTotalTemp = document.querySelector('.service-table__service-total-' + i);
+                                sum += Number(serviceTotalTemp.textContent);
+                            }
+                            orderDetailTotalTableSum.textContent = sum;
+                            orderDetailTotalTableDiscount.textContent = 0;
+                            orderDetailTotalTableTotal.textContent = sum;
+                        }
+                        else if (voucherData.error === 'voucher expired') {
+                            console.log('check voucher successful');
+                            orderDetailVoucherResult.textContent = 'Voucher đã hết hạn';
+                            orderDetailVoucherResult.classList.add('text-error');
+
+                            var sum = 0;
+                            for (i = 0; i < data.orderList[currentIndex].serviceList.length; i++) {
+                                const serviceTotalTemp = document.querySelector('.service-table__service-total-' + i);
+                                sum += Number(serviceTotalTemp.textContent);
+                            }
+                            orderDetailTotalTableSum.textContent = sum;
+                            orderDetailTotalTableDiscount.textContent = 0;
+                            orderDetailTotalTableTotal.textContent = sum;
+                        }
+                        else if (voucherData.error === 'voucher null') {
+                            console.log('check voucher successful');
+                            orderDetailVoucherResult.textContent = 'Voucher không hợp lệ';
+                            orderDetailVoucherResult.classList.add('text-error');
+
+                            var sum = 0;
+                            for (i = 0; i < data.orderList[currentIndex].serviceList.length; i++) {
+                                const serviceTotalTemp = document.querySelector('.service-table__service-total-' + i);
+                                sum += Number(serviceTotalTemp.textContent);
+                            }
+                            orderDetailTotalTableSum.textContent = sum;
+                            orderDetailTotalTableDiscount.textContent = 0;
+                            orderDetailTotalTableTotal.textContent = sum;
+                        }
+                        else {
+                            console.log('check voucher failed');
+                            console.log(voucherData.error);
+                            orderDetailVoucherResult.textContent = 'Có lỗi xảy ra, vui lòng thử lại';
+                            orderDetailVoucherResult.classList.add('text-error');
+
+                            var sum = 0;
+                            for (i = 0; i < data.orderList[currentIndex].serviceList.length; i++) {
+                                const serviceTotalTemp = document.querySelector('.service-table__service-total-' + i);
+                                sum += Number(serviceTotalTemp.textContent);
+                            }
+                            orderDetailTotalTableSum.textContent = sum;
+                            orderDetailTotalTableDiscount.textContent = 0;
+                            orderDetailTotalTableTotal.textContent = sum;
+                        }
+                    }
+                }
+                else {
+                    console.log('check voucher failed');
+                    orderDetailVoucherResult.textContent = 'Có lỗi xảy ra, vui lòng thử lại';
+                    orderDetailVoucherResult.classList.add('text-error');
+
+                    var sum = 0;
+                    for (i = 0; i < data.orderList[currentIndex].serviceList.length; i++) {
+                        const serviceTotalTemp = document.querySelector('.service-table__service-total-' + i);
+                        sum += Number(serviceTotalTemp.textContent);
+                    }
+                    orderDetailTotalTableSum.textContent = sum;
+                    orderDetailTotalTableDiscount.textContent = 0;
+                    orderDetailTotalTableTotal.textContent = sum;
+                }
+            }
+            catch(err) {
+                console.log('check voucher error');
+                console.log(err);
+                orderDetailVoucherResult.textContent = 'Có lỗi xảy ra, vui lòng thử lại';
+                orderDetailVoucherResult.classList.add('text-error');
+
+                var sum = 0;
+                for (i = 0; i < data.orderList[currentIndex].serviceList.length; i++) {
+                    const serviceTotalTemp = document.querySelector('.service-table__service-total-' + i);
+                    sum += Number(serviceTotalTemp.textContent);
+                }
+                orderDetailTotalTableSum.textContent = sum;
+                orderDetailTotalTableDiscount.textContent = 0;
+                orderDetailTotalTableTotal.textContent = sum;
+            }
+        }
+    });
+
+    const btnSave = document.querySelector('.btn-save');
+    btnSave.addEventListener('click', async () => {
+        try {
+            orderDetailVoucherResult.textContent = '';
+            orderDetailVoucherResult.classList.remove('text-error');
+
+            const orderCode = data.orderList[currentIndex].orderCode;
+            const customerName = orderDetailCustomerName.value;
+            const customerPhone = orderDetailCustomerPhone.value;
+            const customerMail = orderDetailCustomerMail.value;
+            const appointment = orderDetailMeetingTimeInput.value;
+            const orderStatus = orderDetailDropdownStatus.textContent;
+            var serviceList = [];
+            const sum = orderDetailTotalTableSum.textContent;
+            const discount = orderDetailTotalTableDiscount.textContent;
+            const voucher = orderDetailInputVoucher.value;
+            const total = orderDetailTotalTableTotal.textContent;
+            const note = orderDetailNote.value;
+            const payment = orderDetailPayment.textContent;
+
+            for (i = 0; i < data.orderList[currentIndex].serviceList.length; i++) {
+                const serviceQuantity = document.querySelector('.service-table__service-quantity-' + i);
+                const servicePrice = document.querySelector('.service-table__service-price-' + i);
+                const serviceType = document.getElementById('dropdown-service-type-' + i);
+                const serviceTotal = document.querySelector('.service-table__service-total-' + i);
+
+                var service = {
+                    service: data.orderList[currentIndex].serviceList[i].service,
+                    type: serviceType.textContent,
+                    quantity: Number(serviceQuantity.textContent),
+                    price: Number(servicePrice.textContent),
+                    total:  Number(serviceTotal.textContent),
+                };
+                serviceList.push(service);
+            }
+
+            console.log(serviceList);
+
+            const res = await fetch('/account/admin-save-order', {
+                method: 'POST',
+                body: JSON.stringify({ orderCode, customerName, customerPhone, customerMail, appointment, orderStatus, serviceList, sum, discount, voucher, total, note, payment }),
+                headers: {'Content-Type': 'application/json'}
+            });
+            const savedOrderData = await res.json();
+            if (savedOrderData) {
+                if (savedOrderData.savedOrder) {
+                    console.log('save order successful');
+                    data.orderList[currentIndex] = savedOrderData.savedOrder;
+
+                    const orderTableAppointment = document.getElementById('order-table__appointment-' + currentIndex);
+                    const orderTableCustomerName = document.getElementById('order-table__customer-name-' + currentIndex);
+                    const orderTableOrderTotal = document.getElementById('order-table__order-total-' + currentIndex);
+                    const orderTableOrderStatus = document.getElementById('order-table__order-status-' + currentIndex);
+
+                    var date = new Date(data.orderList[currentIndex].meetingTime);
+                    orderTableAppointment.textContent = (date.getDate() < 10 ? ('0' + date.getDate().toString()) : date.getDate().toString()) + '/' + (date.getMonth() < 9 ? ('0' + (date.getMonth() + 1).toString()) : (date.getMonth() + 1).toString()) + '/' + date.getFullYear().toString() + ' ' + date.toTimeString().substring(0, 5);
+                    orderTableCustomerName.textContent = data.orderList[currentIndex].fullname;
+                    orderTableOrderTotal.textContent = data.orderList[currentIndex].total;
+                    orderTableOrderStatus.textContent = data.orderList[currentIndex].status;
+
+                    showAlertChicPet('alert-success', 'Lưu hóa đơn thành công');
+                }
+                else if (savedOrderData.error) {
+                    if (savedOrderData.error === 'voucher already used') {
+                        console.log('save order voucher already used');
+                        orderDetailVoucherResult.textContent = 'Voucher đã được sử dụng';
+                        orderDetailVoucherResult.classList.add('text-error');
+
+                        var sumTemp = 0;
+                        for (i = 0; i < data.orderList[currentIndex].serviceList.length; i++) {
+                            const serviceTotalTemp = document.querySelector('.service-table__service-total-' + i);
+                            sumTemp += Number(serviceTotalTemp.textContent);
+                        }
+                        orderDetailTotalTableSum.textContent = sumTemp;
+                        orderDetailTotalTableDiscount.textContent = 0;
+                        orderDetailTotalTableTotal.textContent = sumTemp;
+
+                        showAlertChicPet('alert-danger', 'Voucher đã được sử dụng');
+                    }
+                    else if (savedOrderData.error === 'voucher expired') {
+                        console.log('save order voucher expired');
+                        orderDetailVoucherResult.textContent = 'Voucher đã hết hạn';
+                        orderDetailVoucherResult.classList.add('text-error');
+
+                        var sumTemp = 0;
+                        for (i = 0; i < data.orderList[currentIndex].serviceList.length; i++) {
+                            const serviceTotalTemp = document.querySelector('.service-table__service-total-' + i);
+                            sumTemp += Number(serviceTotalTemp.textContent);
+                        }
+                        orderDetailTotalTableSum.textContent = sumTemp;
+                        orderDetailTotalTableDiscount.textContent = 0;
+                        orderDetailTotalTableTotal.textContent = sumTemp;
+
+                        showAlertChicPet('alert-danger', 'Voucher đã hết hạn');
+                    }
+                    else if (savedOrderData.error === 'voucher null') {
+                        console.log('save order voucher null');
+                        orderDetailVoucherResult.textContent = 'Voucher không hợp lệ';
+                        orderDetailVoucherResult.classList.add('text-error');
+
+                        var sumTemp = 0;
+                        for (i = 0; i < data.orderList[currentIndex].serviceList.length; i++) {
+                            const serviceTotalTemp = document.querySelector('.service-table__service-total-' + i);
+                            sumTemp += Number(serviceTotalTemp.textContent);
+                        }
+                        orderDetailTotalTableSum.textContent = sumTemp;
+                        orderDetailTotalTableDiscount.textContent = 0;
+                        orderDetailTotalTableTotal.textContent = sumTemp;
+
+                        showAlertChicPet('alert-danger', 'Voucher không hợp lệ');
+                    }
+                    else {
+                        console.log('save order failed');
+                        console.log(savedOrderData.error);
+                        showAlertChicPet('alert-danger', 'Lưu hóa đơn thất bại, vui lòng thử lại');
+                    }
+                }
+            }
+            else {
+                console.log('save order failed');
+                console.log('save order return null');
+                showAlertChicPet('alert-danger', 'Lưu hóa đơn thất bại, vui lòng thử lại');
+            }
+        }
+        catch(err) {
+            console.log('btn save error');
+            console.log(err);
+            showAlertChicPet('alert-danger', 'Lưu hóa đơn thất bại, vui lòng thử lại');
+        }
+    });
+
+    const btnDelete = document.querySelector('.btn-delete');
+    btnDelete.addEventListener('click', async () => {
+        const orderCode = data.orderList[currentIndex].orderCode;
+        if (confirm('Bạn có chắc muốn xóa hóa đơn ' + orderCode + '?')) {
+            try {
+                const res = await fetch('/account/admin-delete-order', {
+                    method: 'POST',
+                    body: JSON.stringify({ orderCode }),
+                    headers: {'Content-Type': 'application/json'}
+                });
+                const deletedOrderData = await res.json();
+                if (deletedOrderData) {
+                    if (deletedOrderData.deletedOrder) {
+                        console.log('save order successful');
+                        console.log('deleted order: ');
+                        console.log(deletedOrderData.deletedOrder);
+                        showAlertChicPet('alert-success', 'Xóa hóa đơn thành công');
+                        btnSearchOnClick();
+                    }
+                    else {
+                        console.log('delete order failed');
+                        console.log('delete order failed');
+                        showAlertChicPet('alert-danger', 'Xóa hóa đơn thất bại, vui lòng thử lại');
+                    }
+                }
+                else {
+                    console.log('delete order failed');
+                    console.log('delete order return null');
+                    showAlertChicPet('alert-danger', 'Xóa hóa đơn thất bại, vui lòng thử lại');
+                }
+            }
+            catch(err) {
+                console.log('btn delete error');
+                console.log(err);
+                showAlertChicPet('alert-danger', 'Xóa hóa đơn thất bại, vui lòng thử lại');
+            }
+        }
+        
+    })
+
+    function isNumber(evt) {
+        evt = (evt) ? evt : window.event;
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if ( (charCode > 31 && charCode < 48) || charCode > 57) {
+            return false;
+        }
+        return true;
+    }
+
+    // script create order
+
+    var bookServiceList = [];
+    var bookOrderServiceList = [];
+
+    const dogServiceNav = document.getElementById('v-pills-dog-tab');
+    const catServiceNav = document.getElementById('v-pills-cat-tab');
+    const otherServiceNav = document.getElementById('v-pills-other-tab');
+
+    const dropdownServiceName = document.getElementById('dropdownServiceName');
+    const dropdownServiceNameMenu = document.querySelector('.dropdown-service-name-menu');
+    const dropdownServiceNameError = document.querySelector('.dropdownServiceNameError');
+
+    const dropdownServiceType = document.getElementById('dropdownServiceType');
+    const dropdownServiceTypeMenu = document.querySelector('.dropdown-service-type-menu');
+    const dropdownServiceTypeError = document.querySelector('.dropdownServiceTypeError');
+
+    const btnAdd = document.querySelector('.btn-add-service');
+
+    const btnCheckUserCode = document.querySelector('.btn-check-user-code');
+
+    const inputBookUserCode = document.getElementById('userCode');
+    const inputBookName = document.getElementById('name');
+    const inputBookPhone = document.getElementById('phone');
+    const inputBookEmail = document.getElementById('email');
+    const inputBookAppointment = document.getElementById('appointment');
+    const inputBookNote = document.getElementById('comments');
+
+    const bookServiceTableBody = document.querySelector('.book-service-table-body');
+    
+    const inputBookUserCodeError = document.querySelector('.inputUserCodeError');
+    const inputBookNameError = document.querySelector('.inputNameError');
+    const inputBookPhoneError = document.querySelector('.inputPhoneError');
+    const inputBookMailError = document.querySelector('.inputMailError');
+    const inputBookAppointmentError = document.querySelector('.inputAppointmentError');
+    const bookServiceTableError = document.querySelector('.serviceTableError');
+
+    const allServiceTotal = document.querySelector('.allServiceTotal');
+
+    const btnBook = document.querySelector('.btn-book');
+
+    getListService();
+
+    async function getListService() {
+        try {
+            const res = await fetch('/service/book/get-service-list', {
+                method: 'POST',
+                body: JSON.stringify({ }),
+                headers: {'Content-Type': 'application/json'}
+            });
+            const serviceListData = await res.json();
+            if (serviceListData) {
+                if (serviceListData.serviceList) {
+                    console.log(serviceListData.serviceList);
+                    bookServiceList = serviceListData.serviceList;
+                    renderDropdownServiceName();
+                    renderDropdownServiceType(bookServiceList[0].name);                
+                }
+                else if (serviceListData.error) {
+                    console.log('get service list error');
+                    console.log(serviceListData.error);
+                }
+            }
+            else {
+                console.log('get service list failed');
+            }
+        }
+        catch(err) {
+            console.log('get service list error');
+            console.log(err);
+        }
+    }
+
+    function renderDropdownServiceName() {
+        if (dogServiceNav.classList.contains('active')) {
+            var numberOfServiceAdded = 0;
+            var html = '';
+            for (i = 0; i < bookServiceList.length; i++) {
+                if (bookServiceList[i].category === 'dog-service') {
+                    numberOfServiceAdded++;
+                    html += `<li><div class="dropdown-item dropdown-service-name-item text-wrap" onclick="updateDropdownServiceNameBtn('${bookServiceList[i].name}')">${bookServiceList[i].name}</div></li>`
+                }
+            }
+            if (numberOfServiceAdded > 0) {
+                dropdownServiceNameMenu.innerHTML = html;
+                for (i = 0; i < bookServiceList.length; i++) {
+                    if (bookServiceList[i].category === 'dog-service') {
+                        dropdownServiceName.textContent = bookServiceList[i].name;
+                        renderDropdownServiceType(bookServiceList[i].name);
+                        break;
+                    }
+                }
+            }
+            else {
+                dropdownServiceName.textContent = '';
+                dropdownServiceNameMenu.innerHTML = '';
+                dropdownServiceType.textContent = '';
+                dropdownServiceNameMenu.innerHTML = '';
+            }
+        }
+        else if (catServiceNav.classList.contains('active')) {
+            var numberOfServiceAdded = 0;
+            var html = '';
+            for (i = 0; i < bookServiceList.length; i++) {
+                if (bookServiceList[i].category === 'cat-service') {
+                    numberOfServiceAdded++;
+                    html += `<li><div class="dropdown-item dropdown-service-name-item text-wrap" onclick="updateDropdownServiceNameBtn('${bookServiceList[i].name}')">${bookServiceList[i].name}</div></li>`
+                }
+            }
+            if (numberOfServiceAdded > 0) {
+                dropdownServiceNameMenu.innerHTML = html;
+                for (i = 0; i < bookServiceList.length; i++) {
+                    if (bookServiceList[i].category === 'cat-service') {
+                        dropdownServiceName.textContent = bookServiceList[i].name;
+                        renderDropdownServiceType(bookServiceList[i].name);
+                        break;
+                    }
+                }
+            }
+            else {
+                dropdownServiceName.textContent = '';
+                dropdownServiceNameMenu.innerHTML = '';
+                dropdownServiceType.textContent = '';
+                dropdownServiceNameMenu.innerHTML = '';
+            }
+        }
+        else if (otherServiceNav.classList.contains('active')) {
+            var numberOfServiceAdded = 0;
+            var html = '';
+            for (i = 0; i < bookServiceList.length; i++) {
+                if (bookServiceList[i].category === 'other-service') {
+                    numberOfServiceAdded++;
+                    html += `<li><div class="dropdown-item dropdown-service-name-item text-wrap" onclick="updateDropdownServiceNameBtn('${bookServiceList[i].name}')">${bookServiceList[i].name}</div></li>`
+                }
+            }
+            if (numberOfServiceAdded > 0) {
+                dropdownServiceNameMenu.innerHTML = html;
+                for (i = 0; i < bookServiceList.length; i++) {
+                    if (bookServiceList[i].category === 'other-service') {
+                        dropdownServiceName.textContent = bookServiceList[i].name;
+                        renderDropdownServiceType(bookServiceList[i].name);
+                        break;
+                    }
+                }
+            }
+            else {
+                dropdownServiceName.textContent = '';
+                dropdownServiceNameMenu.innerHTML = '';
+                dropdownServiceType.textContent = '';
+                dropdownServiceNameMenu.innerHTML = '';
+            }
+        }
+    }
+
+    function updateDropdownServiceNameBtn(serviceName) {
+        dropdownServiceName.textContent = serviceName;
+
+        renderDropdownServiceType(serviceName);
+    }
+
+    function renderDropdownServiceType(serviceName) {
+        var html = '';
+        for (i = 0; i < bookServiceList.length; i++) {
+            if (serviceName === bookServiceList[i].name) {
+                dropdownServiceType.textContent = bookServiceList[i].prices[0].type;
+                for (j = 0; j < bookServiceList[i].prices.length; j++) {
+                    html += `<li><div class="dropdown-item dropdown-service-type-item text-wrap" onclick="updateDropdownServiceTypeBtn('${bookServiceList[i].prices[j].type}')">${bookServiceList[i].prices[j].type}</div></li>`;
+                }
+                break;
+            }
+        }
+        dropdownServiceTypeMenu.innerHTML = html;
+    }
+
+    function updateDropdownServiceTypeBtn(type) {
+        dropdownServiceType.textContent = type;
+    }
+
+    function renderServiceTableBody() {
+        const html = bookOrderServiceList.map((element, index) => (
+            `<tr>
+                <th>${index + 1}</th>
+                <td class="text-start">${element.serviceName}</td>
+                <td class="text-center">${element.serviceType}</td>
+                <td class="text-center">
+                    <input type="number" id="service-table-quantity-${index}" class="text-center" max="10" min="0" value="${element.quantity}" onchange="serviceTableQuantityOnChanged(${index}, this.value)">
+                </td>
+                <td class="text-center">${element.servicePrice}</td>
+                <td class="text-center">${element.serviceTotal}</td>
+            </tr>`
+        ));
+        bookServiceTableBody.innerHTML = html.join('');
+
+        var allServiceTotalValue = 0;
+        for (i = 0; i < bookOrderServiceList.length; i++) {
+            allServiceTotalValue += bookOrderServiceList[i].serviceTotal;
+        }
+        allServiceTotal.textContent = allServiceTotalValue;
+    }
+
+    btnAdd.addEventListener('click', () => {
+        dropdownServiceNameError.textContent = '';
+        dropdownServiceTypeError.textContent = '';
+
+        const serviceName = dropdownServiceName.textContent;
+        const serviceType = dropdownServiceType.textContent;
+        var serviceValidated = true;
+
+        if (serviceName === '') {
+            dropdownServiceNameError.textContent = 'Vui lòng chọn tên dịch vụ';
+            serviceValidated = false;
+        }
+        if (serviceType === '') {
+            dropdownServiceTypeError.textContent = 'Vui lòng chọn kiểu dịch vụ';
+            serviceValidated = false;
+        }
+
+        if (serviceValidated) {
+            var serviceAlreadyAdded = false;
+            bookOrderServiceList.forEach((element) => { 
+                if(element.serviceName == serviceName && element.serviceType == serviceType){
+                    serviceAlreadyAdded = true;
+                    if(element.quantity < 10){
+                        element.quantity ++;
+                        element.serviceTotal = element.servicePrice * element.quantity;
+                        renderServiceTableBody();
+                    }
+                } 
+            } );
+            if(!serviceAlreadyAdded){
+                var servicePrice = 0;
+                for (i = 0; i < bookServiceList.length; i++) {
+                    if (bookServiceList[i].name === serviceName) {
+                        for (j = 0; j < bookServiceList[i].prices.length; j++) {
+                            if (bookServiceList[i].prices[j].type === serviceType) {
+                                servicePrice = bookServiceList[i].prices[j].price;
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                }
+                const Data = {
+                    serviceName: serviceName,
+                    serviceType: serviceType,
+                    quantity: 1,
+                    servicePrice: servicePrice,
+                    serviceTotal: servicePrice,
+                }
+                bookOrderServiceList.push(Data);
+                renderServiceTableBody();
+            }
+            console.log(bookOrderServiceList);
+        }
+    })
+
+    function serviceTableQuantityOnChanged(index, value){
+        if(value < 1){
+            bookOrderServiceList.splice(index, 1);
+            renderServiceTableBody();
+        }
+        else if(value > 10){
+            bookOrderServiceList[index].quantity = 10;
+            bookOrderServiceList[index].serviceTotal = 10 * bookOrderServiceList[index].servicePrice;
+            renderServiceTableBody();
+        }
+        else{
+            bookOrderServiceList[index].quantity = Number(value);
+            bookOrderServiceList[index].serviceTotal = Number(value) * bookOrderServiceList[index].servicePrice;
+            renderServiceTableBody();
+        }
+        console.log(bookOrderServiceList);
+    }
+
+    btnCheckUserCode.addEventListener('click', async () => {
+        const userCodeToFind = inputBookUserCode.value;
+        inputBookUserCodeError.textContent = '';
+
+        if (userCodeToFind !== '') {
+            try {
+                const res = await fetch('/account/get-user-info', {
+                    method: 'POST',
+                    body: JSON.stringify({ userCodeToFind }),
+                    headers: {'Content-Type': 'application/json'}
+                });
+                const userInfoData = await res.json();
+                console.log(userInfoData);
+                if (userInfoData) {
+                    if (userInfoData.userInfo) {
+                        console.log('get user info successful');
+                        console.log(userInfoData.userInfo);
+                        inputBookName.value = userInfoData.userInfo.fullname;
+                        inputBookPhone.value = userInfoData.userInfo.phone;
+                        inputBookEmail.value = userInfoData.userInfo.mail;
+                    }
+                    else if (userInfoData.error) {
+                        if (userInfoData.error === 'userInfo null') {
+                            console.log('get user info successful');
+                            console.log(userInfoData.error);
+                            inputBookUserCodeError.textContent = 'Mã khách hàng không hợp lệ';
+                        }
+                        else {
+                            console.log('get user info failed');
+                            console.log(userInfoData.error);
+                            inputBookUserCodeError.textContent = 'Mã khách hàng không hợp lệ';
+                        }
+                    }
+                    else {
+                        console.log('get user info failed');
+                    }
+                }
+            }
+            catch(err) {
+                console.log('btn get user info error');
+                console.log(err);
+            }
+        }
+        else {
+            inputBookUserCodeError.textContent = 'Vui lòng nhập mã khách hàng';
+        }
+    })
+
+    btnBook.addEventListener('click', async ()=>{
+        console.log('btn-book clicked');
+        inputBookUserCodeError.textContent = '';
+        inputBookNameError.textContent = '';
+        inputBookPhoneError.textContent = '';
+        bookServiceTableError.textContent = '';
+        inputBookAppointmentError.textContent = '';
+
+        const userCode = inputBookUserCode.value;
+        const name = inputBookName.value;
+        const phone = inputBookPhone.value;
+        const mail = inputBookEmail.value;
+        const appointment = inputBookAppointment.value;
+        const note = inputBookNote.value;
+        const total = Number(allServiceTotal.textContent);
+        var orderValidated = true;
+
+        const appointmentDate = new Date(appointment);
+
+        if (userCode === '') {
+            inputBookUserCodeError.textContent = 'Vui lòng nhập mã khách hàng';
+            orderValidated = false;
+        }
+        if (name === '') {
+            inputBookNameError.textContent = 'Vui lòng nhập họ tên';
+            orderValidated = false;
+        }
+        if (phone === '') {
+            inputBookPhoneError.textContent = 'Vui lòng nhập số điện thoại';
+            orderValidated = false;
+        }
+        if (appointment === '') {
+            inputBookAppointmentError.textContent = 'Vui lòng nhập thời gian hẹn';
+            orderValidated = false;
+        }
+        if (appointmentDate.getTime() < Date.now()) {
+            inputBookAppointmentError.textContent = 'Thời gian hẹn không hợp lệ';
+            orderValidated = false;
+        }
+        if (bookOrderServiceList.length < 1) {
+            bookServiceTableError.textContent = 'Vui lòng chọn dịch vụ';
+            orderValidated = false;
+        }
+
+        if (orderValidated) {
+            var services = [];
+            for (i = 0; i < bookOrderServiceList.length; i++) {
+                var serviceInfo = bookServiceList.find(element => (element.name === bookOrderServiceList[i].serviceName));
+                console.log(serviceInfo);
+                var service = {
+                    service: serviceInfo,
+                    type: bookOrderServiceList[i].serviceType,
+                    quantity: bookOrderServiceList[i].quantity,
+                    price: bookOrderServiceList[i].servicePrice,
+                    total:  bookOrderServiceList[i].serviceTotal,
+                }
+                services.push(service);
+            }
+            console.log(services);
+            try {
+                const res = await fetch('/service/admin-book', {
+                    method: 'POST',
+                    body: JSON.stringify({ userCode, name, phone, mail, appointment, services, note, total }),
+                    headers: {'Content-Type': 'application/json'}
+                });
+                const orderData = await res.json();
+                console.log(orderData);
+                if (orderData) {
+                    if (orderData.order) {
+                        console.log("Đăng ký đơn thành công");
+                        console.log(orderData.order);
+                        showAlertChicPet('alert-success', 'Đăng ký đơn thành công');
+
+                        btnSearchOnClick();
+                        inputBookUserCode.value = '';
+                        inputBookName.value = '';
+                        inputBookPhone.value = '';
+                        inputBookEmail.value = '';
+                        inputBookAppointment.value = '';
+                        inputBookNote.value = '';
+                        bookServiceTableBody.innerHTML = '';
+                        bookOrderServiceList = [];
+                        allServiceTotal.textContent = 0;
+                    }
+                    else if (orderData.error) {
+                        if (orderData.error === 'user code not found') {
+                            console.log('Đăng ký đơn thất bại');
+                            console.log(orderData.error);
+                            inputBookUserCodeError.textContent = 'Mã khách hàng không hợp lệ';
+                            showAlertChicPet('alert-danger', 'Đăng ký đơn thất bại, vui lòng thử lại');
+                        }
+                        else {
+                            console.log('Đăng ký đơn thất bại');
+                            console.log(orderData.error);
+                            showAlertChicPet('alert-danger', 'Đăng ký đơn thất bại, vui lòng thử lại');
+                        }
+                    }
+                    else {
+                        console.log("Đăng ký đơn thất bại");
+                        console.log(orderData);
+                        showAlertChicPet('alert-danger', 'Đăng ký đơn thất bại, vui lòng thử lại');
+                    }
+                }
+            }
+            catch (err) {
+                console.log("Đăng ký đơn lỗi");
+                console.log(err);
+                showAlertChicPet('alert-danger', 'Đăng ký đơn thất bại, vui lòng thử lại');
+            }
+        }
+    });
+
+</script>
+<script>
+    document.getElementById("navbarDropdownMenuLink").classList.add("active");
+</script>

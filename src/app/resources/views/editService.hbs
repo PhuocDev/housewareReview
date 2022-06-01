@@ -1,0 +1,338 @@
+<link rel="stylesheet" href="/css/editservice.css">
+<Title>Edit service</Title>
+
+<div class="container px-5">
+<div class="d-flex align-items-start content">
+    <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+        <button class="nav-link active" id="v-pills-all-tab" data-bs-toggle="pill" data-bs-target="#v-pills-all" type="button" role="tab" aria-controls="v-pills-all" aria-selected="true">All</button>
+        <button class="nav-link" id="v-pills-dog-tab" data-bs-toggle="pill" data-bs-target="#v-pills-dog" type="button" role="tab" aria-controls="v-pills-dog" aria-selected="false">Dog's services</button>
+        <button class="nav-link" id="v-pills-cat-tab" data-bs-toggle="pill" data-bs-target="#v-pills-cat" type="button" role="tab" aria-controls="v-pills-cat" aria-selected="false">Cat's services</button>
+        <button class="nav-link" id="v-pills-takeCareDog-tab" data-bs-toggle="pill" data-bs-target="#v-pills-takeCareDog" type="button" role="tab" aria-controls="v-pills-takeCareDog" aria-selected="false">Other services</button>
+    </div>
+    <div class="tab-content overflow-auto" id="v-pills-tabContent">
+        <div class="tab-pane fade show active" id="v-pills-all" role="tabpanel" aria-labelledby="v-pills-all-tab">
+
+            {{#each services }}
+                <div class="service-item row mx-0 mt-1">
+                    <div class="col-md-2 pe-0 item-img">
+                        <img src="{{this.img}}" alt="">
+                    </div>
+                    <div class="col-md-8">
+                        <p class="service-title mb-1"><b>{{this.name}}</b></p>
+                        <p class="service-description mb-1">{{this.description}}</p>
+                    </div>
+                    <div class="col-md-2 d-flex align-items-top justify-content-center">
+                        <button class=" btn btn-view p-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{this._id}}" aria-expanded="false" aria-controls="collapseExample">
+                            <i class="far fa-eye"></i>
+                        </button>
+                        <a href="/service/editService/updateService/{{this._id}}" class=" btn btn-edit p-2" type="button" >
+                            <i class="far fa-edit"></i> 
+                        </a>
+     
+                        <button class=" btn btn-delete p-2" id="{{this._id}}" onClick="reply_click(this.id)">
+                            <i class="far fa-trash-alt"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="collapse multi-collapse" id="collapse{{this._id}}">
+                    <div class="card card-body">
+                        <div class="service-header mb-5">
+                            <div class="service-category">
+                                <p>{{this.category}}</p>
+                            </div>
+                            <div>
+                                <h2>{{this.name}}</h2>
+                            </div>
+                            <hr>
+                        </div>
+
+
+                        <div class="service-body mb-5">
+                            <div class="service-description ">
+                                <p>{{this.description}}</p>
+                            </div>
+                            <div class="service-img d-flex justify-content-center mb-5">
+                                <img src="{{this.img}}" alt="" height="300">
+                            </div>
+                            <div class="mb-4">
+                                <h4>Service Price</h4>
+                                {{#each this.prices}}
+                                    <h5>{{this.type}}: {{this.price}} VND</h5>
+                                {{/each}}
+                            </div>
+                            <div class="service-content">
+                                <input type="text" value="{{this.contentCode}}" id="inputContentCode">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {{/each}}    
+
+        </div>
+        <div class="tab-pane fade" id="v-pills-dog" role="tabpanel" aria-labelledby="v-pills-dob-tab">
+            {{#each services }}
+            {{#ifCond this.category '==' 'dog-service'}}
+                <div class="service-item row mx-0 mt-1">
+                    <div class="col-md-2 pe-0 item-img">
+                        <img src="{{this.img}}" alt="">
+                    </div>
+                    <div class="col-md-8">
+                        <p class="service-title mb-1"><b>{{this.name}}</b></p>
+                        <p class="service-description mb-1">{{this.description}}</p>
+                    </div>
+                    <div class="col-md-2 d-flex align-items-top justify-content-center">
+                        <button class=" btn btn-view p-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{this._id}}" aria-expanded="false" aria-controls="collapseExample"  >
+                            <i class="far fa-eye"></i>
+                        </button>
+                        <a href="/service/editService/updateService/{{this._id}}" class=" btn btn-edit p-2" type="button" >
+                            <i class="far fa-edit"></i> 
+                        </a>
+                        <button class=" btn btn-delete p-2" id="{{this._id}}" onClick="reply_click(this.id)">
+                            <i class="far fa-trash-alt"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="collapse multi-collapse" id="collapse{{this._id}}">
+                    <div class="card card-body">
+                        <div class="service-header mb-5">
+                            <div class="service-category">
+                                <p>{{this.category}}</p>
+                            </div>
+                            <div>
+                                <h2>{{this.name}}</h2>
+                            </div>
+                            <hr>
+                        </div>
+                        <div class="service-body mb-5">
+                            <div class="service-description ">
+                                <p>{{this.description}}</p>
+                            </div>
+                            <div class="service-img d-flex justify-content-center mb-5">
+                                <img src="{{this.img}}" alt="" height="300">
+                            </div>
+                            <div class="mb-4">
+                                <h4>Service Price</h4>
+                                {{#each this.prices}}
+                                    <h5>{{this.type}}: {{this.price}} VND</h5>
+                                {{/each}}
+                            </div>
+                            <div class="service-content">
+                                <input type="text" value="{{this.contentCode}}" id="inputContentCode">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {{/ifCond}}
+            {{/each}}
+        </div>
+        <div class="tab-pane fade" id="v-pills-cat" role="tabpanel" aria-labelledby="v-pills-cat-tab">
+            {{#each services }}
+            {{#ifCond this.category '==' 'cat-service'}}
+                <div class="service-item row mx-0 mt-1">
+                    <div class="col-md-2 pe-0 item-img">
+                        <img src="{{this.img}}" alt="">
+                    </div>
+                    <div class="col-md-8">
+                        <p class="service-title mb-1"><b>{{this.name}}</b></p>
+                        <p class="service-description mb-1">{{this.description}}</p>
+                    </div>
+                    <div class="col-md-2 d-flex align-items-top justify-content-center">
+                        <button class=" btn btn-view p-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{this._id}}" aria-expanded="false" aria-controls="collapseExample">
+                            <i class="far fa-eye"></i>
+                        </button>
+                        <a href="/service/editService/updateService/{{this._id}}" class=" btn btn-edit p-2" type="button" >
+                            <i class="far fa-edit"></i> 
+                        </a>
+                        <button class=" btn btn-delete p-2" id="{{this._id}}" onClick="reply_click(this.id)">
+                            <i class="far fa-trash-alt"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="collapse multi-collapse" id="collapse{{this._id}}">
+                    <div class="card card-body">
+                        <div class="service-header mb-5">
+                            <div class="service-category">
+                                <p>{{this.category}}</p>
+                            </div>
+                            <div>
+                                <h2>{{this.name}}</h2>
+                            </div>
+                            <hr>
+                        </div>
+
+
+                        <div class="service-body mb-5">
+                            <div class="service-description ">
+                                <p>{{this.description}}</p>
+                            </div>
+                            <div class="service-img d-flex justify-content-center mb-5">
+                                <img src="{{this.img}}" alt="" height="300">
+                            </div>
+                            <div class="mb-4">
+                                <h4>Service Price</h4>
+                                {{#each this.prices}}
+                                    <h5>{{this.type}}: {{this.price}} VND</h5>
+                                {{/each}}
+                            </div>
+                            <div class="service-content">
+                                <input type="text" value="{{this.contentCode}}" id="inputContentCode">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {{/ifCond}}
+            {{/each}}
+        </div>
+        <div class="tab-pane fade" id="v-pills-takeCareDog" role="tabpanel" aria-labelledby="v-pills-takeCareDog-tab">
+            {{#each services }}
+            {{#ifCond this.category '==' 'other-service'}}
+                <div class="service-item row mx-0 mt-1">
+                    <div class="col-md-2 pe-0 item-img">
+                        <img src="{{this.img}}" alt="">
+                    </div>
+                    <div class="col-md-8">
+                        <p class="service-title mb-1"><b>{{this.title}}</b></p>
+                        <p class="service-description mb-1">{{this.description}}</p>
+                    </div>
+                    <div class="col-md-2 d-flex align-items-top justify-content-center">
+                        <button class=" btn btn-view p-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{this._id}}" aria-expanded="false" aria-controls="collapseExample">
+                            <i class="far fa-eye"></i>
+                        </button>
+                        <a href="/service/editService/updateService/{{this._id}}" class=" btn btn-edit p-2" type="button" >
+                            <i class="far fa-edit"></i> 
+                        </a>
+                        <button class=" btn btn-delete p-2" id="{{this._id}}" onClick="reply_click(this.id)">
+                            <i class="far fa-trash-alt"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="collapse multi-collapse" id="collapse{{this._id}}">
+                    <div class="card card-body">
+                        <div class="service-header mb-5">
+                            <div class="service-category">
+                                <p>{{this.category}}</p>
+                            </div>
+                            <div>
+                                <h2>{{this.name}}</h2>
+                            </div>
+                            <hr>
+                        </div>
+
+
+                        <div class="service-body mb-5">
+                            <div class="service-description ">
+                                <p>{{this.description}}</p>
+                            </div>
+                            <div class="service-img d-flex justify-content-center mb-5">
+                                <img src="{{this.img}}" alt="" height="300">
+                            </div>
+                            <div class="mb-4">
+                                <h4>Service Price</h4>
+                                {{#each this.prices}}
+                                    <h5>{{this.type}}: {{this.price}} VND</h5>
+                                {{/each}}
+                            </div>
+                            <div class="service-content">
+                                <input type="text" value="{{this.contentCode}}" id="inputContentCode">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {{/ifCond}}
+            {{/each}}
+        </div>
+    </div>
+
+<!-- Modal -->
+        <div class="modal fade" id="modal-inform" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Delete</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Deleted successful!
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-closeModal" data-bs-dismiss="modal" onClick="closeModal_click()">Close</button>
+                <a class="btn btn-viewService" type="button" href="/service">View service</a>
+            </div>
+            </div>
+        </div>
+        </div>
+<!-- Modal confirm delete -->
+        <div class="modal fade" id="modal-confirm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Delete</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Do you want to delete?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-closeModal" data-bs-dismiss="modal">Close</button>
+                        <button class="btn btn-delete" type="button" data-bs-dismiss="modal" onClick="delete_click()">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+
+<script>
+
+    const serviceContents = document.querySelectorAll('.service-content');
+    serviceContents.forEach((element) => { 
+        var html = `` + document.querySelector('#inputContentCode').value;
+        element.innerHTML = html;
+    });
+        
+    var delete_id = "null";
+    async function reply_click(clicked_id) 
+    {   
+        const modalConfirm = new bootstrap.Modal(document.getElementById('modal-confirm'));
+        modalConfirm.show();
+        delete_id = clicked_id;
+        console.log(clicked_id);
+        
+    }
+    async function delete_click(){
+
+        try {
+            const id = delete_id;
+            delete_id = "null";
+            const status = "delete";
+
+            const res = await fetch('/service/editService', {
+                method: 'POST',
+                body: JSON.stringify({ id, status}),
+                headers: {'Content-Type': 'application/json'}
+            });
+            const data = await res.json();
+            console.log(data);
+            if (data.status === "deleted") {
+                const modalInform = new bootstrap.Modal(document.getElementById('modal-inform'));
+                modalInform.show();
+                console.log("Xoa Thanh Cong");
+            }
+        }
+        catch (err) {
+            console.log('sign up error');
+            console.log(err);
+        }
+    }
+
+    function closeModal_click(){
+        location.reload();
+    }
+    
+</script>
+    <script>
+        document.getElementById("nav-services").classList.add("active");
+    </script>

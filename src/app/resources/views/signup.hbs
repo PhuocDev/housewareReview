@@ -1,0 +1,192 @@
+
+<title>Sign Up</title>
+<link rel="stylesheet" type="text/css" href="./css/signup.css">
+	
+
+<div class="container">
+	<div class="d-flex justify-content-center h-100">
+		<div class="card">
+
+			<div class="card-header">
+				<h3>Sign Up</h3>
+				<div class="d-flex justify-content-end social_icon">
+					<a href="/home">
+						<span><i class="fas fa-home"></i></span>
+					</a>
+					<span><i class="fab fa-google-plus-square"></i></span>
+				</div>
+			</div>
+			
+			<div class="card-body">
+				<form class="form-signup" id="form-signup" action="/signup" method="POST">
+
+					<div class="tab-1">
+
+							<div class="mt-3">
+								<div class="input-group form-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text"><i class="fas fa-user"></i></span>
+									</div>
+									<input type="text" class="form-control" placeholder="full name" {{!-- required --}} name="fullname">
+								</div>
+								<div class="input-error fullname-error"></div>
+							</div>
+
+							<div class="mt-3">
+								<div class="input-group form-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text"><i class="fas fa-envelope"></i></span>
+									</div>
+									<input type="text" class="form-control" placeholder="your email" {{!-- required --}} name="mail">
+								</div>
+								<div class="input-error mail-error"></div>
+							</div>
+
+							<div class="mt-3">
+								<div class="input-group form-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text"><i class="fas fa-phone"></i></span>
+									</div>
+									<input type="text" class="form-control" placeholder="your phone" {{!-- required --}} name="phone">
+								</div>
+								<div class="input-error phone-error"></div>
+							</div>
+
+							<div class="form-group d-flex justify-content-end pt-4">
+								<input type="button" value="Next" class="btn float-right next_btn" onclick="nextClick()">
+							</div>
+					</div>
+
+					<div class="tab-2">
+							<div class="mt-3">
+								<div class="input-group form-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text"><i class="fas fa-user"></i></span>
+									</div>
+									<input type="text" class="form-control" placeholder="username" {{!-- required --}} name="username">
+								</div>
+								<div class="input-error username-error"></div>
+							</div>
+
+							<div class="mt-3">
+								<div class="input-group form-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text"><i class="fas fa-key"></i></span>
+									</div>
+									<input type="password" class="form-control" placeholder="password" {{!-- required --}} name="password">
+								</div>
+								<div class="input-error password-error"></div>
+							</div>
+
+							<div class="mt-3">
+								<div class="input-group form-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text"><i class="fas fa-key"></i></span>
+									</div>
+									<input type="password" class="form-control" placeholder="repeat password" {{!-- required --}} name="confirmPassword">
+								</div>
+								<div class="input-error confirmPassword-error"></div>
+							</div>
+
+
+							<div class="form-group pt-4 d-flex justify-content-between">
+								<input type="button" value="Back" class="btn pre_btn" onclick="preClick()">
+								<input type="submit" id= "signup_btn" value="Submit" class="btn submit_btn">
+							</div>
+					</div>
+
+				</form>
+			</div>
+
+
+
+			<div class="card-footer text-center">
+				<div>
+                    <p>Have already an account? 
+                        <a href="./login" class="text-decoration-none"><small>Login here</small></a>
+                    </p>
+                </div>
+			</div>
+
+
+			<script>
+				const tab1 = document.querySelector('.tab-1');
+				const tab2 = document.querySelector('.tab-2');
+
+				function nextClick(){
+					tab1.style.display = "none";
+					tab2.style.display = "block";
+				}
+
+				function preClick(){
+					tab1.style.display = "block";
+					tab2.style.display = "none";
+				}
+			</script>
+
+			<script>
+				const signupForm = document.getElementById('form-signup');
+				const usernameError = document.querySelector('.username-error');
+				const passwordError = document.querySelector('.password-error');
+				const confirmPasswordError = document.querySelector('.confirmPassword-error');
+				const fullnameError = document.querySelector('.fullname-error');
+				const mailError = document.querySelector('.mail-error');
+				const phoneError = document.querySelector('.phone-error');
+
+				signupForm.addEventListener('submit', async (e) => {
+					e.preventDefault();
+					usernameError.textContent = '';
+					passwordError.textContent = '';
+					confirmPasswordError.textContent = '';
+					fullnameError.textContent = '';
+					mailError.textContent = '';
+					phoneError.textContent = '';
+
+					const username = signupForm.username.value;
+					const password = signupForm.password.value;
+					const confirmPassword = signupForm.confirmPassword.value;
+					const fullname = signupForm.fullname.value;
+					const mail = signupForm.mail.value;
+					const phone = signupForm.phone.value;
+
+					try {
+						if (password.length < 6 && username.length > 0) {
+							passwordError.textContent = 'Minimum password length is 6 characters';
+						}
+						else if (password !== confirmPassword) {
+							confirmPasswordError.textContent = 'Password does not match';
+						}
+						else {
+							const res = await fetch('/signup', {
+								method: 'POST',
+								body: JSON.stringify({ username, password, fullname, phone, mail }),
+								headers: {'Content-Type': 'application/json'}
+							});
+							const data = await res.json();
+							if (data.errors) {
+								usernameError.textContent = data.errors.username;
+								passwordError.textContent = data.errors.password;
+								fullnameError.textContent = data.errors.fullname;
+								mailError.textContent = data.errors.mail;
+								phoneError.textContent = data.errors.phone;
+								if(data.errors.fullname != '' || data.errors.mail != '' || data.errors.phone != ''){
+									document.querySelector('.tab-1').style.display = "block";
+					 				document.querySelector('.tab-2').style.display = "none";
+								}
+							}
+							else if (data.user) {
+								console.log('sign up successful');
+								location.assign('/');
+							}
+						}
+						
+					}
+					catch (err) {
+						console.log('sign up error');
+						console.log(err);
+					}
+				});
+			</script>
+		</div>
+	</div>
+</div>

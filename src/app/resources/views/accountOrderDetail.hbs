@@ -1,0 +1,130 @@
+<title>Order Detail</title>
+<link rel="stylesheet" href="/css/general.css">
+<link rel="stylesheet" href="/css/accountOrderDetail.css">
+
+
+<div class="container-xl account-order-container">
+    <div class="row">
+        <div class="col-12 col-md-4 col-lg-3 my-3">
+            {{> customerAccountSidebar}}
+        </div>
+        <div class="col-12 col-md-8 col-lg-9 my-3">
+
+            <div class="order-detail-header text-center">
+                <h2 class="text-uppercase order-detail-header__title">Thông tin đơn hàng của bạn</h2>
+                <div class="my-3">
+                    Dưới đây là thông tin đơn hàng 
+                    <span class="order-detail-header__order-code">#{{order.orderCode}}</span>
+                    <span class="order-detail-header__order-time"> - {{toDateTimeString order.createdAt}}</span>
+                </div>
+                {{#if order.meetingTime}}
+                <div class="my-3">
+                    Thời gian hẹn: 
+                    <span class="order-detail-header__order-meeting-time">{{toDateTimeString order.meetingTime}}</span>
+                </div>
+                {{/if}}
+                <div class="mb-4">
+                    <div class="order-detail-header__order-status-title mb-3">Trạng thái đơn hàng:</div>
+                    <span class="order-detail-header__order-status text--primary pb-2">{{order.status}}</span>
+                </div>
+            </div>
+            <div class="order-detail-service-table text-center">
+                <table class="table service-table table-borderless">
+                    <thead>
+                        <tr>
+                            <th scope="col-4" class="text-start align-middle" >Tên dịch vụ</th>
+                            <th scope="col-2" class="align-middle">Biến thể</th>
+                            <th scope="col-2" class="align-middle">Số lượng</th>
+                            <th scope="col-2" class="align-middle">Đơn giá</th>
+                            <th scope="col-2" class="align-middle">Thành tiền</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        {{#each order.serviceList}}
+                            <tr>
+                                <td class="text-start" style="width: 40%;">{{this.service.name}}</td>
+                                <td style="width: 15%;">{{this.type}}</td>
+                                <td style="width: 15%;">{{this.quantity}}</td>
+                                <td style="width: 15%;">{{this.price}}</td>
+                                <td style="width: 15%;">{{this.total}}</td>
+                            </tr>
+                        {{/each}}
+
+
+                        {{!-- <tr>
+                            <td class="text-start" style="width: 40%;">Cắt tỉa lông chó</td>
+                            <td style="width: 15%;">2</td>
+                            <td style="width: 15%;">150.000đ</td>
+                            <td style="width: 15%;">M</td>
+                            <td style="width: 15%;">300.000đ</td>
+                        </tr>
+                        <tr>
+                            <td class="text-start">Spa cho chó</td>
+                            <td>2</td>
+                            <td>150.000đ</td>
+                            <td>M</td>
+                            <td>300.000đ</td>
+                        </tr> --}}
+                        
+                    </tbody>
+                </table>
+            </div>
+            <div class="order-detail-total-table">
+                <table class="table total-table table-bordered border-white">
+                    <tbody>
+                        <tr>
+                            <td class="text-start">Mã Voucher</td>
+                            <td class="text-end">{{order.voucher}}</td>
+                        </tr>
+                        <tr>
+                            <td class="text-start table-light">Tổng giá trị dịch vụ</td>
+                            <td class="text-end table-light">{{order.sum}}</td>
+                        </tr>
+                        <tr>
+                            <td class="text-start table-light">Số tiền giảm giá</td>
+                            <td class="text-end table-light">{{order.discount}}</td>
+                        </tr>
+                        <tr>
+                            <td class="text-start fw-bold">Tổng thanh toán</td>
+                            <td class="text-end fw-bold">{{order.total}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="order-detail-customer-info mt-4">
+                <p class="fw-bold my-3">
+                    Thông tin khách hàng
+                </p>
+                <p class="my-3">
+                    Tên khách hàng: 
+                    <span class="fw-bold">{{order.fullname}}</span>
+                </p>
+                <p class="my-3">
+                    Địa chỉ Email: 
+                    <span class="fw-bold">{{order.mail}}</span>
+                </p>
+                <p class="my-3">
+                    Số điện thoại: 
+                    <span class="fw-bold">{{order.phone}}</span>
+                </p>
+                <p class="my-3">
+                    Hình thức thanh toán: 
+                    <span class="fw-bold">{{order.payment}}</span>
+                </p>
+            </div>
+            <div class="row order-detail-note my-3">
+                <div class="col-2">
+                    Ghi chú:
+                </div>
+                <div class="col-8">
+                    {{order.note}}
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+    document.getElementById("navbarDropdownMenuLink").classList.add("active");
+</script>

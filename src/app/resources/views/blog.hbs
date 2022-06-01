@@ -1,0 +1,120 @@
+<link rel="stylesheet" href="/css/blog.css">
+<title>Blog</title>
+
+<div class="container page-container">
+    <div class="row mb-4">
+        <div class="col-md-9">
+            <div class="page-header">
+                {{#ifCond category '==' ''}}
+                <h2 class="page-title">Review Sản Phẩm</h2>
+                <p class="lead">Tổng hợp các bài review sản phẩm</p>
+                {{/ifCond}}
+
+                {{#ifCond category '!=' ''}}
+                <h2 class="page-title">{{category}}</h2>
+                <p class="lead">Tổng hợp các bài review sản phẩm thuộc lĩnh vực {{category}}</p>
+                {{/ifCond}}
+            </div>
+
+            {{!-- <form class="page-search-box">
+                <input type='text' placeholder='Nhập từ khóa cần tìm kiếm' class="form-control" name="keyword" />
+                
+                {{#ifCond keyword '!=' ''}}
+                <p class="page-search-title">{{total}} kết quả tìm kiếm cho từ khóa <strong>{{keyword}}</strong>&nbsp;&nbsp;<a href="/blog" class="page-search-reset"><i class="fa fa-times-circle"></i></a></p>
+                {{/ifCond}}
+            </form> --}}
+
+            <div class="articles">
+                {{#each blogs }}
+                    <div class="article">
+                        <a href="/blog/{{ this._id }}">
+                            <img src="{{this.img}}" class="card-img-top" alt="">
+                        </a>
+
+                         <div class="article-details">
+                            <h3 class="article-title">
+                               <a href="/blog/{{ this._id }}">{{this.title}}</a>
+                            </h3>
+                            
+                            <div class="article-meta">
+                                <a href="/blog?category={{this.category}}" class="article-category">{{this.category}}</a>
+                                <span class="article-date">{{formatDate this.createdAt}}</span> • 
+                                <span class="article-author">{{ this.author.fullname }}</span>
+                            </div>
+                            
+                            <p class="article-desc">{{this.description}}</p>
+                        </div>
+                    </div>
+                {{/each}}
+
+                {{#ifCond blogs.length '>' 0}}
+                <div class="d-flex justify-content-center">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            {{#paginate pagination type="previous"}}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{n}}" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                             {{/paginate}}
+
+                            {{#paginate pagination type="middle" limit="10"}}
+                            <li class="page-item"><a class="page-link" href="?page={{n}}">{{n}}</a></li>
+                            {{/paginate}}
+
+                            {{#paginate pagination type="next"}}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{n}}" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                            {{/paginate}}
+                        </ul>
+                    </nav>
+                </div>
+                {{/ifCond}}
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <a href="/blog/postBlog" class="post-review">
+                <img src="https://assets.materialup.com/uploads/78207405-3122-4cf6-b446-446f86147a8e/preview.jpg" />
+                <span class="post-review-title">Đăng bài review</span>
+                <span class="post-review-desc">Đóng góp bài viết review cho cộng đồng</span>
+            </a>
+
+            {{#ifCond loggedIn '==' true}}
+            <div class="latest-posts">
+                <div class="latest-posts-header">
+                    <h4><a href="/account/blog">Bài Viết Của Bạn</a></h4>
+                </div>
+
+                {{#ifCond userBlogs.length '>' 0}}
+                <div class="your-articles">
+                    {{#each userBlogs }}
+                        <div class="your-article">
+                            <a href="/blog/{{this._id}}">
+                                <img src="{{this.img}}" class="your-article-img" alt="">
+                            </a>
+
+                            <div class="your-article-details">
+                                <h5 class="your-article-title">
+                                    <a href="/blog/{{this._id}}">{{truncateText this.title 40}}</a>
+                                </h5>
+                                
+                                <p class="your-article-desc">{{truncateText this.description 70}}</p>
+                            </div>
+                        </div>
+                    {{/each}}  
+                </div>
+                {{/ifCond}}
+
+                {{#ifCond userBlogs.length '<=' 0}}
+                <p class="latest-posts-empty">Bạn chưa có bài review nào</p>
+                {{/ifCond}}
+            </div>
+            {{/ifCond}}
+        </div>
+    </div>
+</div>

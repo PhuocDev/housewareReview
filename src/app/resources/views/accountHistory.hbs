@@ -1,4 +1,4 @@
-<title>Bài Viết Của Bạn</title>
+<title>Lịch Sử Xem</title>
 <link rel="stylesheet" href="/css/accountBlog.css">
 <link rel="stylesheet" href="/css/general.css">
 
@@ -11,16 +11,20 @@
         <div class="col-12 col-md-8 col-lg-9 my-3">
             <div class="page-header">
                 <div>
-                {{#ifCond category '==' ''}}
-                <h2 class="page-title">Bài Viết Của Bạn</h2>
-                <p class="lead">Tổng hợp các bài review sản phẩm do bạn đăng tải</p>
-                {{/ifCond}}
+                    {{#ifCond category '==' ''}}
+                    <h2 class="page-title">Bài Viết Đã Xem</h2>
+                    <p class="lead">Danh sách các bài viết review sản phẩm mà bạn đã xem</p>
+                    {{/ifCond}}
 
-                {{#ifCond category '!=' ''}}
-                <h2 class="page-title">{{category}}</h2>
-                <p class="lead">Tổng hợp các bài review sản phẩm do bạn đăng tải thuộc lĩnh vực {{category}}</p>
-                {{/ifCond}}
+                    {{#ifCond category '!=' ''}}
+                    <h2 class="page-title">{{category}}</h2>
+                    <p class="lead">Danh sách các bài viết review sản phẩm thuộc lĩnh vực {{category}} mà bạn đã xem </p>
+                    {{/ifCond}}
                 </div>
+
+                {{#ifCond histories.length '>' 0}}
+                <a class="btn btn-delete-all">Xóa Tất Cả</a>
+                {{/ifCond}}
             </div>
 
             <form class="page-search-box">
@@ -32,10 +36,10 @@
             </form>
 
             <div class="articles">
-                {{#each blogs }}
+                {{#each histories }}
                     <div class="article">
                         <a href="/account/blog/{{this._id}}">
-                            <img src="{{this.img}}" class="card-img-top" alt="">
+                            <img src="{{this.image}}" class="card-img-top" alt="">
                         </a>
 
                          <div class="article-details">
@@ -44,19 +48,18 @@
                             </h3>
                             
                             <div class="article-meta">
-                                <a href="/account/blog?category={{this.category}}" class="article-category">{{this.category}}</a>
+                                <a href="/account/history?category={{this.category}}" class="article-category">{{this.category}}</a>
                                 <span class="article-date">{{formatDate this.createdAt}}</span>
                             </div>
                             
                             <p class="article-desc">{{truncateText this.description 255}}</p>
 
-                            <a href="/blog/editBlog/{{this._id}}" class="btn btn-edit">Sửa Bài Viết</a>
-                            <a class="btn btn-delete" data-id="{{ this._id }}" data-title="{{ this.title }}">Xóa Bài Viết</a>
+                            <a class="btn btn-delete" data-id="{{ this._id }}" data-title="{{ this.title }}">Xóa</a>
                         </div>
                     </div>
                 {{/each}}
 
-                {{#ifCond blogs.length '>' 0}}
+                {{#ifCond histories.length '>' 0}}
                 <div class="d-flex justify-content-center">
                     <nav aria-label="Page navigation example">
                         <ul class="pagination">
@@ -82,7 +85,7 @@
                         </ul>
                     </nav>
                 </div>
-                {{/ifCond}}
+                 {{/ifCond}}
             </div>
         </div>
     </div>
@@ -91,7 +94,7 @@
 </div>
 
 <script>
-    const sidebarItemContact = document.getElementById('account_sidebar__blog');
+    const sidebarItemContact = document.getElementById('account_sidebar__history');
     sidebarItemContact.classList.add('account-sidebar__item--active');
 
     $(document).ready(function() {
@@ -101,24 +104,56 @@
 
             swal({
                 title: "Xóa Bài Viết",
-                text: `Bạn có chắc chắn muốn xóa bài viết '${title}' khỏi danh sách bài viết hay không?`,
+                text: `Bạn có chắc chắn muốn xóa bài viết '${title}' khỏi lịch sử xem hay không?`,
                 icon: "warning",
                 buttons: true,
                 dangerMode: true,
             })
             .then((willDelete) => {
                 $.ajax({
-                    url: `/blog/${id}`,
+                    url: `/histories/single/${id}`,
                     type: 'DELETE',
                     success: function(result) {
-                        console.log('result', result);
+                        console.log(result);
                     }
                 });
 
                 if (willDelete) {
                     swal({
                         title: "Thành công",
-                        text: `Xóa bài viết ${title} thành công!`,
+                        text: `Xóa bài viết ${title} khỏi lịch sử xem thành công!`,
+                        icon: "success",
+                        button: "Đồng Ý",
+                    }).then(data => {
+                        location.reload();
+                    });
+                }
+            });
+        });
+
+        $('.btn-delete-all').on('click', function() {
+            const userId = $('#userId').val();
+
+            swal({
+                title: "Xóa Tất Cả Bài Viết",
+                text: `Bạn có chắc chắn muốn xóa tất cả bài viết đã xem hay không?`,
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                $.ajax({
+                    url: `/histories/all/${userId}`,
+                    type: 'DELETE',
+                    success: function(result) {
+                        console.log(result);
+                    }
+                });
+
+                if (willDelete) {
+                    swal({
+                        title: "Thành công",
+                        text: `Xóa tất cả bài viết đã xem thành công!`,
                         icon: "success",
                         button: "Đồng Ý",
                     }).then(data => {

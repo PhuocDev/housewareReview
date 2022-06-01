@@ -1,0 +1,307 @@
+<link rel="stylesheet" href="/css/updateService.css">
+<title>Update</title>
+
+<div class="container px-5">
+    <div class="row flex-wrap content mx-0 mb-5">
+        <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 menu-bar">
+            <div class="d-flex flex-column align-items-center align-items-sm-start pt-2 list-item">
+                
+                <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+                    <li class="nav-item">
+                        <button class="nav-link align-middle px-0 btn btn-preview"> 
+                            <i class="fas fa-chalkboard-teacher"></i> Preview
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link align-middle px-0 btn btn-post" type="submit">
+                            <i class="far fa-paper-plane"></i> Update
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link align-middle px-0 btn btn-manager" type="manager" onclick="window.location.href='/service/editService'"> 
+                           <i class="fas fa-chalkboard-teacher"></i> Manager
+                        </button>
+                    </li>
+                </ul>    
+            </div>
+        </div>
+
+        <div class="col py-3 post-content">
+            <form action="/formUpdate" method="post" enctype="multipart/form-data" class="form-post">
+               <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text" id="inputGroup-sizing-sm">Service name</span>
+                    <input type="text" class="form-control name-service" value="{{service.name}}" id ="{{service._id}}" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                </div>
+
+                <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text">Image</span>
+                    <input type="text" aria-label="First name" value="{{service.img}}" class="form-control img-service">
+                    <span class="input-group-text">Category</span>
+                    <select class="form-select form-select-sm category-service" aria-label=".form-select-sm example">
+                        <option {{#ifCond service.category '==' 'dog-service'}} selected {{/ifCond}} value="dog-service">Dog's service</option>
+                        <option {{#ifCond service.category '==' 'cat-service'}} selected {{/ifCond}} value="cat-service">Cat's service</option>
+                        <option {{#ifCond service.category '==' 'other-service'}} selected {{/ifCond}} value="other-service">Other</option>
+                    </select>
+                </div>
+
+                <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text" id="inputGroup-sizing-sm">Description</span>
+                    <input type="text" class="form-control description-service" value="{{service.description}}" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                </div>
+
+                <table class="table mt-3 service-table" id = "serviceTable">
+                    <thead>
+                        <tr>
+                        <th scope="col">#</th>
+                        <th scope="col" style="width: 40%">Type</th>
+                        <th scope="col" style="width: 40%">Price</th>
+                        <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each service.prices}}
+                        <tr>
+                            <th scope="row"></th>
+                            <td>{{this.type}}</td>
+                            <td>{{this.price}}</td>
+                            <td><button type="button" class="btn btn-delete p-0" onClick="deleteType()"><i class="fas fa-minus"></i></button></td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+                <div class="input-group input-group-sm mb-2">
+                    <span class="input-group-text" id="inputGroup-sizing-sm">Type: </span>
+                    <input type="text" class="form-control type-price" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                    <span class="input-group-text" id="inputGroup-sizing-sm">Price: </span>
+                    <input type="number" class="form-control size-service-m input-price" min="0" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" onchange="myFunction(this.value)">
+                    <button type="button" class="btn btn-secondary btn-add" id = "add_type_size"  onClick="addType()"><i class="fas fa-plus fa-lg"></i></button>
+                </div>
+
+                <div class="row justify-content-md-center">
+                    <div class="form-group">
+                        <textarea id="editor">    
+                        </textarea>
+                            
+                    </div>
+                    <div class="contentCode-div">
+                        <input type="text" value="{{service.contentCode}}" id="inputContentCode">
+                    </div>
+                </div>  
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+    <div class="modal fade" tabindex="-1" id="modal-inform">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Update service</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <p>Update successful!</p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-closeModal" data-bs-dismiss="modal">Close</button>
+            <a class="btn btn-viewService" type="button" href="/service">View service</a>
+        </div>
+        </div>
+    </div>
+    </div>
+
+{{!-- modal-preview --}}
+<div class="modal fade" tabindex="-1" id="modal-preview">
+    <div class="modal-dialog modal-fullscreen">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Preview service</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="previewModal-body"></div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-closeModal" data-bs-dismiss="modal" onclick="updateNow()">Update now</button>
+            <button type="button" class="btn btn-closeModal" data-bs-dismiss="modal">Close</button>
+        </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+<script src="https://cdn.tiny.cloud/1/2f03u9d8k3bfqttf9dac5pmhdc50rnspe3xpee2cfn8a7plx/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+
+
+
+<script>
+  tinymce.init({
+    selector: 'textarea#editor',
+    skin: 'bootstrap',
+    plugins: 'lists, link, image, media',
+    toolbar: 'h1 h2 bold italic strikethrough blockquote bullist numlist backcolor | link image media | removeformat help',
+    menubar: false,
+    setup: editor => {
+            editor.on('init', () => {
+                editor.setContent(document.getElementById('inputContentCode').value);
+                const divContent = document.querySelector('.contentCode-div');
+                divContent.innerHTML = ``;
+            });
+        }
+  });
+    
+</script>
+
+
+
+
+
+<script>
+
+     /*-------------------------inner html------------------------------------*/
+    const elementTbody = document.querySelector('tbody');
+    var listPrice = [];
+
+    var myTab = document.getElementById('serviceTable');
+
+    for (i = 1; i < myTab.rows.length; i++) {
+        const Data = {
+            type: myTab.rows.item(i).cells[1].textContent,
+            price: myTab.rows.item(i).cells[2].textContent,
+        }
+        listPrice.push(Data);
+    }
+
+    const render = () => {
+        const html = listPrice.map((element, index) => (
+            `<tr>
+            <th scope="row">${index + 1}</th>
+            <td>${element.type}</td>
+            <td>${element.price}</td>
+            <td><button type="button" class="btn btn-delete p-0" onClick="deleteType(${index})"><i class="fas fa-minus"></i></button></td>
+        </tr>`
+        ));
+        elementTbody.innerHTML = html.join('');
+    }
+    render();
+
+    function addType()
+    {  
+        const Data = {
+            type: document.querySelector('.type-price').value,
+            price: document.querySelector('.input-price').value,
+        }
+        if(Data.type != '' && Data.price != ''){
+            listPrice.push(Data);
+            render();
+            document.querySelector('.type-price').value = '';
+            document.querySelector('.input-price').value = '';
+        }
+    }
+    function deleteType(index){
+        listPrice.splice(index, 1);
+        render();
+    }
+    function myFunction(value){
+        if(value < 0){
+            document.querySelector('.input-price').value = 0;
+        }
+    }
+
+    /*---------------------------------update-------------------------*/
+    const btnPost = document.querySelector('.btn-post');
+    function updateNow(){
+        btnPost.click();
+    }
+
+    btnPost.addEventListener('click', async ()=> {
+        const inputName = document.querySelector('.name-service');
+        const inputImg = document.querySelector('.img-service').value;
+        const inputCategory = document.querySelector('.category-service').value;
+        const inputDescription = document.querySelector('.description-service').value;
+        var myContent = tinymce.get("editor").getContent();
+        console.log(inputImg);
+
+        console.log('btn-post clicked');
+        try {
+            const id = inputName.id;
+            const name = inputName.value;
+            const img = inputImg;
+            const category = inputCategory;
+            const description = inputDescription;
+            const prices = listPrice;
+            const contentCode = myContent;
+            const url = '/service/editService/updateService/' + id;
+            const res = await fetch( url , {
+                method: 'POST',
+                body: JSON.stringify({ id, name, img, category, description,prices, contentCode }),
+                headers: {'Content-Type': 'application/json'}
+            });
+            const data = await res.json();
+            console.log(data);
+
+            if (data) {
+                var myModal = new bootstrap.Modal(document.getElementById('modal-inform'));
+                myModal.show();
+                console.log("Update Thanh Cong");
+            }
+        }
+        catch (err) {
+            console.log('sign up error');
+            console.log(err);
+        }
+    });
+
+    /*----------------------preview------------------------------------------*/
+    const btnPreview = document.querySelector('.btn-preview');
+    const bodyPreview = document.querySelector('.previewModal-body');
+
+    btnPreview.addEventListener('click', ()=>{
+        const inputName = document.querySelector('.name-service').value;
+        const inputImg = document.querySelector('.img-service').value;
+        const inputCategory = document.querySelector('.category-service').value;
+        const inputDescription = document.querySelector('.description-service').value;
+        var myContent = tinymce.get("editor").getContent();
+        var inputPrices = ``;
+        for(var i = 0; i< listPrice.length; i++){
+            inputPrices += `<div class="col-3">
+                                <h5>${listPrice[i].type}:</h5>
+                            </div>
+                            <div class="col-3">
+                                <h5>${listPrice[i].price} VND</h5>
+                            </div>
+                            <hr>`
+        }
+        
+        var html = `    <div class="container px-5">
+                        <div class="service-header mb-5">
+                            <div class="service-category">
+                                <p>${inputCategory}</p>
+                            </div>
+                            <div>
+                                <h2>${inputName}</h2>
+                            </div>
+                            <hr>
+                        </div>
+
+                        <div class="service-body mb-5">
+                            <div class="service-description ">
+                                <h5>${inputDescription}</h5>
+                            </div>
+
+                            <div class="service-img d-flex justify-content-center mb-5">
+                                <img src="${inputImg}" alt="" height="380">
+                            </div>
+                        </div>` + `<div class="service-price mb-4">
+                                    <h4>Service Price</h4>
+                                   <div class="row"> ${inputPrices} </div> </div>` + `${myContent}` + `</div>`
+        bodyPreview.innerHTML = html;
+
+        const modalPreview = new bootstrap.Modal(document.getElementById('modal-preview'));
+        modalPreview.show();
+    })
+    
+</script>
+
+    <script>
+        document.getElementById("nav-services").classList.add("active");
+    </script>
