@@ -12,11 +12,10 @@ set up expressjs npm install express
 
 cài đặt nodemon npm i nodemon --save-dev
 
-cài morgan npm i morgan --save-dev
 
 cài đặt express handlerbars npm install express-handlebars
 
-set up node scss npm install node-sass --save-dev
+
 
 --- Cách chạy và debug
 
