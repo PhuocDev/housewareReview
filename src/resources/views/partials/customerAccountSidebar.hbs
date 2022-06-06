@@ -1,0 +1,54 @@
+<link rel="stylesheet" href="/css/customerAccountSidebar.css">
+
+<div class="account-sidebar list-group">
+    <div class="d-flex justify-content-center align-items-end" style="height: 48px">
+        <p class="bg-dark text-white px-1 m-0">Tài Khoản Cá Nhân</p>
+    </div>
+    <div class="account-sidebar__user d-flex align-items-center">
+        <div class="d-flex sidebar-user_name fw-bold text-wrap align-item-center">
+            <i class="sidebar-user__icon fas fa-paw px-4"></i>
+            <span>{{user.fullname}}</span>
+        </div>
+    </div>
+    <div class="account-sidebar__itemlist">
+        <a href="/account/profile" id="account_sidebar__profile" class="account-sidebar__item list-group-item list-group-item-action text-wrap">
+            <i class="sidebar-item__icon fas fa-user-alt"></i>
+            <span>Thông tin cá nhân</span>
+        </a>
+        {{!-- <a href="/account/order" id="account_sidebar__order" class="account-sidebar__item list-group-item list-group-item-action text-wrap">
+            <i class="sidebar-item__icon fas fa-receipt"></i>
+            <span class="sidebar-item__name">Danh sách hóa đơn</span>
+        </a> --}}
+        <a href="/account/history" id="account_sidebar__history" class="account-sidebar__item list-group-item list-group-item-action text-wrap">
+            <i class="sidebar-item__icon fas fa-history text-wrap"></i>
+            <span class="sidebar-item__name">Bài viết đã xem</span>
+        </a>
+        <a href="/account/blog" id="account_sidebar__blog" class="account-sidebar__item list-group-item list-group-item-action text-wrap">
+            <i class="sidebar-item__icon fas fa-file text-wrap"></i>
+            <span class="sidebar-item__name">Bài viết của bạn</span>
+        </a>
+
+        {{#ifCond user.role '==' 'admin'}}
+        <a href="/blog/editBlog" id="account_sidebar__customer" class="account-sidebar__item list-group-item list-group-item-action text-wrap">
+            <i class="sidebar-item__icon fas fa-user-alt"></i>
+            <span>Quản lý bài viết</span>
+        </a>
+        {{/ifCond}}
+
+        {{#ifCond user.role '==' 'admin'}}
+        <a href="/account/customer" id="account_sidebar__customer" class="account-sidebar__item list-group-item list-group-item-action text-wrap">
+            <i class="sidebar-item__icon fas fa-user-alt"></i>
+            <span>Quản lý người dùng</span>
+        </a>
+        {{/ifCond}}
+
+        <a href="/account/contact" id="account_sidebar__contact" class="account-sidebar__item list-group-item list-group-item-action text-wrap">
+            <i class="sidebar-item__icon fas fa-envelope text-wrap"></i>
+            <span class="sidebar-item__name">Gửi ý kiến cho HousewareReview</span>
+        </a>
+        <a href="/logout" id="account_sidebar__logout" class="account-sidebar__item list-group-item list-group-item-action text-wrap">
+            <i class="sidebar-item__icon fas fa-sign-out-alt"></i>
+            <span class="sidebar-item__name">Thoát</span>
+        </a>
+    </div>
+</div>

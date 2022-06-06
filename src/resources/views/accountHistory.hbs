@@ -1,0 +1,166 @@
+<title>Lịch Sử Xem</title>
+<link rel="stylesheet" href="/css/accountBlog.css">
+<link rel="stylesheet" href="/css/general.css">
+
+<div class="container-xl page-container">
+    <div class="row">
+        <div class="col-12 col-md-4 col-lg-3 my-3">
+            {{> customerAccountSidebar}}
+        </div>
+
+        <div class="col-12 col-md-8 col-lg-9 my-3">
+            <div class="page-header">
+                <div>
+                    {{#ifCond category '==' ''}}
+                    <h2 class="page-title">Bài Viết Đã Xem</h2>
+                    <p class="lead">Danh sách các bài viết review sản phẩm mà bạn đã xem</p>
+                    {{/ifCond}}
+
+                    {{#ifCond category '!=' ''}}
+                    <h2 class="page-title">{{category}}</h2>
+                    <p class="lead">Danh sách các bài viết review sản phẩm thuộc lĩnh vực {{category}} mà bạn đã xem </p>
+                    {{/ifCond}}
+                </div>
+
+                {{#ifCond histories.length '>' 0}}
+                <a class="btn btn-delete-all">Xóa Tất Cả</a>
+                {{/ifCond}}
+            </div>
+
+            <form class="page-search-box">
+                <input type='text' placeholder='Nhập từ khóa cần tìm kiếm' class="form-control" name="keyword" />
+                
+                {{#ifCond keyword '!=' ''}}
+                <p class="page-search-title">{{total}} kết quả tìm kiếm cho từ khóa <strong>{{keyword}}</strong>&nbsp;&nbsp;<a href="/blog" class="page-search-reset"><i class="fa fa-times-circle"></i></a></p>
+                {{/ifCond}}
+            </form>
+
+            <div class="articles">
+                {{#each histories }}
+                    <div class="article">
+                        <a href="/account/blog/{{this._id}}">
+                            <img src="{{this.image}}" class="card-img-top" alt="">
+                        </a>
+
+                         <div class="article-details">
+                            <h3 class="article-title">
+                               <a href="/blog/{{this._id}}">{{this.title}}</a>
+                            </h3>
+                            
+                            <div class="article-meta">
+                                <a href="/account/history?category={{this.category}}" class="article-category">{{this.category}}</a>
+                                <span class="article-date">{{formatDate this.createdAt}}</span>
+                            </div>
+                            
+                            <p class="article-desc">{{truncateText this.description 255}}</p>
+
+                            <a class="btn btn-delete" data-id="{{ this._id }}" data-title="{{ this.title }}">Xóa</a>
+                        </div>
+                    </div>
+                {{/each}}
+
+                {{#ifCond histories.length '>' 0}}
+                <div class="d-flex justify-content-center">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            {{#paginate pagination type="previous"}}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{n}}" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                             {{/paginate}}
+
+                            {{#paginate pagination type="middle" limit="10"}}
+                            <li class="page-item"><a class="page-link" href="?page={{n}}">{{n}}</a></li>
+                            {{/paginate}}
+
+                            {{#paginate pagination type="next"}}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{n}}" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                            {{/paginate}}
+                        </ul>
+                    </nav>
+                </div>
+                 {{/ifCond}}
+            </div>
+        </div>
+    </div>
+
+    <input type='hidden' id='userId' value="{{ userId }}" />
+</div>
+
+<script>
+    const sidebarItemContact = document.getElementById('account_sidebar__history');
+    sidebarItemContact.classList.add('account-sidebar__item--active');
+
+    $(document).ready(function() {
+        $('.btn-delete').on('click', function() {
+            const id = $(this).data('id');
+            const title = $(this).data('title');
+
+            swal({
+                title: "Xóa Bài Viết",
+                text: `Bạn có chắc chắn muốn xóa bài viết '${title}' khỏi lịch sử xem hay không?`,
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                $.ajax({
+                    url: `/histories/single/${id}`,
+                    type: 'DELETE',
+                    success: function(result) {
+                        console.log(result);
+                    }
+                });
+
+                if (willDelete) {
+                    swal({
+                        title: "Thành công",
+                        text: `Xóa bài viết ${title} khỏi lịch sử xem thành công!`,
+                        icon: "success",
+                        button: "Đồng Ý",
+                    }).then(data => {
+                        location.reload();
+                    });
+                }
+            });
+        });
+
+        $('.btn-delete-all').on('click', function() {
+            const userId = $('#userId').val();
+
+            swal({
+                title: "Xóa Tất Cả Bài Viết",
+                text: `Bạn có chắc chắn muốn xóa tất cả bài viết đã xem hay không?`,
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                $.ajax({
+                    url: `/histories/all/${userId}`,
+                    type: 'DELETE',
+                    success: function(result) {
+                        console.log(result);
+                    }
+                });
+
+                if (willDelete) {
+                    swal({
+                        title: "Thành công",
+                        text: `Xóa tất cả bài viết đã xem thành công!`,
+                        icon: "success",
+                        button: "Đồng Ý",
+                    }).then(data => {
+                        location.reload();
+                    });
+                }
+            });
+        });
+    })
+</script>

@@ -1,0 +1,412 @@
+
+<title>Services</title>
+<link rel="stylesheet" href="/css/service.css">
+
+<!-- Bootstrap Static Header -->
+<div style= "background: url(https://s1.1zoom.me/big0/153/Dogs_Black_background_Spaniel_539102_1280x794.jpg);  padding-top: 90px !important;
+    background-clip: padding-box;" class="jumbotron bg-cover text-white img-fluid">
+    <div class="container py-5 text-center">
+        <h1 class="display-4 font-weight-bold">Best services for your pets!</h1>
+        <p class="font-italic mb-4 ">Đến với dịch vụ thú cưng của ChicPet bạn sẽ nhân được sự chăm sóc đặc biệt cho thú cưng của bạn từ dịch vụ tắm rửa, cắt lông, cắt móng,… đến tư vấn sức khỏe cho vật nuôi. 
+            Với sứ mệnh đưa con người và vật nuôi trở nên gần gũi với nhau hơn chúng tôi sẽ nỗ lực đưa tới những dịch vụ tốt nhât. </p>
+
+        <a href="/service/book" role="button" class="btn btn-primary px-5" style="background-color: rgb(255, 101, 80); border: 0;">Book now!</a>
+    </div>
+</div>
+
+{{!-- body content --}}
+<div class="container px-4 px-lg-5">
+    <!-- Heading Row-->
+            <div class="row gx-4 gx-lg-5 align-items-center my-5">
+                <div class="col-lg-7"><img class="img-fluid rounded mb-4 mb-lg-0" src="./img/home/about.png" alt="..." /></div>
+                <div class="col-lg-5">
+                    <h1 class="font-weight-light">About us</h1>
+                    <p>Để bảo vệ sức khỏe của vật nuôi bạn cần biết cách chăm sóc thú cưng đúng cách. Tuy nhiên, Với dịch vụ chăm sóc thú cưng ChicPet sẽ đưa ra lộ trình chăm sóc pet, 
+                        vật nuôi của bạn 1 cách an toàn nhất. Nhân viên của chúng tôi được đào tạo từ IBPSA (The International Boarding và Pet Services Association) với nhiều chuyên gia có kinh nghiệm chăm sóc thú cưng 
+                        trong chăm sóc thú cưng tại nhà...</p>
+                    <a class="btn btn-primary" href="/contact" style="background-color: rgb(255, 101, 80); border: 0;">Tell me more</a>
+                </div>
+            </div>
+            
+           
+
+        {{!-- 2 column service card --}}
+        <div class="row mb-2">
+            <div class="col-md-6">
+            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                <div class="col p-4 d-flex flex-column position-static">
+                    <strong class="d-inline-block mb-2 text-primary">Dog's Service</strong>
+                    <h3 class="mb-0">For dogs</h3>
+                    <div class="mb-1 text-muted">ChicPet store</div>
+                    <p class="card-text mb-auto">All the best care for your beloved dogs that we have.</p>
+                    <a class="stretched-link" href="#dog-service">More details</a>
+                </div>
+                <div class="col-auto d-none d-lg-block">
+                    <img alt="Cat picture" src="./img/service/dog.jpg" width="200" height="250">
+                </div>
+            </div>
+            </div>
+            <div class="col-md-6">
+            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                <div class="col p-4 d-flex flex-column position-static">
+                    <strong class="d-inline-block mb-2 text-success">Cat's service</strong>
+                    <h3 class="mb-0">For cats</h3>
+                    <div class="mb-1 text-muted">ChicPet store</div>
+                    <p class="card-text mb-auto">All the best care for your beloved cats that we have.</p>
+                    <a class="stretched-link" href="#cat-service">More details</a>
+                </div>
+                <div class="col-auto d-none d-lg-block">
+                    <img alt="Cat picture" src="./img/service/cat2.jpg" width="200" height="250">
+                </div>
+            </div>
+            </div>
+        </div>
+        
+{{!-------------------------------- thanh ngăn cách -------------------------------}}
+
+        <div class="d-flex justify-content-end"> 
+            {{#ifCond user.role '==' 'admin'}}
+            <a href="/service/editService" class="btn p-2 btn-createService"><i class="far fa-edit"></i></a>
+            <a href="/service/postService" class="btn p-2 btn-createService"><i class="fas fa-upload"></i></a>
+            {{/ifCond}}
+        </div>
+        <div class="card text-white my-5 py-2 text-center" style="background-color: rgb(255, 101, 80)">
+            <div class="card-body"><h4 class="text-white m-0">Dog's service</h4></div>
+        </div> 
+        <div class="content row mx-0 mt-4" id="dog-service">
+            {{#each services }}
+            {{#ifCond this.category '==' 'dog-service'}}
+                <div class="card col-md-4 mb-4" data-bs-toggle="popover" data-bs-trigger="hover focus" title="{{this.name}}">
+                <img src="{{this.img}}" class="card-img-top" alt="" height="250">
+                <div class="card-body">
+                    <h5 class="card-title">{{this.name}}</h5>
+                    <p class="card-text">{{this.description}}</p>
+                    <a href="/service/{{this._id}}" class="btn btn-read">Detail</a>
+                </div>
+                </div>
+            {{/ifCond}}
+            {{/each}}
+        </div>
+
+        {{!-- ---------------------------cat--------------------------- --}}
+        <div class="card text-white my-5 py-2 text-center" style="background-color: rgb(255, 101, 80)">
+            <div class="card-body"><h4 class="text-white m-0">Cat's service</h4></div>
+        </div> 
+        <div class="content row mx-0 mt-4" id="cat-service">
+            {{#each services }}
+            {{#ifCond this.category '==' 'cat-service'}}
+                <div class="card col-md-4 mb-4" data-bs-toggle="popover" data-bs-trigger="hover focus" title="{{this.name}}">
+                <img src="{{this.img}}" class="card-img-top" alt="" height="250">
+                <div class="card-body">
+                    <h5 class="card-title">{{this.name}}</h5>
+                    <p class="card-text">{{this.description}}</p>
+                    <a href="/service/{{this._id}}" class="btn btn-read">Detail</a>
+                </div>
+                </div>
+            {{/ifCond}}
+            {{/each}}
+        </div>
+
+        {{!-- -----------------------------other----------------------------------- --}}
+        <div class="card text-white my-5 py-2 text-center" style="background-color: rgb(255, 101, 80)">
+            <div class="card-body"><h4 class="text-white m-0">Other</h4></div>
+        </div> 
+        <div class="content row mx-0 mt-4" id="other-service">
+            {{#each services }}
+            {{#ifCond this.category '==' 'other-service'}}
+                <div class="card col-md-4 mb-4" data-bs-toggle="popover" data-bs-trigger="hover focus" title="{{this.name}}">
+                <img src="{{this.img}}" class="card-img-top" alt="" height="250">
+                <div class="card-body">
+                    <h5 class="card-title">{{this.name}}</h5>
+                    <p class="card-text">{{this.description}}</p>
+                    <a href="/service/{{this._id}}" class="btn btn-read">Detail</a>
+                </div>
+                </div>
+            {{/ifCond}}
+            {{/each}}
+        </div>
+
+         <!-- thanh ngăn cách-->
+
+        <hr class="rounded"  style="background-color: rgb(255, 101, 80); margin-bottom: 50px; height: 10px">
+
+
+        {{!-- blog cards --}}
+            <div class="row gx-4 gx-lg-5">
+                <div class="col-md-4 mb-5">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h2 class="card-title">Card One</h2>
+                            <img alt="Cat picture" src="./img/service/accessories.jpg" width="225" height="170" >
+                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numquam.</p>
+                        </div>
+                        <div class="card-footer"><a class="btn btn-primary btn-sm" href="#!">More Info</a></div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-5">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h2 class="card-title">Card Two</h2>
+                            <img alt="Cat picture" src="./img/service/dog2.png" width="225" height="170" >
+                            <p class="card-text"> Quod tenetur ex natus at dolorem enim! Nessunt quam eaque, luptates quos eligendi labore.</p>
+                        </div>
+                        <div class="card-footer"><a class="btn btn-primary btn-sm" href="#!">More Info</a></div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-5">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h2 class="card-title">Card Three</h2>
+                            <img alt="Cat picture" src="./img/service/cat3.jpg" width="225" height="170" >
+                            <p class="card-text">Lorem ipsum doluas ex numquam, maxime minus quam molestias corporis quod, ea minima accusamus.</p>
+                        </div>
+                        <div class="card-footer"><a class="btn btn-primary btn-sm" href="#!">More Info</a></div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-5">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h2 class="card-title">Card Four</h2>
+                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numquam, maxime minus quam molestias corporis quod, ea minima accusamus.</p>
+                        </div>
+                        <div class="card-footer"><a class="btn btn-primary btn-sm" href="#!">More Info</a></div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-5">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h2 class="card-title">Card Five</h2>
+                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numquam, maxime minus quam molestias corporis quod, ea minima accusamus.</p>
+                        </div>
+                        <div class="card-footer"><a class="btn btn-primary btn-sm" href="#!">More Info</a></div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-5">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h2 class="card-title">Card Six</h2>
+                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numquam, maxime minus quam molestias corporis quod, ea minima accusamus.</p>
+                        </div>
+                        <div class="card-footer"><a class="btn btn-primary btn-sm" href="#!">More Info</a></div>
+                    </div>
+                </div>
+            </div>
+{{!-- Banner before service cards --}}
+        <section class=" py-5" style="background-color: rgb(255, 101, 80)" >
+            <div class="container px-4 px-lg-5 my-5" >
+                <div class="text-center text-white">
+                    <h1 class="display-4 fw-bolder">Shop in style</h1>
+                    <p class="lead fw-normal text-white-50 mb-0">With ChicPet store, provide fashionable acessories for your pet!</p>
+                </div>
+            </div>
+        </section>
+
+
+
+        {{!-- Shopping cards small and detail --}}
+        <section class="py-5">
+            <div class="container px-4 px-lg-5 mt-5">
+                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                    <div class="col mb-5">
+                        <div class="card h-100">
+                            <!-- Product image-->
+                            <img class="card-img-top" src="./img/service/accesories10.jpg" alt="accessories">
+                            <!-- Product details-->
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <!-- Product name-->
+                                    <h5 class="fw-bolder">Pet accessories</h5>
+                                    <!-- Product price-->
+                                    $4.00 - $8.00
+                                </div>
+                            </div>
+                            <!-- Product actions-->
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">View options</a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col mb-5">
+                        <div class="card h-100">
+                            <!-- Sale badge-->
+                            <div class="badge text-white position-absolute" style="top: 0.5rem; right: 0.5rem; background-color:rgb(255, 101, 80)">Sale</div>
+                            <!-- Product image-->
+                            <img class="card-img-top" src="./img/service/accessories2.jpg" alt="accessories">
+                            <!-- Product details-->
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <!-- Product name-->
+                                    <h5 class="fw-bolder">Special Item</h5>
+                                    <!-- Product reviews-->
+                                    <div class="d-flex justify-content-center small text-warning mb-2">
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-fill"></div>
+                                    </div>
+                                    <!-- Product price-->
+                                    <span class="text-muted text-decoration-line-through">$4.00</span>
+                                    $2.00
+                                </div>
+                            </div>
+                            <!-- Product actions-->
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col mb-5">
+                        <div class="card h-100">
+                            <!-- Sale badge-->
+                            <div class="badge  text-white position-absolute" style="top: 0.5rem; right: 0.5rem; background-color:rgb(255, 101, 80)">Sale</div>
+                            <!-- Product image-->
+                            <img class="card-img-top" src="./img/service/accessories3.jpg" alt="accessories">
+                            <!-- Product details-->
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <!-- Product name-->
+                                    <h5 class="fw-bolder">Sale Item</h5>
+                                    <!-- Product price-->
+                                    <span class="text-muted text-decoration-line-through">$10.00</span>
+                                    $5.00
+                                </div>
+                            </div>
+                            <!-- Product actions-->
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col mb-5">
+                        <div class="card h-100">
+                            <!-- Product image-->
+                            <img class="card-img-top" src="./img/service/accesories11.jpg" alt="accessories">
+                            <!-- Product details-->
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <!-- Product name-->
+                                    <h5 class="fw-bolder">Popular Item</h5>
+                                    <!-- Product reviews-->
+                                    <div class="d-flex justify-content-center small text-warning mb-2">
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-fill"></div>
+                                    </div>
+                                    <!-- Product price-->
+                                    $10.00
+                                </div>
+                            </div>
+                            <!-- Product actions-->
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col mb-5">
+                        <div class="card h-100">
+                            <!-- Sale badge-->
+                            <div class="badge text-white position-absolute" style="top: 0.5rem; right: 0.5rem; background-color:rgb(255, 101, 80)">Sale</div>
+                            <!-- Product image-->
+                            <img class="card-img-top" src="./img/service/accesories5.jpg" alt="accessories">
+                            <!-- Product details-->
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <!-- Product name-->
+                                    <h5 class="fw-bolder">Sale Item</h5>
+                                    <!-- Product price-->
+                                    <span class="text-muted text-decoration-line-through">$5.00</span>
+                                    $4.00
+                                </div>
+                            </div>
+                            <!-- Product actions-->
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col mb-5">
+                        <div class="card h-100">
+                            <!-- Product image-->
+                            <img class="card-img-top" src="./img/service/accesories6.jpg" alt="accessories">
+                            <!-- Product details-->
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <!-- Product name-->
+                                    <h5 class="fw-bolder">Fancy Product</h5>
+                                    <!-- Product price-->
+                                    $12.00 - $28.00
+                                </div>
+                            </div>
+                            <!-- Product actions-->
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col mb-5">
+                        <div class="card h-100">
+                            <!-- Sale badge-->
+                            <div class="badge text-white position-absolute" style="top: 0.5rem; right: 0.5rem; background-color:rgb(255, 101, 80)">Sale</div>
+                            <!-- Product image-->
+                            <img class="card-img-top" src="./img/service/accesories12.jpg" alt="accessories">
+                            <!-- Product details-->
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <!-- Product name-->
+                                    <h5 class="fw-bolder">Special Item</h5>
+                                    <!-- Product reviews-->
+                                    <div class="d-flex justify-content-center small text-warning mb-2">
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-fill"></div>
+                                    </div>
+                                    <!-- Product price-->
+                                    <span class="text-muted text-decoration-line-through">$20.00</span>
+                                    $10.00
+                                </div>
+                            </div>
+                            <!-- Product actions-->
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col mb-5">
+                        <div class="card h-100">
+                            <!-- Product image-->
+                            <img class="card-img-top" src="./img/service/accesories9.jpg" alt="accessories">
+                            <!-- Product details-->
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <!-- Product name-->
+                                    <h5 class="fw-bolder">Popular Item</h5>
+                                    <!-- Product reviews-->
+                                    <div class="d-flex justify-content-center small text-warning mb-2">
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-fill"></div>
+                                    </div>
+                                    <!-- Product price-->
+                                    $9.00
+                                </div>
+                            </div>
+                            <!-- Product actions-->
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <script>
+        document.getElementById("nav-services").classList.add("active");
+    </script>

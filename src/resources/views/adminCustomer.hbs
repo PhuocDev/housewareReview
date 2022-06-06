@@ -1,0 +1,244 @@
+<title>Orders</title>
+<link rel="stylesheet" href="/css/general.css">
+<link rel="stylesheet" href="/css/adminCustomer.css">
+
+<div class="container-xl account-order-container">
+    <div class="row">
+        <div class="col-12 col-md-4 col-lg-3 my-3">
+            {{> adminAccountSidebar}}
+        </div>
+        <div class="col-12 col-md-8 col-lg-9 my-3">
+            <div class="row justify-content-between">
+                <h4 class="text-uppercase mb-4 mt-4 w-auto">Danh sách đơn hàng</h4>
+                <button type="button" class="btn btn-search">Tìm kiếm</button>
+            </div>
+            <div class="admin-order-search-container">
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-1"></div>
+                            <label for="inputCustomerCode" class="col-3 col-form-label">Mã KH</label>
+                            <div class="col-7">
+                                <input type="text" class="form-control col-form-label" id="inputCustomerCode">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-1"></div>
+                            <label for="inputCustomerName" class="col-3">Họ tên</label>
+                            <div class="col-7">
+                                <input type="text" class="form-control" id="inputCustomerName">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-1"></div>
+                            <label for="inputCustomerPhone" class="col-3 col-form-label">Số điện thoại</label>
+                            <div class="col-7">
+                                <input type="text" class="form-control col-form-label" id="inputCustomerPhone">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-1"></div>
+                            <label for="inputCustomerMail" class="col-3">Email</label>
+                            <div class="col-7">
+                                <input type="text" class="form-control" id="inputCustomerMail">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="admin-customer-table-container">
+                <table class="table table-hover customer-table text-center">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Mã KH</th>
+                            <th scope="col">Họ tên</th>
+                            <th scope="col">Số điện thoại</th>
+                            <th scope="col">Email</th>
+                        </tr>
+                    </thead>
+                    <tbody class="customer-table-body">
+                       
+                    </tbody>
+                </table>
+            </div>
+            <div class="admin-customer-detail-container d-none">
+                <div class="customer-detail-header text-center pb-4">
+                    <h2 class="text-uppercase customer-detail-header__title">Thông tin khách hàng</h2>
+                    <div class="my-3">
+                        Dưới đây là thông tin khách hàng 
+                        <span class="customer-detail-header__customer-code"></span>
+                    </div>
+                </div>
+                <div class="customer-detail-info mt-4">
+                    <div class="row my-3">
+                        <label for="customer-name" class="col-3">Tên khách hàng:</label>
+                        <div class="col-9">
+                            <p id="customer-name"></p>
+                        </div>
+                    </div>
+                    <div class="row my-3">
+                        <label for="customer-name" class="col-3">Email:</label>
+                        <div class="col-9">
+                            <p id="customer-mail"></p>
+                        </div>
+                    </div>
+                    <div class="row my-3">
+                        <label for="customer-name" class="col-3">Số điện thoại:</label>
+                        <div class="col-9">
+                            <p id="customer-phone"></p>
+                        </div>
+                    </div>
+                    <div class="row my-3">
+                        <label for="customer-name" class="col-3">Địa chỉ:</label>
+                        <div class="col-9">
+                            <p id="customer-address"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-end">
+                    <button type="button" class="btn btn-delete">Xóa KH</button>
+                </div>
+            </div>
+            
+
+        </div>
+    </div>
+</div>
+
+<script>
+    const sidebarItemCustomer = document.getElementById('account_sidebar__customer');
+    sidebarItemCustomer.classList.add('account-sidebar__item--active');
+
+    const inputCustomerCode = document.getElementById('inputCustomerCode');
+    const inputCustomerName = document.getElementById('inputCustomerName');
+    const inputCustomerPhone = document.getElementById('inputCustomerPhone');
+    const inputCustomerMail = document.getElementById('inputCustomerMail');
+    const btnSearch = document.querySelector('.btn-search');
+
+    const customerTable = document.querySelector('.customer-table');
+    const customerTableBody = document.querySelector('.customer-table-body');
+
+    const customerDetailContainer = document.querySelector('.admin-customer-detail-container');
+    const customerDetailCustomerCode = document.querySelector('.customer-detail-header__customer-code');;
+    const customerDetailCustomerName = document.getElementById('customer-name');
+    const customerDetailCustomerMail = document.getElementById('customer-mail');
+    const customerDetailCustomerPhone = document.getElementById('customer-phone');
+    const customerDetailCustomerAddress = document.getElementById('customer-address');
+
+    const btnDelete = document.querySelector('.btn-delete');
+
+    var data = [];
+    var currentIndex = 0;
+
+    btnSearchOnClick();
+    if (customerTable.rows.length > 1) customerTable.rows[1].classList.add('table-active'); 
+
+    function customerTableRowClick(rowIndex) {
+        console.log('table row ', rowIndex, ' clicked');
+        for (i = 1; i < customerTable.rows.length; i++) {
+            if (customerTable.rows[i].classList.contains('table-active')) {
+                customerTable.rows[i].classList.remove('table-active');
+            }
+        }
+        customerTable.rows[rowIndex].classList.add('table-active');
+        currentIndex = rowIndex - 1;
+        console.log(data.customerList[currentIndex]);
+        customerDetailCustomerCode.textContent = data.customerList[currentIndex].userCode;
+        customerDetailCustomerName.textContent = data.customerList[currentIndex].fullname;
+        customerDetailCustomerPhone.textContent = data.customerList[currentIndex].phone;
+        customerDetailCustomerMail.textContent = data.customerList[currentIndex].mail;
+        customerDetailCustomerAddress.textContent = data.customerList[currentIndex].address;
+    }
+    
+    btnSearch.addEventListener('click', btnSearchOnClick);
+    async function btnSearchOnClick() {
+        try {
+            var customerCodeSearch = inputCustomerCode.value;
+            var customerNameSearch = inputCustomerName.value;
+            var customerPhoneSearch = inputCustomerPhone.value;
+            var customerMailSearch = inputCustomerMail.value;
+
+            const res = await fetch('/account/admin-get-customer', {
+                method: 'POST',
+                body: JSON.stringify({ customerCodeSearch, customerNameSearch, customerPhoneSearch, customerMailSearch }),
+                headers: {'Content-Type': 'application/json'}
+            });
+            data = await res.json();
+            if (data) {
+                console.log('Search successful');
+                console.log(data);
+
+                var tableBody = '';
+                for (i = 0; i < data.customerList.length; i++) {
+                    var row = '<tr class="" onclick="customerTableRowClick(' + (i + 1) + ')">'
+                                + '<th scope="row">' + (i + 1) + '</th>'
+                                + '<td>' + data.customerList[i].userCode + '</td>'
+                                + '<td>' + data.customerList[i].fullname + '</td>'
+                                + '<td>' + data.customerList[i].phone + '</td>'
+                                + '<td>' + data.customerList[i].mail + '</td>'
+                            + '</tr>';
+                    tableBody += row;
+                }
+                customerTableBody.innerHTML = tableBody;
+                if (data.customerList.length > 0) {
+                    customerTableRowClick(1);
+                    if (customerDetailContainer.classList.contains('d-none')) {
+                        customerDetailContainer.classList.remove('d-none');
+                    }
+                }
+                else {
+                    if (!customerDetailContainer.classList.contains('d-none')) {
+                        customerDetailContainer.classList.add('d-none');
+                    }
+                }
+
+            }
+        }
+        catch(err) {
+            console.log('Search failed');
+            console.log(err);
+        }
+    }
+
+    btnDelete.addEventListener('click', async () => {
+        if (confirm('Bạn có chắc muốn xóa khách hàng ' + data.customerList[currentIndex].userCode + '?')) {
+            try {
+                const userCodeToDelete = data.customerList[currentIndex].userCode;
+                const res = await fetch('/account/admin-delete-customer', {
+                    method: 'POST',
+                    body: JSON.stringify({ userCodeToDelete }),
+                    headers: {'Content-Type': 'application/json'}
+                });
+                data = await res.json();
+                if (data) {
+                    if (data.status === 200) {
+                        console.log('delete customer successful');
+                        showAlertChicPet('alert-success', 'Xóa khách hàng thành công');
+                        btnSearchOnClick();
+                    }
+                    else if (data.error) {
+                        console.log(data.error);
+                        showAlertChicPet('alert-danger', 'Xóa khách hàng thất bại, vui lòng thử lại');
+                    }
+                }
+            }
+            catch(err) {
+                showAlertChicPet('alert-danger', 'Xóa khách hàng thất bại, vui lòng thử lại');
+            }
+        }
+    });
+
+</script>
+
+<script>
+    document.getElementById("navbarDropdownMenuLink").classList.add("active");
+</script>

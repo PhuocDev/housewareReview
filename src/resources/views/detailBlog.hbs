@@ -1,0 +1,62 @@
+<link rel="stylesheet" href="/css/detailBlog.css">
+
+<title>{{blog.title}}</title>
+
+<div class="container px-5">
+    <div class="blog-header mb-5">
+        <div class="blog-category">
+            <p>{{blog.category}}</p>
+        </div>
+        <div>
+            <h2>{{blog.title}}</h2>
+        </div>
+        <div class="blog-timeCreate">
+            <p>{{blog.createdAt}}</p>
+        </div>
+        <hr>
+    </div>
+
+    <div class="blog-body mb-5">
+        <div class="blog-description ">
+            <p>{{blog.description}}</p>
+        </div>
+        <div class="blog-img d-flex justify-content-center mb-5">
+            <img src="{{blog.img}}" alt="" height="380">
+        </div>
+        <div class="blog-content">
+            {{{ blog.contentCode }}}
+        </div>
+
+        <div class="blog-comments">
+            <h3>Bình Luận</h3>
+            <div class="fb-comments" data-width="100%" data-href="{{ blogUrl }}" data-width="" data-numposts="5"></div>
+        </div>
+    </div>
+
+    <input type='hidden' id="url" value="/blog/{{ blog._id }}" />
+    <input type='hidden' id='title' value="{{ blog.title }}" />
+    <input type='hidden' id='description' value="{{ blog.description }}" />
+    <input type='hidden' id='image' value="{{ blog.img }}" />
+    <input type='hidden' id='category' value="{{ blog.category }}" />
+    <input type='hidden' id='userId' value="{{ userId }}" />
+</div>
+
+<script>
+    $(document).ready(function() {
+        const url = $('#url').val();
+        const title = $('#title').val();
+        const description = $('#description').val();
+        const image = $('#image').val();
+        const category = $('#category').val();
+        const userId = $('#userId').val();
+
+        $.post("/histories", {
+            url,
+            userId,
+            title,
+            description,
+            image,
+            category
+        }); 
+    })
+</script>

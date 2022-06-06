@@ -1,0 +1,247 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+html {
+  font-family: Arial, Helvetica, sans-serif;
+  scroll-behavior: smooth;
+}
+.container-fluid {
+  /* padding: 0; */
+}
+/*-----------------slider-------------------*/
+
+.home-slider img {
+  height: 650px;
+  margin-top: 90px;
+  object-fit: cover;
+}
+.carousel-control-prev {
+  margin-top: 90px !important;
+}
+.carousel-control-next {
+  margin-top: 90px !important;
+}
+.sloganHome {
+  font-family: "Papyrus", Fantasy;
+  color: white;
+  position: absolute;
+  top: 25%;
+  right: 60%;
+  font-size: 100px;
+}
+.carousel-caption h4,
+.carousel-caption h5 {
+  font-family: "Papyrus", Fantasy;
+}
+
+/*----------------------about-------------*/
+.body-home {
+}
+.about {
+  background-color: rgb(245, 245, 245);
+  background-clip: padding-box;
+  padding: 7% 3%;
+}
+.about .head-Text {
+  color: rgb(255, 101, 80);
+}
+.about h2 {
+  /*   font-family: 'Courier New	', monospace; */
+  font-family: sans-serif;
+  font-weight: bold;
+  letter-spacing: 0px;
+}
+.about p {
+  font-family: sans-serif;
+}
+.img-about img {
+  height: 100%;
+  width: 100%;
+}
+.text-about {
+  height: 100%;
+  border-top-right-radius: 250px;
+  border-bottom-right-radius: 250px;
+
+  background-color: white;
+  background-clip: padding-box;
+}
+.btn-book {
+  background-color: rgb(255, 101, 80);
+  color: white;
+  border-bottom-right-radius: 50px;
+  border-top-right-radius: 50px;
+  border-bottom-left-radius: 50px;
+  padding: 12px 24px;
+}
+
+/*----------------------------------------*/
+#services {
+  background-color: white;
+  padding: 5% 5%;
+  height: 100%;
+}
+#services .services-img {
+  height: 70%;
+  width: 100%;
+}
+.service-item1 {
+  border-radius: 50px;
+  color: black;
+  background-color: transparent;
+}
+.service-item2 {
+  border-radius: 50px;
+  background-color: transparent;
+
+  color: black;
+}
+.service-item3 {
+  border-radius: 50px;
+  background-color: transparent;
+  color: black;
+}
+
+.service-item1:hover {
+  color: rgb(255, 101, 80);
+  background-color: #00000021;
+}
+.service-item2:hover {
+  color: rgb(255, 101, 80);
+  background-color: #00000021;
+}
+.service-item3:hover {
+  color: rgba(255, 101, 80);
+  background-color: #00000021;
+}
+
+/*------------------------------------blog-----------------------------------*/
+.blog {
+  padding: 3% 6% 4% 6%;
+  background-color: rgb(238, 238, 238);
+  margin: 0;
+}
+.blog a {
+  text-decoration: none;
+  color: black;
+}
+.blog .card:hover {
+  opacity: 0.8;
+}
+.btn-seemore {
+  font-size: larger;
+  width: 10rem;
+}
+.btn-seemore:hover {
+  color: rgb(255, 101, 80);
+  text-decoration: underline;
+}
+/*----------------------------------------------------------------------------*/
+.works-gallery .item {
+  border-radius: 50%;
+}
+
+/*---------------------------------feedback-------------------------------*/
+.feedback {
+  background-color: rgb(238, 238, 238);
+}
+
+.feedback-list {
+  padding: 5% 10%;
+}
+
+.feedback-img {
+  width: 100%;
+  height: 80%;
+}
+.feedback-item {
+  background-color: white;
+  height: 20%;
+  padding: 0 0;
+}
+.feedback-body {
+  padding: 0 10%;
+}
+
+.section {
+  margin: 32px 0;
+}
+
+.section .card {
+  margin-bottom: 24px;
+}
+
+.section a {
+  text-decoration: none;
+}
+
+.section .blog-heading {
+  color: #333;
+}
+
+.section .card-text {
+  color: #4d4d4d;
+  font-size: 15px;
+}
+
+.section-title {
+  margin-bottom: 24px;
+}
+
+.section-title a {
+  color: rgba(255, 101, 80);
+}
+
+.section-title a:hover {
+  color: rgba(255, 101, 80);
+}
+
+.section img {
+  object-fit: cover;
+}
+
+.section-product {
+  display: flex;
+  margin-bottom: 24px;
+}
+
+.section-product-image {
+  width: 120px;
+  height: 120px;
+  border-radius: 12px;
+  object-fit: cover;
+  margin-right: 12px;
+}
+
+.section-product-title {
+  color: #333;
+  font-size: 16px;
+}
+
+.section-product-reviews {
+  color: #777;
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+
+.sale-price {
+  font-weight: bold;
+  margin-right: 12px;
+  font-size: 14px;
+  color: #333;
+}
+
+.regular-price {
+  margin-right: 12px;
+  text-decoration: line-through;
+  color: #777;
+  font-size: 14px;
+}
+
+.discount-rate {
+  color: rgb(255, 101, 80);
+  font-weight: bold;
+  font-size: 14px;
+}

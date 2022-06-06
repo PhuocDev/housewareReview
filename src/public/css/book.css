@@ -1,0 +1,117 @@
+.book{
+    padding-top:120px;
+    padding-bottom: 7%;
+}
+.container-fluid{
+    padding: 0 10%;
+}
+
+.btn-book{
+    background-color: rgb(255, 101, 80);
+    color: white;
+}
+.btn-book:hover{
+    opacity: 0.8;
+}
+
+.btn-add-service {
+    background-color: rgb(255, 101, 80);
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    width: 80px;
+    border-radius: 8px;
+}
+
+.btn-add-service:hover {
+    background-color: rgba(255, 101, 80, 75%);
+}
+
+.appointment input{
+    height: 38px;
+    width: 100%;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+}
+
+.nav-pills .nav-link{
+    border: 1px solid rgb(255, 101, 80);
+    border-radius: 0%;
+    width: 100%;
+    min-height: 54px;
+}
+
+.nav-pills .nav-link.active{
+    background-color: rgb(255, 101, 80)!important;
+    color: white !important;
+}
+
+.dropdown-service-name {
+    border: 1px solid #ced4da;
+    text-overflow: ellipsis;
+    overflow:hidden; 
+}
+
+.dropdown-service-name-item {
+    line-height: 1.5;
+    padding: 6px 24px;
+}
+
+.dropdown-service-name-item:hover {
+    color: rgb(255, 101, 80);
+    background-color: #f8f9fa;
+}
+
+.dropdown-service-type {
+    border: 1px solid #ced4da;
+    text-overflow: ellipsis;
+    overflow:hidden; 
+}
+
+.dropdown-service-type-item {
+    line-height: 1.5;
+    padding: 6px 24px;
+}
+
+.dropdown-service-type-item:hover {
+    color: rgb(255, 101, 80);
+    background-color: #f8f9fa;
+}
+
+.tab-content{
+    border: 1px solid rgb(255, 101, 80);
+    min-height: 96px;
+}
+
+.service-table {
+    min-height: 100px;
+}
+
+.service-item{
+    height: 100%;
+    width: 100%;
+    margin: 0;
+}
+
+.service-item:hover{
+    background-color: rgb(255, 101, 80);
+    color: white;
+}
+.service-item .btn-add{
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    color: black;
+    font-size: 0.8rem;
+    background-color: white;
+}
+.service-item .btn-add:hover{
+    color: black;
+    opacity: 0.8;
+}
+
+.text-error {
+    color: red;
+}
+
+/*-------------------------------*/

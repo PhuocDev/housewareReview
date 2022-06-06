@@ -1,0 +1,487 @@
+<link rel="stylesheet" href="/css/book.css">
+
+<div class="row book">
+
+    <div class="col-md-5">
+        <h3 class="text-center pb-4">SERVICE</h3>
+		<div class="d-flex align-items-start">
+            <div class="nav col-3 flex-column nav-pills me-2" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                <button class="nav-link active" id="v-pills-dog-tab" onclick="renderDropdownServiceName()" data-bs-toggle="pill" data-bs-target="#v-pills-dog" type="button" role="tab" aria-controls="v-pills-dog" aria-selected="true">Dog</button>
+                <button class="nav-link" id="v-pills-cat-tab" onclick="renderDropdownServiceName()" data-bs-toggle="pill" data-bs-target="#v-pills-cat" type="button" role="tab" aria-controls="v-pills-cat" aria-selected="false">Cat</button>
+                <button class="nav-link" id="v-pills-other-tab" onclick="renderDropdownServiceName()" data-bs-toggle="pill" data-bs-target="#v-pills-other" type="button" role="tab" aria-controls="v-pills-other" aria-selected="false">Other Pets</button>
+            </div>
+            <div class="col-9 px-2">
+                {{!-- <div class="row pb-3">
+                    <div class="col-8 pe-1">
+                        <select class="form-select w-100">
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                    </div>
+                    
+                    <div class="col-4 ps-1 d-flex justify-content-center">
+                        <button type="button" class="btn btn-add-service ">Add</button>
+                    </div>
+                </div> --}}
+                
+                <div class="pb-2">
+                    <label for="dropdownServiceName" class="col-form-label">Tên dịch vụ</label>
+
+                    <div class="dropdown">
+                        <button class="btn dropdown-service-name dropdown-toggle w-100" type="button" id="dropdownServiceName" data-bs-toggle="dropdown" aria-expanded="false"></button>
+                        <ul class="dropdown-menu dropdown-service-name-menu w-100">
+
+                        </ul>
+                    </div>
+                    <div class="dropdownServiceNameError text-error"></div>
+                </div>
+                
+                <div class="pb-2">
+                    <label for="dropdownServiceType" class="col-form-label">Tên dịch vụ</label>
+
+                    <div class="dropdown">
+                        <button class="btn dropdown-service-type dropdown-toggle w-100" type="button" id="dropdownServiceType" data-bs-toggle="dropdown" aria-expanded="false"></button>
+                        <ul class="dropdown-menu dropdown-service-type-menu w-100">
+                            
+                        </ul>
+                    </div>
+                    <div class="dropdownServiceTypeError text-error"></div>
+                </div>
+
+                <div class="d-flex justify-content-end pt-3">
+                    <button type="button" class="btn btn-add-service">Add</button>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    <form class="col-md-7 form-book">
+	    <h3 class="text-center pb-4">BOOK</h3>
+
+        <div class="row">
+            <div class="col-md-6 form-group mb-3">
+                <input class="form-control" id="name" name="name" placeholder="Name " type="text" value="{{user.fullname}}">
+                <div class="inputNameError text-error"></div>
+            </div>
+            <div class="col-md-6 form-group mb-3">
+                <input class="form-control" id="phone" name="phone" placeholder="Phone" type="text" value="{{user.phone}}" onkeypress="return isNumber(event)" onpaste="return false;">
+                <div class="inputPhoneError text-error"></div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-6 mb-3">
+                <input class="form-control" id="email" name="email" placeholder="Email" type="email" value="{{user.mail}}">
+                <div class="inputMailError text-error"></div>
+            </div>
+            <div class="col-md-6 mb-3 appointment">
+                <input type="datetime-local" class="px-2" id="appointment" name="appointment">
+                <div class="inputAppointmentError text-error"></div>
+            </div>          
+        </div>
+
+        <table class="table mt-3 service-table" name = "serviceTable">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col" class="text-start align-middle" >Tên dịch vụ</th>
+                    <th scope="col" class="align-middle">Biến thể</th>
+                    <th scope="col" class="align-middle">Số lượng</th>
+                    <th scope="col" class="align-middle">Đơn giá</th>
+                    <th scope="col" class="align-middle">Thành tiền</th>
+                </tr>
+            </thead>
+            <tbody class="service-table-body">
+
+                {{!-- <tr>
+                    <th>1</th>
+                    <td class="text-start">Tỉa lông chó (thường)</td>
+                    <td class="text-center">5kg</td>
+                    <td class="text-center">
+                        <input type="number" id="service-table-quantity-0" class="text-center" max="10" min="0" value="1" onchange="serviceTableQuantityOnChanged(0, this.value)">
+                    </td>
+                    <td class="text-center">150000</td>
+                    <td class="text-center">150000</td>
+                </tr> --}}
+            </tbody>
+        </table>
+        <div class="row">
+            <div class="col-6 fw-bold text-start ps-5">Tổng thanh toán</div>
+            <div class="col-6 allServiceTotal fw-bold text-end pe-5">0</div>
+        </div>
+        <div class="serviceTableError text-error text-end"></div>
+
+
+        <div>
+            <textarea class="form-control mt-3" id="comments" name="note" placeholder="Note" rows="4"></textarea><br>
+        </div>
+        <div class="d-flex justify-content-end">
+            <button type="button" class="btn btn-book" >Book Now</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    var serviceList = [];
+    var orderServiceList = [];
+
+    const dogServiceNav = document.getElementById('v-pills-dog-tab');
+    const catServiceNav = document.getElementById('v-pills-cat-tab');
+    const otherServiceNav = document.getElementById('v-pills-other-tab');
+
+    const dropdownServiceName = document.getElementById('dropdownServiceName');
+    const dropdownServiceNameMenu = document.querySelector('.dropdown-service-name-menu');
+    const dropdownServiceNameError = document.querySelector('.dropdownServiceNameError');
+
+    const dropdownServiceType = document.getElementById('dropdownServiceType');
+    const dropdownServiceTypeMenu = document.querySelector('.dropdown-service-type-menu');
+    const dropdownServiceTypeError = document.querySelector('.dropdownServiceTypeError');
+
+    const btnAdd = document.querySelector('.btn-add-service');
+
+    const inputName = document.getElementById('name');
+    const inputPhone = document.getElementById('phone');
+    const inputMail = document.getElementById('email');
+    const inputAppointment = document.getElementById('appointment');
+    const inputNote = document.getElementById('comments');
+
+    const serviceTableBody = document.querySelector('.service-table-body');
+
+    const inputNameError = document.querySelector('.inputNameError');
+    const inputPhoneError = document.querySelector('.inputPhoneError');
+    const inputMailError = document.querySelector('.inputMailError');
+    const inputAppointmentError = document.querySelector('.inputAppointmentError');
+    const serviceTableError = document.querySelector('.serviceTableError');
+
+    const allServiceTotal = document.querySelector('.allServiceTotal');
+
+    const btnBook = document.querySelector('.btn-book');
+
+    getListService();
+
+    async function getListService() {
+        try {
+            const res = await fetch('/service/book/get-service-list', {
+                method: 'POST',
+                body: JSON.stringify({ }),
+                headers: {'Content-Type': 'application/json'}
+            });
+            const data = await res.json();
+            if (data) {
+                if (data.serviceList) {
+                    console.log(data.serviceList);
+                    serviceList = data.serviceList;
+                    renderDropdownServiceName();
+                    renderDropdownServiceType(serviceList[0].name);                    
+                }
+                else if (data.error) {
+                    console.log('get service list error');
+                    console.log(data.error);
+                }
+            }
+            else {
+                console.log('get service list failed');
+            }
+        }
+        catch(err) {
+            console.log('get service list error');
+            console.log(err);
+        }
+    }
+
+    function renderDropdownServiceName() {
+        if (dogServiceNav.classList.contains('active')) {
+            var numberOfServiceAdded = 0;
+            var html = '';
+            for (i = 0; i < serviceList.length; i++) {
+                if (serviceList[i].category === 'dog-service') {
+                    numberOfServiceAdded++;
+                    html += `<li><div class="dropdown-item dropdown-service-name-item text-wrap" onclick="updateDropdownServiceNameBtn('${serviceList[i].name}')">${serviceList[i].name}</div></li>`
+                }
+            }
+            if (numberOfServiceAdded > 0) {
+                dropdownServiceNameMenu.innerHTML = html;
+                for (i = 0; i < serviceList.length; i++) {
+                    if (serviceList[i].category === 'dog-service') {
+                        dropdownServiceName.textContent = serviceList[i].name;
+                        renderDropdownServiceType(serviceList[i].name);
+                        break;
+                    }
+                }
+            }
+            else {
+                dropdownServiceName.textContent = '';
+                dropdownServiceNameMenu.innerHTML = '';
+                dropdownServiceType.textContent = '';
+                dropdownServiceNameMenu.innerHTML = '';
+            }
+        }
+        else if (catServiceNav.classList.contains('active')) {
+            var numberOfServiceAdded = 0;
+            var html = '';
+            for (i = 0; i < serviceList.length; i++) {
+                if (serviceList[i].category === 'cat-service') {
+                    numberOfServiceAdded++;
+                    html += `<li><div class="dropdown-item dropdown-service-name-item text-wrap" onclick="updateDropdownServiceNameBtn('${serviceList[i].name}')">${serviceList[i].name}</div></li>`
+                }
+            }
+            if (numberOfServiceAdded > 0) {
+                dropdownServiceNameMenu.innerHTML = html;
+                for (i = 0; i < serviceList.length; i++) {
+                    if (serviceList[i].category === 'cat-service') {
+                        dropdownServiceName.textContent = serviceList[i].name;
+                        renderDropdownServiceType(serviceList[i].name);
+                        break;
+                    }
+                }
+            }
+            else {
+                dropdownServiceName.textContent = '';
+                dropdownServiceNameMenu.innerHTML = '';
+                dropdownServiceType.textContent = '';
+                dropdownServiceNameMenu.innerHTML = '';
+            }
+        }
+        else if (otherServiceNav.classList.contains('active')) {
+            var numberOfServiceAdded = 0;
+            var html = '';
+            for (i = 0; i < serviceList.length; i++) {
+                if (serviceList[i].category === 'other-service') {
+                    numberOfServiceAdded++;
+                    html += `<li><div class="dropdown-item dropdown-service-name-item text-wrap" onclick="updateDropdownServiceNameBtn('${serviceList[i].name}')">${serviceList[i].name}</div></li>`
+                }
+            }
+            if (numberOfServiceAdded > 0) {
+                dropdownServiceNameMenu.innerHTML = html;
+                for (i = 0; i < serviceList.length; i++) {
+                    if (serviceList[i].category === 'other-service') {
+                        dropdownServiceName.textContent = serviceList[i].name;
+                        renderDropdownServiceType(serviceList[i].name);
+                        break;
+                    }
+                }
+            }
+            else {
+                dropdownServiceName.textContent = '';
+                dropdownServiceNameMenu.innerHTML = '';
+                dropdownServiceType.textContent = '';
+                dropdownServiceNameMenu.innerHTML = '';
+            }
+        }
+    }
+
+    function updateDropdownServiceNameBtn(serviceName) {
+        dropdownServiceName.textContent = serviceName;
+
+        renderDropdownServiceType(serviceName);
+    }
+
+    function renderDropdownServiceType(serviceName) {
+        var html = '';
+        for (i = 0; i < serviceList.length; i++) {
+            if (serviceName === serviceList[i].name) {
+                dropdownServiceType.textContent = serviceList[i].prices[0].type;
+                for (j = 0; j < serviceList[i].prices.length; j++) {
+                    html += `<li><div class="dropdown-item dropdown-service-type-item text-wrap" onclick="updateDropdownServiceTypeBtn('${serviceList[i].prices[j].type}')">${serviceList[i].prices[j].type}</div></li>`;
+                }
+                break;
+            }
+        }
+        dropdownServiceTypeMenu.innerHTML = html;
+    }
+
+    function updateDropdownServiceTypeBtn(type) {
+        dropdownServiceType.textContent = type;
+    }
+
+    function renderServiceTableBody() {
+        const html = orderServiceList.map((element, index) => (
+            `<tr>
+                <th>${index + 1}</th>
+                <td class="text-start">${element.serviceName}</td>
+                <td class="text-center">${element.serviceType}</td>
+                <td class="text-center">
+                    <input type="number" id="service-table-quantity-${index}" class="text-center" max="10" min="0" value="${element.quantity}" onchange="serviceTableQuantityOnChanged(${index}, this.value)">
+                </td>
+                <td class="text-center">${element.servicePrice}</td>
+                <td class="text-center">${element.serviceTotal}</td>
+            </tr>`
+        ));
+        serviceTableBody.innerHTML = html.join('');
+
+        var allServiceTotalValue = 0;
+        for (i = 0; i < orderServiceList.length; i++) {
+            allServiceTotalValue += orderServiceList[i].serviceTotal;
+        }
+        allServiceTotal.textContent = allServiceTotalValue;
+    }
+
+    btnAdd.addEventListener('click', () => {
+        dropdownServiceNameError.textContent = '';
+        dropdownServiceTypeError.textContent = '';
+
+        const serviceName = dropdownServiceName.textContent;
+        const serviceType = dropdownServiceType.textContent;
+        var serviceValidated = true;
+
+        if (serviceName === '') {
+            dropdownServiceNameError.textContent = 'Vui lòng chọn tên dịch vụ';
+            serviceValidated = false;
+        }
+        if (serviceType === '') {
+            dropdownServiceTypeError.textContent = 'Vui lòng chọn kiểu dịch vụ';
+            serviceValidated = false;
+        }
+
+        if (serviceValidated) {
+            var serviceAlreadyAdded = false;
+            orderServiceList.forEach((element) => { 
+                if(element.serviceName == serviceName && element.serviceType == serviceType){
+                    serviceAlreadyAdded = true;
+                    if(element.quantity < 10){
+                        element.quantity ++;
+                        element.serviceTotal = element.servicePrice * element.quantity;
+                        renderServiceTableBody();
+                    }
+                } 
+            } );
+            if(!serviceAlreadyAdded){
+                var servicePrice = 0;
+                for (i = 0; i < serviceList.length; i++) {
+                    if (serviceList[i].name === serviceName) {
+                        for (j = 0; j < serviceList[i].prices.length; j++) {
+                            if (serviceList[i].prices[j].type === serviceType) {
+                                servicePrice = serviceList[i].prices[j].price;
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                }
+                const Data = {
+                    serviceName: serviceName,
+                    serviceType: serviceType,
+                    quantity: 1,
+                    servicePrice: servicePrice,
+                    serviceTotal: servicePrice,
+                }
+                orderServiceList.push(Data);
+                renderServiceTableBody();
+            }
+            console.log(orderServiceList);
+        }
+    })
+
+    function serviceTableQuantityOnChanged(index, value){
+        if(value < 1){
+            orderServiceList.splice(index, 1);
+            renderServiceTableBody();
+        }
+        else if(value > 10){
+            orderServiceList[index].quantity = 10;
+            orderServiceList[index].serviceTotal = 10 * orderServiceList[index].servicePrice;
+            renderServiceTableBody();
+        }
+        else{
+            orderServiceList[index].quantity = Number(value);
+            orderServiceList[index].serviceTotal = Number(value) * orderServiceList[index].servicePrice;
+            renderServiceTableBody();
+        }
+        console.log(orderServiceList);
+    }
+
+    btnBook.addEventListener('click', async ()=>{
+        console.log('btn-book clicked');
+        inputNameError.textContent = '';
+        inputPhoneError.textContent = '';
+        serviceTableError.textContent = '';
+        inputAppointmentError.textContent = '';
+
+        const name = inputName.value;
+        const phone = inputPhone.value;
+        const mail = inputMail.value;
+        const appointment = inputAppointment.value;
+        const note = inputNote.value;
+        const total = Number(allServiceTotal.textContent);
+        var orderValidated = true;
+
+        const appointmentDate = new Date(appointment);
+
+        if (name === '') {
+            inputNameError.textContent = 'Vui lòng nhập họ tên';
+            orderValidated = false;
+        }
+        if (phone === '') {
+            inputPhoneError.textContent = 'Vui lòng nhập số điện thoại';
+            orderValidated = false;
+        }
+        if (appointment === '') {
+            inputAppointmentError.textContent = 'Vui lòng nhập thời gian hẹn';
+            orderValidated = false;
+        }
+        if (appointmentDate.getTime() < Date.now()) {
+            inputAppointmentError.textContent = 'Thời gian hẹn không hợp lệ';
+            orderValidated = false;
+        }
+        if (orderServiceList.length < 1) {
+            serviceTableError.textContent = 'Vui lòng chọn dịch vụ';
+            orderValidated = false;
+        }
+
+        if (orderValidated) {
+            var services = [];
+            for (i = 0; i < orderServiceList.length; i++) {
+                var serviceInfo = serviceList.find(element => (element.name === orderServiceList[i].serviceName));
+                console.log(serviceInfo);
+                var service = {
+                    service: serviceInfo,
+                    type: orderServiceList[i].serviceType,
+                    quantity: orderServiceList[i].quantity,
+                    price: orderServiceList[i].servicePrice,
+                    total:  orderServiceList[i].serviceTotal,
+                }
+                services.push(service);
+            }
+            console.log(services);
+            try {
+                const res = await fetch('/service/book', {
+                    method: 'POST',
+                    body: JSON.stringify({ name, phone, mail, appointment, services, note, total }),
+                    headers: {'Content-Type': 'application/json'}
+                });
+                const data = await res.json();
+                console.log(data);
+                if (data) {
+                    if (data.order) {
+                        console.log("Đăng ký đơn thành công");
+                        showAlertChicPet('alert-success', 'Đăng ký đơn thành công');
+                        window.location.href = "http://localhost:3000/account/get-order/" + data.order.orderCode;
+                    }
+                    else {
+                        console.log("Đăng ký đơn thất bại");
+                        console.log(data);
+                        showAlertChicPet('alert-danger', 'Đăng ký đơn thất bại, vui lòng thử lại');
+                    }
+                }
+            }
+            catch (err) {
+                console.log("Đăng ký đơn lỗi");
+                console.log(err);
+                showAlertChicPet('alert-danger', 'Đăng ký đơn thất bại, vui lòng thử lại');
+            }
+        }
+    });
+    
+    function isNumber(evt) {
+        evt = (evt) ? evt : window.event;
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if ( (charCode > 31 && charCode < 48) || charCode > 57) {
+            return false;
+        }
+        return true;
+    }
+</script>
+
+    <script>
+        document.getElementById("nav-services").classList.add("active");
+    </script>
