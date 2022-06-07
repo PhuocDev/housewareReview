@@ -90,8 +90,28 @@
                     <h4><a href="/account/blog">Bài Viết Của Bạn</a></h4>
                 </div>
 
-                
-                <p class="latest-posts-empty">Bạn chưa có bài review nào</p>
+                {{#ifCond userBlogs.length '>' 0}}
+                <div class="your-articles">
+                    {{#each userBlogs }}
+                        <div class="your-article">
+                            <a href="/blog/{{this._id}}">
+                                <img src="{{this.img}}" class="your-article-img" alt="">
+                            </a>
+
+                            <div class="your-article-details">
+                                <h5 class="your-article-title">
+                                    <a href="/blog/{{this._id}}">{{truncateText this.title 40}}</a>
+                                </h5>
+                                
+                                <p class="your-article-desc">{{truncateText this.description 70}}</p>
+                            </div>
+                        </div>
+                    {{/each}}  
+                </div>
+                {{/ifCond}}
+
+                {{#ifCond userBlogs.length '<=' 0}}
+                <p class="latest-posts-empty">Bạn chưa có bài review nào!</p>
                 {{/ifCond}}
             </div>
             {{/ifCond}}
