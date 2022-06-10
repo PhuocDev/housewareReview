@@ -160,7 +160,7 @@ module.exports.postBlog_post = async (req, res) => {
 
     var newBlog = new Blog({
       title: title,
-      img: "https://cdn.shopify.com/s/files/1/0070/7032/files/how-to-price-a-product.jpg?v=1611727768",
+      img: img,
       category: category,
       description: description,
       contentCode: contentCode,
@@ -211,7 +211,10 @@ module.exports.editBlog_get = async (req, res) => {
     const blogList = await Blog.find({}).sort({ createdAt: -1 }).lean();
 
     if (blogList) {
-      res.render("editBlog", { blogs: blogList, userRole: req?.userRole });
+      res.render("editBlog", {
+        blogs: blogList,
+        userRole: req?.userRole,
+      });
     } else {
       console.log("blogList Null");
     }
@@ -264,15 +267,10 @@ module.exports.editDetailBlog_get = async (req, res) => {
 };
 
 module.exports.editDetailBlog_post = async (req, res) => {
-  const {
-    id,
-    title,
-    img,
-    category,
-    description,
-    contentCode,
-    status = "draft",
-  } = req.body;
+  const { id, title, img, category, description, contentCode, status } =
+    req.body;
+
+  console.log("go here", status);
 
   if (title == "") throw Error("Title is required");
   if (img == "") throw Error("Image is required");
@@ -287,8 +285,9 @@ module.exports.editDetailBlog_post = async (req, res) => {
     category: category,
     description: description,
     contentCode: contentCode,
-    status,
+    status: status,
   });
+
   try {
     //const query = { _id: objectId };
     const result = await Blog.updateOne(
@@ -299,6 +298,7 @@ module.exports.editDetailBlog_post = async (req, res) => {
         category: category,
         description: description,
         contentCode: contentCode,
+        status: status,
       }
     );
     if (result.modifiedCount === 1) {

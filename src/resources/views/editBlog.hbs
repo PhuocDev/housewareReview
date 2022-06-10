@@ -9,9 +9,9 @@
         <button class="nav-link" id="v-pills-cat-tab" data-bs-toggle="pill" data-bs-target="#v-pills-cat" type="button" role="tab" aria-controls="v-pills-cat" aria-selected="false">Đồ chơi công nghệ</button>
         <button class="nav-link" id="v-pills-takeCareDog-tab" data-bs-toggle="pill" data-bs-target="#v-pills-takeCareDog" type="button" role="tab" aria-controls="v-pills-takeCareDog" aria-selected="false">Điện gia dụng</button>
     </div>
+    
     <div class="tab-content overflow-auto" id="v-pills-tabContent">
         <div class="tab-pane fade show active" id="v-pills-all" role="tabpanel" aria-labelledby="v-pills-all-tab">
-
             {{#each blogs }}
                 <div class="blog-item row mx-0 mt-1">
                     <div class="col-md-2 pe-0 item-img">
@@ -68,7 +68,7 @@
         </div>
         <div class="tab-pane fade" id="v-pills-dog" role="tabpanel" aria-labelledby="v-pills-dob-tab">
             {{#each blogs }}
-            {{#ifCond this.category '==' 'Các giống chó'}}
+            {{#ifCond this.category '==' 'Làm đẹp'}}
                 <div class="blog-item row mx-0 mt-1">
                     <div class="col-md-2 pe-0 item-img">
                         <img src="{{this.img}}" alt="">
@@ -123,61 +123,6 @@
         </div>
         <div class="tab-pane fade" id="v-pills-cat" role="tabpanel" aria-labelledby="v-pills-cat-tab">
             {{#each blogs }}
-            {{#ifCond this.category '==' 'Làm đẹp'}}
-                <div class="blog-item row mx-0 mt-1">
-                    <div class="col-md-2 pe-0 item-img">
-                        <img src="{{this.img}}" alt="">
-                    </div>
-                    <div class="col-md-8">
-                        <p class="blog-title mb-1"><b>{{this.title}}</b></p>
-                        <p class="blog-description mb-1">{{this.description}}</p>
-                    </div>
-                    <div class="col-md-2 d-flex align-items-top justify-content-center">
-                        <button class=" btn btn-view p-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{this._id}}" aria-expanded="false" aria-controls="collapseExample">
-                            <i class="far fa-eye"></i>
-                        </button>
-                        <a class=" btn btn-edit p-2" href="/blog/editBlog/{{this._id}}">
-                            <i class="far fa-edit"></i>
-                        </a>
-                        <button class=" btn btn-delete p-2" id="{{this._id}}" onClick="reply_click(this.id)">
-                            <i class="far fa-trash-alt"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="collapse multi-collapse" id="collapse{{this._id}}">
-                    <div class="card card-body">
-                        <div class="blog-header mb-5">
-                            <div class="blog-category">
-                                <p>{{this.category}}</p>
-                            </div>
-                            <div>
-                                <h2>{{this.title}}</h2>
-                            </div>
-                            <div class="blog-timeCreate">
-                                <p>{{this.createdAt}}</p>
-                            </div>
-                            <hr>
-                        </div>
-
-
-                        <div class="blog-body mb-5">
-                            <div class="blog-description ">
-                                <p>{{this.description}}</p>
-                            </div>
-                            <div class="blog-img d-flex justify-content-center mb-5">
-                                <img src="{{this.img}}" alt="" height="300">
-                            </div>
-                            <div class="blog-content">
-                                <input type="text" value="{{this.contentCode}}" id="inputContentCode">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            {{/ifCond}}
-            {{/each}}
-        </div>
-        <div class="tab-pane fade" id="v-pills-takeCareDog" role="tabpanel" aria-labelledby="v-pills-takeCareDog-tab">
-            {{#each blogs }}
             {{#ifCond this.category '==' 'Đồ chơi công nghệ'}}
                 <div class="blog-item row mx-0 mt-1">
                     <div class="col-md-2 pe-0 item-img">
@@ -231,7 +176,7 @@
             {{/ifCond}}
             {{/each}}
         </div>
-        <div class="tab-pane fade" id="v-pills-takeCareCat" role="tabpanel" aria-labelledby="v-pills-takeCareCat-tab">
+        <div class="tab-pane fade" id="v-pills-takeCareDog" role="tabpanel" aria-labelledby="v-pills-takeCareDog-tab">
             {{#each blogs }}
             {{#ifCond this.category '==' 'Điện gia dụng'}}
                 <div class="blog-item row mx-0 mt-1">

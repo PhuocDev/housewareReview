@@ -56,8 +56,8 @@
                 <div class="input-group input-group-sm mt-3">
                     <span class="input-group-text" id="inputGroup-sizing-sm">Trạng Thái</span>
                     <select class="form-select form-select-sm status-blog" aria-label=".form-select-sm example">
-                        <option selected value="draft">Chưa được duyệt</option>
-                        <option value="published">Đã được duyệt</option>
+                        <option value="draft" {{#ifCond blog.status '==' 'draft'}} selected {{/ifCond}}>Chưa được duyệt</option>
+                        <option value="published" {{#ifCond blog.status '==' 'published'}} selected {{/ifCond}}>Đã được duyệt</option>
                     </select>
                 </div>
                 <div class="description-error error-text"></div>
@@ -186,9 +186,10 @@
         const inputTitle = document.querySelector('.title-blog');
         const inputCategory = document.querySelector('.category-blog').value;
         const inputDescription = document.querySelector('.description-blog').value;
+        const inputStatus = document?.querySelector('.status-blog')?.value || 'draft';
         var myContent = tinymce.get("editor").getContent();
 
-        console.log('btn-post clicked');
+        console.log('btn-post clicked', inputStatus);
         try {
         //--------------------------------------------------
             const id = inputTitle.id;
@@ -197,12 +198,13 @@
             const category = inputCategory;
             const description = inputDescription;
             const contentCode = myContent;
+            const status = inputStatus;
 
             const url = '/Blog/editBlog/' + id;
 
             const res = await fetch(url , {
                 method: 'POST',
-                body: JSON.stringify({ id, title, img, category, description, contentCode }),
+                body: JSON.stringify({ id, title, img, category, description, contentCode, status }),
                 headers: {'Content-Type': 'application/json'}
             });
             const data = await res.json();
