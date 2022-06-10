@@ -1,0 +1,100 @@
+<link rel="stylesheet" href="/css/blog.css">
+<link rel="stylesheet" href="/css/bestseller.css">
+<title>Sản Phẩm Bán Chạy Nhất</title>
+
+<div class="container page-container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-header">
+                {{#ifCond category '==' ''}}
+                <h2 class="page-title">Sản Phẩm Bán Chạy Nhất</h2>
+                <p class="lead">Tổng hợp các sản phẩm bán chạy nhất</p>
+                {{/ifCond}}
+
+                {{#ifCond category '!=' ''}}
+                <h2 class="page-title">{{title}}</h2>
+                <p class="lead">Tổng hợp các sản phẩm bán chạy nhất thuộc lĩnh vực {{title}}</p>
+                {{/ifCond}}
+            </div>
+
+            <div class="row category-menu">
+                <div class="col-md-4">
+                    <a href="?category=beauty&period=week" class="category-menu-item">
+                        Làm Đẹp
+                    </a>
+                </div>
+
+                <div class="col-md-4">
+                    <a href="?category=digital_devices&period=week" class="category-menu-item">
+                        Đồ Chơi Công Nghệ
+                    </a>
+                </div>
+
+                <div class="col-md-4">
+                    <a href="?category=electric_appliances&period=week" class="category-menu-item">
+                        Điện Gia Dụng
+                    </a>
+                </div>
+            </div>
+
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+            <div class="row period-menu">
+                <div class="col-md-3">
+                    <a href="?category={{category}}&period=week" class="period-menu-item">
+                        Tuần Này
+                    </a>
+                </div>
+
+                <div class="col-md-3">
+                    <a href="?category={{category}}&period=month" class="period-menu-item">
+                        Tháng Này
+                    </a>
+                </div>
+
+                <div class="col-md-3">
+                    <a href="?category={{category}}&period=year_2020" class="period-menu-item">
+                        2020
+                    </a>
+                </div>
+
+                <div class="col-md-3">
+                    <a href="?category={{category}}&period=year_2019" class="period-menu-item">
+                        2019
+                    </a>
+                </div>
+            </div>
+    </div>
+</div>
+            
+
+            <div class="articles">
+                <h3 class="mb-4 text-center">Danh Sách Sản Phẩm Bán Chạy Nhất {{ periodTitle }}</h3>
+                <hr />
+
+                {{#ifCond items.length '==' 0}}
+                    <p class="lead text-center mb-4">Không có sản phẩm nào!</p>
+                {{/ifCond}}
+                
+                {{#each items }}
+                    <div class="article">
+                        <a href="{{ this.url }}" target="_blank">
+                            <img src="{{this.image}}" class="card-img-top" alt="">
+                        </a>
+
+                         <div class="article-details">
+                            <h3 class="article-title">
+                               <a href="{{ this.url }}" target="_blank"><span class="article-top">[TOP {{ this.rank }}]</span> {{this.title}}</a>
+                            </h3>
+
+                            <p class="article-reviews">({{ this.review_count }} nhận xét)</p>
+                            <p><span class="sale-price">{{ this.sale_price }}</span> <span class="regular-price">{{ this.regular_price }}</span> <span class="discount-rate">{{ this.discount_rate }}</span></p>
+                            
+                            <p class="article-desc">{{this.description}}</p>
+                        </div>
+                    </div>
+                {{/each}}
+            </div>
+        </div>
+    </div>
+</div>

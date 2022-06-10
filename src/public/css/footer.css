@@ -1,0 +1,29 @@
+.footer{
+    background-color: rgb(126, 123, 123);
+    font-weight: lighter;
+    margin: 0;
+  }
+ .footer .address{
+   color: white;
+ }
+ .footer .account{
+   color: white;
+ }
+ .footer .account a:hover{
+   color: rgb(255, 101, 80);
+ }
+ .footer .popular{
+   color: white;
+ }
+ .footer .popular a:hover{
+   color: rgb(255, 101, 80);
+ }
+ .footer .popular a,
+ .footer .account a
+ {
+   color: white;
+ }
+
+ #footer2{
+   color: white;
+ }

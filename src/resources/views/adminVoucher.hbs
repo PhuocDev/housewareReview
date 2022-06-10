@@ -1,0 +1,651 @@
+<title>Voucher</title>
+<link rel="stylesheet" href="/css/general.css">
+<link rel="stylesheet" href="/css/adminVoucher.css">
+
+<div class="container-xl account-order-container">
+    <div class="row">
+        <div class="col-12 col-md-4 col-lg-3 my-3">
+            {{> adminAccountSidebar}}
+        </div>
+        <div class="col-12 col-md-8 col-lg-9 my-3">
+            <div class="row justify-content-between">
+                <h4 class="text-uppercase mb-4 mt-4 w-auto">Danh sách Voucher</h4>
+                <div class="span w-auto">
+                    <button type="button" class="btn btn-search">Tìm kiếm</button>
+                </div>
+            </div>
+            <div class="admin-order-search-container">
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-1"></div>
+                            <label for="inputVoucherIdSearch" class="col-3 col-form-label">Voucher ID</label>
+                            <div class="col-7">
+                                <input type="text" class="form-control col-form-label" id="inputVoucherIdSearch">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-1"></div>
+                            <label for="inputVoucherCodeSearch" class="col-3 col-form-label">Voucher Code</label>
+                            <div class="col-7">
+                                <input type="text" class="form-control" id="inputVoucherCodeSearch">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-1"></div>
+                            <label for="dropdownTypeSearch" class="col-3 col-form-label">Loại Voucher</label>
+                            <div class="col-7">
+                                <div class="dropdown dropdown-type-search-container">
+                                    <button class="btn btn-dropdown-type-search dropdown-toggle" type="button" id="dropdownTypeSearch" data-bs-toggle="dropdown" aria-expanded="false">Tất cả</button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownTypePayment">
+                                        <li><div class="dropdown-item dropdown-type-search-item" onclick="updateDropdownTypeSearchBtn('Tất cả')">Tất cả</div></li>
+                                        <li><div class="dropdown-item dropdown-type-search-item" onclick="updateDropdownTypeSearchBtn('Phần trăm')">Phần trăm</div></li>
+                                        <li><div class="dropdown-item dropdown-type-search-item" onclick="updateDropdownTypeSearchBtn('Mức tiền')">Mức tiền</div></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-1"></div>
+                            <label for="inputVoucherExpSearch" class="col-3 col-form-label">Hạn sử dụng</label>
+                            <div class="col-7">
+                                <input type="date" class="form-control col-form-label" id="inputVoucherExpSearch">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="admin-voucher-table-container">
+                <table class="table table-hover voucher-table text-center">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Voucher Id</th>
+                            <th scope="col">Loại voucher</th>
+                            <th scope="col">Giá trị</th>
+                            <th scope="col">Đã sử dụng</th>
+                            <th scope="col">Ngày tạo</th>
+                            <th scope="col">HSD</th>
+                        </tr>
+                    </thead>
+                    <tbody class="voucher-table-body">
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="voucher-option-container">
+                <div class="row">
+                    <button type="button" class="btn btn-option-info btn-voucher-option btn-voucher-option--active">Thông tin Voucher</button>
+                    <button type="button" class="btn btn-option-create btn-voucher-option">Tạo Voucher</button>
+                </div>
+            </div>
+            <div class="voucher-detail-container">
+                <div class="voucher-detail-header text-center pb-4">
+                    <h2 class="text-uppercase voucher-detail-header__title">Thông tin Voucher</h2>
+                    <div class="my-3">
+                        Dưới đây là thông tin Voucher 
+                        <span class="voucher-detail-header__voucher-id"></span>
+                    </div>
+                </div>
+                <div class="voucher-detail-info mt-4">
+                    <div class="row my-3">
+                        <label for="voucher-type" class="col-3">Loại Voucher:</label>
+                        <div class="col-9">
+                            <p id="voucher-type"></p>
+                        </div>
+                    </div>
+                    <div class="row my-3">
+                        <label for="voucher-value" class="col-3">Giá trị:</label>
+                        <div class="col-9">
+                            <p id="voucher-value"></p>
+                        </div>
+                    </div>
+                    <div class="row my-3">
+                        <label for="voucher-quantity" class="col-3">Đã sử dụng:</label>
+                        <div class="col-9">
+                            <p id="voucher-quantity"></p>
+                        </div>
+                    </div>
+                    <div class="row my-3">
+                        <label for="voucher-created-at" class="col-3">Ngày tạo:</label>
+                        <div class="col-9">
+                            <p id="voucher-created-at"></p>
+                        </div>
+                    </div>
+                    <div class="row my-3">
+                        <label for="voucher-exp" class="col-3">HSD:</label>
+                        <div class="col-9">
+                            <p id="voucher-exp"></p>
+                        </div>
+                    </div>
+                    <div class="row my-3">
+                        <label for="voucher-note" class="col-3">Ghi chú:</label>
+                        <div class="col-9">
+                            <p id="voucher-note"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <button type="button" class="btn btn-link btn-show-voucher-code text-decoration-none text--primary mb-3">Hiển thị Voucher Code</button>
+                </div>
+                <div class="voucher-code-table-container d-none">
+                    <table class="table voucher-code-table text-center">
+                        <tbody class="voucher-code-table-body">
+
+                        </tbody>
+                    </table>
+                </div>
+                
+
+
+                <div class="d-flex justify-content-end">
+                    <button type="button" class="btn btn-delete">Xóa Voucher</button>
+                </div>
+            </div>
+            <div class="admin-create-voucher-container d-none">
+                <p class="fw-bold my-3">
+                        Tạo Voucher
+                </p>
+                <div class="row my-3">
+                    <label for="inputVoucherId" class="col-3 col-form-label">ID Voucher:</label>
+                    <div class="col-6">
+                        <input type="text" class="form-control col-form-label" id="inputVoucherId" value="">
+                        <div class="inputVoucherIdError text-error"></div>
+                    </div>
+                    <div class="col-2">
+                        <button type="button" class="btn btn-create-id">Tạo ID</button>
+                    </div>
+
+                </div>
+                <div class="row my-3">
+                        <label for="dropdownTypeCreateVoucher" class="col-3 col-form-label">Loại Voucher:</label>
+                        <div class="dropdown col-6">
+                            <button class="btn btn-dropdown-type-create dropdown-toggle" type="button" id="dropdownTypeCreateVoucher" data-bs-toggle="dropdown" aria-expanded="false">Mức tiền</button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdown">
+                                <li><div class="dropdown-item dropdown-type-create-item" onclick="updateDropdownTypeCreateVoucherBtn('Mức tiền')">Mức tiền</div></li>
+                                <li><div class="dropdown-item dropdown-type-create-item" onclick="updateDropdownTypeCreateVoucherBtn('Phần trăm')">Phần trăm</div></li>
+                            </ul>
+                        </div>
+                    </div>
+                <div class="inputAmountVoucherValueContainer">
+                    <div class="row my-3">
+                        <label for="inputAmountVoucherValue" class="col-3 col-form-label">Giá trị:</label>
+                        <div class="col-6">
+                            <div class="input-group">
+                                <input type="text" class="form-control col-form-label" id="inputAmountVoucherValue" value="" onkeypress="return isNumber(event)" onpaste="return false;">
+                                <span class="input-group-text input-group-text-unit">đ</span>
+                            </div>
+                            <div class="inputAmountVoucherValueError text-error"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="inputPercentVoucherValueContainer d-none">
+                    <div class="row my-3">
+                        <label for="inputPercentVoucherValue" class="col-3 col-form-label">Giá trị:</label>
+                        <div class="col-6">
+                            <div class="input-group">
+                                <input type="text" class="form-control col-form-label" id="inputPercentVoucherValue" value="" min="1" max="100" onkeypress="return isNumber(event)" onpaste="return false;">
+                                <span class="input-group-text input-group-text-unit">%</span>
+                            </div>
+                            <div class="inputPercentVoucherValueError text-error"></div>
+                        </div>
+                    </div>
+                    <div class="row my-3">
+                        <label for="inputPercentVoucherMaxValue" class="col-3 col-form-label">Tối đa:</label>
+                        <div class="col-6 input-group w-50">
+                            <div class="input-group">
+                                <input type="text" class="form-control col-form-label" id="inputPercentVoucherMaxValue" value="" onkeypress="return isNumber(event)" onpaste="return false;">
+                                <span class="input-group-text input-group-text-unit">đ</span>
+                            </div>
+                            <div class="inputPercentVoucherMaxValueError text-error"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row my-3">
+                    <label for="inputVoucherQuantity" class="col-3 col-form-label">Số lượng:</label>
+                    <div class="col-6">
+                        <input type="text" class="form-control col-form-label" id="inputVoucherQuantity" value="" min="1" onkeypress="return isNumber(event)" onpaste="return false;">
+                        <div class="inputVoucherQuantityError text-error"></div>
+                    </div>
+                </div>
+                <div class="row my-3">
+                    <label for="inputVoucherExp" class="col-3 col-form-label">HSD:</label>
+                    <div class="col-6">
+                        <input type="date" class="form-control col-form-label" id="inputVoucherExp">
+                        <div class="inputVoucherExpError text-error"></div>
+                    </div>
+                </div>
+                <div class="form-floating my-3">
+                    <textarea class="form-control" id="inputVoucherNote" style="height: 100px"></textarea>
+                    <label for="inputVoucherNote">Ghi chú</label>
+                </div>
+                <div class="d-flex justify-content-end">
+                    <button type="button" class="btn btn-create">Tạo Voucher</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const sidebarItemVoucher = document.getElementById('account_sidebar__voucher');
+    sidebarItemVoucher.classList.add('account-sidebar__item--active');
+
+    const inputVoucherIdSearch = document.getElementById('inputVoucherIdSearch');
+    const inputVoucherCodeSearch = document.getElementById('inputVoucherCodeSearch');
+    const dropdownTypeSearch = document.getElementById('dropdownTypeSearch');
+    const inputVoucherExpSearch = document.getElementById('inputVoucherExpSearch');
+
+    const voucherTable = document.querySelector('.voucher-table');
+    const voucherTableBody = document.querySelector('.voucher-table-body');
+
+    const btnOptionInfo = document.querySelector('.btn-option-info');
+    const btnOptionCreate = document.querySelector('.btn-option-create');
+
+    const voucherDetailContainer = document.querySelector('.voucher-detail-container');
+    const voucherCreateContainer = document.querySelector('.admin-create-voucher-container');
+
+    const voucherDetailId = document.querySelector('.voucher-detail-header__voucher-id');
+    const voucherDetailType = document.getElementById('voucher-type');
+    const voucherDetailValue = document.getElementById('voucher-value');
+    const voucherDetailQuantity = document.getElementById('voucher-quantity');
+    const voucherDetailCreatedAt = document.getElementById('voucher-created-at');
+    const voucherDetailExp = document.getElementById('voucher-exp');
+    const voucherDetailNote = document.getElementById('voucher-note');
+    const voucherDetailCodeTableContainer = document.querySelector('.voucher-code-table-container');
+    const voucherDetailCodeTableBody = document.querySelector('.voucher-code-table-body');
+
+    const inputVoucherId = document.getElementById('inputVoucherId');
+    const inputAmountVoucherValue = document.getElementById('inputAmountVoucherValue');
+    const inputPercentVoucherValue = document.getElementById('inputPercentVoucherValue');
+    const inputPercentVoucherMaxValue = document.getElementById('inputPercentVoucherMaxValue');
+    const inputVoucherQuantity = document.getElementById('inputVoucherQuantity');
+    const inputVoucherExp = document.getElementById('inputVoucherExp');
+    const inputVoucherNote = document.getElementById('inputVoucherNote');
+    const inputAmountVoucherValueContainer = document.querySelector('.inputAmountVoucherValueContainer');
+    const inputPercentVoucherValueContainer = document.querySelector('.inputPercentVoucherValueContainer');
+
+    const inputVoucherIdError = document.querySelector('.inputVoucherIdError');
+    const inputAmountVoucherValueError = document.querySelector('.inputAmountVoucherValueError');
+    const inputPercentVoucherValueError = document.querySelector('.inputPercentVoucherValueError');
+    const inputPercentVoucherMaxValueError = document.querySelector('.inputPercentVoucherMaxValueError');
+    const inputVoucherQuantityError = document.querySelector('.inputVoucherQuantityError');
+    const inputVoucherExpError = document.querySelector('.inputVoucherExpError');
+
+    var data = [];
+    var currentIndex = 0;
+
+    btnSearchOnClick();
+
+    function voucherTableRowClick(rowIndex) {
+        console.log('table row ', rowIndex, ' clicked');
+        for (i = 1; i < voucherTable.rows.length; i++) {
+            if (voucherTable.rows[i].classList.contains('table-active')) {
+                voucherTable.rows[i].classList.remove('table-active');
+            }
+        }
+        voucherTable.rows[rowIndex].classList.add('table-active');
+        currentIndex = rowIndex - 1;
+        console.log(data.voucherList[currentIndex]);
+        voucherDetailId.textContent = data.voucherList[currentIndex].voucherId;
+        voucherDetailType.textContent = data.voucherList[currentIndex].type;
+        if (data.voucherList[currentIndex].type === 'Mức tiền') {
+            voucherDetailValue.textContent = data.voucherList[currentIndex].value;
+        }
+        else if (data.voucherList[currentIndex].type === 'Phần trăm') {
+            voucherDetailValue.textContent = data.voucherList[currentIndex].value + '% (Tối đa ' + data.voucherList[currentIndex].max + ')';
+        }
+        var numberUsed = 0;
+        var tableBody = '';
+        for (i = 0; i < Math.floor(data.voucherList[currentIndex].codeList.length / 5); i++) {
+            var row = '';
+            row += '<tr>';
+            for (j = 0; j < 5; j++) {
+                if (data.voucherList[currentIndex].codeList[i * 5 + j].isUsed) {
+                    numberUsed++;
+                    row += '<td class="text-decoration-line-through">' + data.voucherList[currentIndex].codeList[i * 5 + j].code + '</td>';
+                }
+                else {
+                    row += '<td>' + data.voucherList[currentIndex].codeList[i * 5 + j].code + '</td>';
+                }
+            }
+            row += '</tr>';
+            tableBody += row;
+        }
+        if ((data.voucherList[currentIndex].codeList.length % 5) > 0) {
+            const numberOfRowsCreated = Math.floor(data.voucherList[currentIndex].codeList.length / 5);
+            var row = '';
+            row += '<tr>';
+            for (i = 0; i < 5; i++) {
+                var index = numberOfRowsCreated * 5 + i;
+                if (index < data.voucherList[currentIndex].codeList.length) {
+                    if (data.voucherList[currentIndex].codeList[index].isUsed) {
+                        numberUsed++;
+                        row += '<td class="text-decoration-line-through">' + data.voucherList[currentIndex].codeList[index].code + '</td>';
+                    }
+                    else {
+                        row += '<td>' + data.voucherList[currentIndex].codeList[index].code + '</td>';
+                    }
+                }
+                else {
+                    row += '<td></td>';
+                }
+            }
+            row += '</tr>';
+            tableBody += row;
+        }
+        voucherDetailCodeTableBody.innerHTML = tableBody;
+        voucherDetailQuantity.textContent = numberUsed + '/' + data.voucherList[currentIndex].codeList.length;
+        var createdAtDate = new Date(data.voucherList[currentIndex].createdAt);
+        voucherDetailCreatedAt.textContent = createdAtDate.toDateString();
+        var expDate = new Date(data.voucherList[currentIndex].exp);
+        voucherDetailExp.textContent = expDate.toDateString();
+        voucherDetailNote.textContent = data.voucherList[currentIndex].note;
+        btnOptionInfoOnClick();
+    }
+
+    function updateDropdownTypeSearchBtn(type) {
+        dropdownTypeSearch.textContent = type;
+    }
+
+
+    btnOptionInfo.addEventListener('click', btnOptionInfoOnClick);
+    function btnOptionInfoOnClick() {
+        btnOptionInfo.classList.add('btn-voucher-option--active');
+        btnOptionCreate.classList.remove('btn-voucher-option--active');
+        voucherDetailContainer.classList.remove('d-none');
+        voucherCreateContainer.classList.add('d-none');
+    };
+
+    btnOptionCreate.addEventListener('click', btnOptionCreateOnClick);
+    function btnOptionCreateOnClick() {
+        btnOptionInfo.classList.remove('btn-voucher-option--active');
+        btnOptionCreate.classList.add('btn-voucher-option--active');
+        voucherDetailContainer.classList.add('d-none');
+        voucherCreateContainer.classList.remove('d-none');
+    };
+
+
+    const dropdownTypeCreateVoucher = document.getElementById('dropdownTypeCreateVoucher');
+    function updateDropdownTypeCreateVoucherBtn(type) {
+        dropdownTypeCreateVoucher.textContent = type;
+        if (type === 'Mức tiền') {
+            inputAmountVoucherValueContainer.classList.remove('d-none');
+            inputPercentVoucherValueContainer.classList.add('d-none');
+        }
+        else if (type === 'Phần trăm') {
+            inputAmountVoucherValueContainer.classList.add('d-none');
+            inputPercentVoucherValueContainer.classList.remove('d-none');
+        }
+    }
+
+    const btnSearch = document.querySelector('.btn-search');
+    btnSearch.addEventListener('click', btnSearchOnClick);
+    async function btnSearchOnClick() {
+        try {
+            var voucherIdSearch = inputVoucherIdSearch.value;
+            var voucherCodeSearch = inputVoucherCodeSearch.value;
+            var voucherTypeSearch = dropdownTypeSearch.textContent;
+            var voucherExpSearch = inputVoucherExpSearch.value;
+
+            const res = await fetch('/account/admin-get-voucher', {
+                method: 'POST',
+                body: JSON.stringify({ voucherIdSearch, voucherCodeSearch, voucherTypeSearch, voucherExpSearch }),
+                headers: {'Content-Type': 'application/json'}
+            });
+            data = await res.json();
+            if (data) {
+                if (data.voucherList) {
+                    console.log('search voucher successful');
+                    console.log(data.voucherList);
+                    var tableBody = '';
+                    for (i = 0; i < data.voucherList.length; i++) {
+                        var createdAtDate = new Date(data.voucherList[i].createdAt);
+                        var expDate = new Date(data.voucherList[i].exp);
+                        var row = '';
+                        var numberUsed = 0;
+                        for (j = 0; j < data.voucherList[i].codeList.length; j++) {
+                            if (data.voucherList[i].codeList[j].isUsed === true) numberUsed++;
+                        }
+                        if (data.voucherList[i].type === 'Mức tiền') {
+                            row =   '<tr onclick="voucherTableRowClick(' + (i + 1) + ')">'
+                                    + '<th scope="row">' + (i + 1) + '</th>'
+                                    + '<td>' + data.voucherList[i].voucherId + '</td>'
+                                    + '<td>' + data.voucherList[i].type + '</td>'
+                                    + '<td>' + data.voucherList[i].value + '</td>'
+                                    + '<td>' + numberUsed + '/' + data.voucherList[i].codeList.length + '</td>'
+                                    + '<td>' + createdAtDate.toDateString() + '</td>'
+                                    + '<td>' + expDate.toDateString() + '</td>'
+                                    + '</tr>';
+                        }
+                        else if (data.voucherList[i].type === 'Phần trăm') {
+                            row =   '<tr onclick="voucherTableRowClick(' + (i + 1) + ')">'
+                                    + '<th scope="row">' + (i + 1) + '</th>'
+                                    + '<td>' + data.voucherList[i].voucherId + '</td>'
+                                    + '<td>' + data.voucherList[i].type + '</td>'
+                                    + '<td>' + data.voucherList[i].value + '% (Tối đa ' + data.voucherList[i].max + ')' + '</td>'
+                                    + '<td>' + numberUsed + '/' + data.voucherList[i].codeList.length + '</td>'
+                                    + '<td>' + createdAtDate.toDateString() + '</td>'
+                                    + '<td>' + expDate.toDateString() + '</td>'
+                                    + '</tr>';
+                        }
+                        tableBody += row;
+                    }
+                    voucherTableBody.innerHTML = tableBody;
+                    if (data.voucherList.length > 0) {
+                        voucherTableRowClick(1);
+                    }
+                    else {
+                        btnOptionCreateOnClick();
+                        voucherDetailId.textContent = '';
+                        voucherDetailType.textContent = '';
+                        voucherDetailValue.textContent = '';
+                        voucherDetailQuantity.textContent = '';
+                        voucherDetailCreatedAt.textContent = '';
+                        voucherDetailExp.textContent = '';
+                    }
+                }
+                else if (data.error) {
+                    console.log('search voucher failed');
+                    console.log(data.error);
+                }
+            }
+            else {
+                console.log('search voucher failed');
+            }
+        }
+        catch(err) {
+            console.log('search voucher error');
+            console.log(err);
+        }
+    };
+
+    const btnShowVoucherCode = document.querySelector('.btn-show-voucher-code');
+    btnShowVoucherCode.addEventListener('click', () => {
+        if (voucherDetailCodeTableContainer.classList.contains('d-none')) {
+            voucherDetailCodeTableContainer.classList.remove('d-none');
+        }
+        else {
+            voucherDetailCodeTableContainer.classList.add('d-none');
+        }
+    });
+
+    const btnDelete = document.querySelector('.btn-delete');
+    btnDelete.addEventListener('click', async () => {
+        if (data.voucherList.length > 0) {
+            if (confirm('Bạn có chắc muốn xóa Voucher ' + data.voucherList[currentIndex].voucherId + '?')) {
+                try {
+                    const voucherIdToDelete = data.voucherList[currentIndex].voucherId;
+                    const res = await fetch('/account/admin-delete-voucher', {
+                        method: 'POST',
+                        body: JSON.stringify({ voucherIdToDelete }),
+                        headers: {'Content-Type': 'application/json'}
+                    });
+                    data = await res.json();
+                    if (data) {
+                        if (data.status === 200) {
+                            console.log('delete voucher successful');
+                            showAlertChicPet('alert-success', 'Xóa Voucher thành công');
+                            btnSearchOnClick();
+                        }
+                        else if (data.error) {
+                            console.log(data.error);
+                            showAlertChicPet('alert-danger', 'Xóa Voucher thất bại, vui lòng thử lại');
+                        }
+                    }
+                }
+                catch(err) {
+                    console.log('btn delete error');
+                    console.log(err);
+                    showAlertChicPet('alert-danger', 'Xóa Voucher thất bại, vui lòng thử lại');
+                }
+            }
+        }
+    });
+    
+    const btnCreateId = document.querySelector('.btn-create-id');
+    btnCreateId.addEventListener('click', () => {
+        console.log('btn create id clicked');
+        var newId = generateID(8);
+        inputVoucherId.value = newId;
+    });
+
+    function generateID(length) {
+        var result           = '';
+        var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        var charactersLength = characters.length;
+        for ( var i = 0; i < length; i++ ) {
+            result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        }
+        return result;
+    };
+
+    const btnCreateVoucher = document.querySelector('.btn-create');
+    btnCreateVoucher.addEventListener('click', async () => {
+        inputVoucherIdError.textContent = '';
+        inputAmountVoucherValueError.textContent = '';
+        inputPercentVoucherValueError.textContent = '';
+        inputPercentVoucherMaxValueError.textContent = '';
+        inputVoucherQuantityError.textContent = '';
+        inputVoucherExpError.textContent = '';
+
+        var inputValidated = true;
+
+        if (inputVoucherId.value === '') {
+            inputVoucherIdError.textContent = 'Vui lòng nhập ID Voucher';
+            inputValidated = false;
+        }
+        if (dropdownTypeCreateVoucher.textContent === 'Mức tiền') {
+            if (inputAmountVoucherValue.value === '') {
+                inputAmountVoucherValueError.textContent = 'Vui lòng nhập giá trị Voucher';
+                inputValidated = false;
+            }
+        }
+        else if (dropdownTypeCreateVoucher.textContent === 'Phần trăm') {
+            if (inputPercentVoucherValue.value === '') {
+                inputPercentVoucherValueError.textContent = 'Vui lòng nhập giá trị Voucher';
+                inputValidated = false;
+            }
+            else if (inputPercentVoucherValue.value < 1 || inputPercentVoucherValue.value > 100) {
+                inputPercentVoucherValueError.textContent = 'Giá trị Voucher không hợp lệ';
+                inputValidated = false;
+            }
+            if (inputPercentVoucherMaxValue.value === '') {
+                inputPercentVoucherMaxValueError.textContent = 'Vui lòng nhập giá trị tối đa';
+                inputValidated = false;
+            }
+        }
+        if (inputVoucherQuantity.value === '') {
+            inputVoucherQuantityError.textContent = 'Vui lòng nhập số lượng Voucher';
+            inputValidated = false;
+        }
+        if (inputVoucherQuantity.value < 1) {
+            inputVoucherQuantityError.textContent = 'Vui lòng nhập số lượng Voucher';
+            inputValidated = false;
+        }
+        if (inputVoucherExp.value === '') {
+            inputVoucherExpError.textContent = 'Vui lòng nhập HSD Voucher';
+            inputValidated = false;
+        }
+
+        if (inputValidated) {
+            try {
+                const newVoucherId = inputVoucherId.value;
+                const newVoucherType = dropdownTypeCreateVoucher.textContent;
+                var newVoucherValue;
+                var newVoucherMaxValue;
+                if (newVoucherType === 'Mức tiền') {
+                    newVoucherValue = inputAmountVoucherValue.value;
+                    newVoucherMaxValue = null;
+                }
+                else if (newVoucherType === 'Phần trăm') {
+                    newVoucherValue = inputPercentVoucherValue.value;
+                    newVoucherMaxValue = inputPercentVoucherMaxValue.value;
+                }
+                const newVoucherQuantity = inputVoucherQuantity.value;
+                const newVoucherExp = inputVoucherExp.value;
+                const newVoucherNote = inputVoucherNote.value;
+
+                const res = await fetch('/account/admin-create-voucher', {
+                    method: 'POST',
+                    body: JSON.stringify({ newVoucherId, newVoucherType, newVoucherValue, newVoucherMaxValue, newVoucherQuantity, newVoucherExp, newVoucherNote }),
+                    headers: {'Content-Type': 'application/json'}
+                });
+                const data = await res.json();
+                if (data) {
+                    if (data.newVoucher) {
+                        console.log('create voucher successful');
+                        console.log(data.newVoucher);
+                        showAlertChicPet('alert-success', 'Tạo voucher thành công');
+                        inputVoucherId.value = '';
+                        updateDropdownTypeCreateVoucherBtn('Mức tiền');
+                        inputAmountVoucherValue.value = '';
+                        inputPercentVoucherValue.value = '';
+                        inputPercentVoucherMaxValue.value = '';
+                        inputVoucherQuantity.value = '';
+                        inputVoucherExp.value = '';
+                        btnSearchOnClick();
+                    }
+                    else if (data.error) {
+                        console.log('create voucher failed');
+                        console.log(data.error);
+                        if (data.error.code) {
+                            if (data.error.code === 11000) inputVoucherIdError.textContent = 'ID Voucher đã tồn tại';
+                        }
+                    }
+                }
+                else {
+                    console.log('create voucher failed');
+                    showAlertChicPet('alert-success', 'Tạo voucher thất bại');
+                }
+            }
+            catch(err) {
+                console.log('create voucher error');
+                console.log(err);
+                showAlertChicPet('alert-success', 'Tạo voucher thất bại');
+            }
+        }
+    });
+
+    function isNumber(evt) {
+        evt = (evt) ? evt : window.event;
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if ( (charCode > 31 && charCode < 48) || charCode > 57) {
+            return false;
+        }
+        return true;
+    }
+</script>
+<script>
+    document.getElementById("navbarDropdownMenuLink").classList.add("active");
+</script>

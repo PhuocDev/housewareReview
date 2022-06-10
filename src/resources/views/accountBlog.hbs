@@ -1,0 +1,131 @@
+<title>Bài Viết Của Bạn</title>
+<link rel="stylesheet" href="/css/accountBlog.css">
+<link rel="stylesheet" href="/css/general.css">
+
+<div class="container-xl page-container">
+    <div class="row">
+        <div class="col-12 col-md-4 col-lg-3 my-3">
+            {{> customerAccountSidebar}}
+        </div>
+
+        <div class="col-12 col-md-8 col-lg-9 my-3">
+            <div class="page-header">
+                <div>
+                {{#ifCond category '==' ''}}
+                <h2 class="page-title">Bài Viết Của Bạn</h2>
+                <p class="lead">Tổng hợp các bài review sản phẩm do bạn đăng tải</p>
+                {{/ifCond}}
+
+                {{#ifCond category '!=' ''}}
+                <h2 class="page-title">{{category}}</h2>
+                <p class="lead">Tổng hợp các bài review sản phẩm do bạn đăng tải thuộc lĩnh vực {{category}}</p>
+                {{/ifCond}}
+                </div>
+            </div>
+
+            <form class="page-search-box">
+                <input type='text' placeholder='Nhập từ khóa cần tìm kiếm' class="form-control" name="keyword" />
+                
+                {{#ifCond keyword '!=' ''}}
+                <p class="page-search-title">{{total}} kết quả tìm kiếm cho từ khóa <strong>{{keyword}}</strong>&nbsp;&nbsp;<a href="/blog" class="page-search-reset"><i class="fa fa-times-circle"></i></a></p>
+                {{/ifCond}}
+            </form>
+
+            <div class="articles">
+                {{#each blogs }}
+                    <div class="article">
+                        <a href="/account/blog/{{this._id}}">
+                            <img src="{{this.img}}" class="card-img-top" alt="">
+                        </a>
+
+                         <div class="article-details">
+                            <h3 class="article-title">
+                               <a href="/blog/{{this._id}}">{{this.title}}</a>
+                            </h3>
+                            
+                            <div class="article-meta">
+                                <a href="/account/blog?category={{this.category}}" class="article-category">{{this.category}}</a>
+                                <span class="article-date">{{formatDate this.createdAt}}</span>
+                            </div>
+                            
+                            <p class="article-desc">{{truncateText this.description 255}}</p>
+
+                            <a href="/blog/editBlog/{{this._id}}" class="btn btn-edit">Sửa Bài Viết</a>
+                            <a class="btn btn-delete" data-id="{{ this._id }}" data-title="{{ this.title }}">Xóa Bài Viết</a>
+                        </div>
+                    </div>
+                {{/each}}
+
+                {{#ifCond blogs.length '>' 0}}
+                <div class="d-flex justify-content-center">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            {{#paginate pagination type="previous"}}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{n}}" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                             {{/paginate}}
+
+                            {{#paginate pagination type="middle" limit="10"}}
+                            <li class="page-item"><a class="page-link" href="?page={{n}}">{{n}}</a></li>
+                            {{/paginate}}
+
+                            {{#paginate pagination type="next"}}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{n}}" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                            {{/paginate}}
+                        </ul>
+                    </nav>
+                </div>
+                {{/ifCond}}
+            </div>
+        </div>
+    </div>
+
+    <input type='hidden' id='userId' value="{{ userId }}" />
+</div>
+
+<script>
+    const sidebarItemContact = document.getElementById('account_sidebar__blog');
+    sidebarItemContact.classList.add('account-sidebar__item--active');
+
+    $(document).ready(function() {
+        $('.btn-delete').on('click', function() {
+            const id = $(this).data('id');
+            const title = $(this).data('title');
+
+            swal({
+                title: "Xóa Bài Viết",
+                text: `Bạn có chắc chắn muốn xóa bài viết '${title}' khỏi danh sách bài viết hay không?`,
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                $.ajax({
+                    url: `/blog/${id}`,
+                    type: 'DELETE',
+                    success: function(result) {
+                        console.log('result', result);
+                    }
+                });
+
+                if (willDelete) {
+                    swal({
+                        title: "Thành công",
+                        text: `Xóa bài viết ${title} thành công!`,
+                        icon: "success",
+                        button: "Đồng Ý",
+                    }).then(data => {
+                        location.reload();
+                    });
+                }
+            });
+        });
+    })
+</script>

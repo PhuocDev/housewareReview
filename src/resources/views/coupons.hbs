@@ -1,0 +1,163 @@
+<link rel="stylesheet" href="/css/coupon.css">
+<title>Mã Giảm Giá</title>
+
+<div class="blog-body mb-5 container px-lg-5" id="body">
+    <div class="blog-nav">
+        <div class="collap-content">
+            <div class="collapse show" id="collapseWidthExample">
+                <div class="card card-body" >
+                    <div class="row d-flex px-0 body1 mx-0">
+                        <div class="box col mx-3 blog-item4">
+                            <a href="?category=shopee" class="p-3">
+                                <img src="https://mgg.vn/wp-content/uploads/2018/01/shopee.png" width="200" height="100">
+                                <h5 class="mt-2">Mã Giảm Giá Shopee</h5>
+                            </a>
+                        </div>
+
+                        <div class="box col mx-3 blog-item4">
+                           <a href="?category=tiki" class="p-3">
+                                <img src="https://mgg.vn/wp-content/uploads/2018/01/tiki.png" width="200" height="100">
+                                <h5 class="mt-2">Mã Giảm Giá Tiki</h5>
+                            </a>
+                        </div>
+
+                        <div class="box col mx-3 blog-item4">
+                            <a href="?category=lazada" class="p-3">
+                                <img src="https://mgg.vn/wp-content/uploads/2020/06/lazada.png" width="200" height="100">
+                                <h5 class="mt-2">Mã Giảm Giá Lazada</h5>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-header mt-4">
+        <h2>Tổng hợp mã giảm giá {{ category }}</h2>
+    </div>
+
+    <div class="content row mx-0 mt-4" id="content">
+        {{#each coupons }}
+            <div class="card coupon-card col-md-12 mb-4">
+                {{#ifCond this.source '==' 'shopee'}}
+                    <img src="https://mgg.vn/wp-content/uploads/2018/01/shopee.png" class="card-img-top" alt="">
+                {{/ifCond}}
+
+                {{#ifCond this.source '==' 'tiki'}}
+                    <img src="https://mgg.vn/wp-content/uploads/2018/01/tiki.png" class="card-img-top" alt="">
+                {{/ifCond}}
+
+                {{#ifCond this.source '==' 'lazada'}}
+                    <img src="https://mgg.vn/wp-content/uploads/2018/01/lazada.png" class="card-img-top" alt="">
+                {{/ifCond}}
+
+                <div class="card-body">
+                    <p class="coupon-value">
+                        {{this.value}}
+                    </p>
+
+                    <h5 class="card-title">{{this.title}}</h5>
+                    <p><strong>Hạn SD:</strong> {{toDateTimeString this.expiredDate}}</p>
+                    <p class="coupon-description">{{this.description}}</p>
+
+                    {{#ifCond this.code '!=' ''}}
+                        <span class="coupon-code" data-code="{{ this.code }}" data-url="{{ this.url }}" data-title="{{ this.title }}" data-description="{{ this.description }}" data-source="{{ this.source }}">
+                            {{this.code}}
+                        </span>
+                    {{/ifCond}}
+
+                    {{#ifCond this.code '==' ''}}
+                        <a class="btn btn-read" data-url="{{ this.url }}" data-title="{{ this.title }}" data-description="{{ this.description }}" data-source="{{ this.source }}">Nhận Khuyến Mãi</a>
+                    {{/ifCond}}
+                    
+                </div>
+            </div>
+        {{/each}}    
+    </div>
+
+    {{#ifCond coupons.length '>' 0}}
+    <div class="d-flex justify-content-center">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                {{#paginate pagination type="previous"}}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{n}}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                    {{/paginate}}
+
+                {{#paginate pagination type="middle" limit="10"}}
+                <li class="page-item"><a class="page-link" href="?page={{n}}">{{n}}</a></li>
+                {{/paginate}}
+
+                {{#paginate pagination type="next"}}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{n}}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+                {{/paginate}}
+            </ul>
+        </nav>
+    </div>
+    {{/ifCond}}
+
+    <input type='hidden' id='userId' value="{{ userId }}" />
+</div>
+
+<script>
+    $(document).ready(function() {
+        const SHOPEE_LOGO = 'https://mgg.vn/wp-content/uploads/2018/01/shopee.png';
+        const TIKI_LOGO = 'https://mgg.vn/wp-content/uploads/2018/01/tiki.png';
+        const LAZADA_LOGO = 'https://mgg.vn/wp-content/uploads/2018/01/lazada.png';
+
+        const getImageFromSource = (source) => {
+            switch (source) {
+                case 'shopee':
+                    return SHOPEE_LOGO;
+
+                case 'tiki':
+                    return TIKI_LOGO;
+
+                case 'lazada':
+                    return LAZADA_LOGO;
+            }
+        }
+
+        $('.coupon-code').on('click', function() {
+            const code = $(this).data('code');
+            const url = $(this).data('url');
+            const title = $(this).data('title');
+            const description = $(this).data('description');
+            const image = $(this).data('image');
+            const source = $(this).data('source');
+            const userId = $('#userId').val();
+
+            navigator.clipboard.writeText(code);
+
+            swal({
+                title: "Thành công",
+                text: "Mã giảm giá đã được sao chép!",
+                icon: "success",
+                button: "Đồng Ý",
+            }).then(data => {
+                window.open(url, '_blank');
+            });
+        });
+
+        $('.btn-read').on('click', function(e) {
+            const url = $(this).data('url');
+            const title = $(this).data('title');
+            const description = $(this).data('description');
+            const image = $(this).data('image');
+            const source = $(this).data('source');
+            const userId = $('#userId').val();
+
+            e.preventDefault();
+
+            window.open(url, '_blank');
+        });
+    })
+</script>

@@ -1,0 +1,109 @@
+/* Made with love by Mutiullah Samim*/
+
+html,body{
+    background-image: url('./../img/login/background.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100%;
+    font-family: 'Numans', sans-serif;
+}
+
+.container{
+height: 100%;
+align-content: center;
+}
+
+.card{
+margin-top: auto;
+margin-bottom: auto;
+width: 400px;
+background-color: rgba(0,0,0,0.2) !important;
+}
+
+.social_icon span{
+font-size: 60px;
+margin-left: 10px;
+color: rgb(255, 101, 80);
+}
+
+.social_icon span:hover{
+opacity: 0.5;
+cursor: pointer;
+}
+
+.card-header h3{
+color: white;
+}
+
+.social_icon{
+position: absolute;
+right: 20px;
+top: -45px;
+}
+
+.input-group-prepend span{
+width: 50px;
+height: 40px;
+background-color: rgb(255, 101, 80);
+color: black;
+border:0 !important;
+}
+
+.input-error {
+    font-size: 0.9rem;
+    color: red;
+}
+
+input:focus{
+outline: 0 0 0 0  !important;
+box-shadow: 0 0 0 0 !important;    
+}
+
+.card-footer a:hover{
+    text-decoration: underline !important;
+    color: rgba(0, 0, 0, 0.7);
+}
+.card-footer a{
+    color: white;
+}
+.card-footer p{
+    color: white;
+}
+
+/*----------------------*/
+.tab-2{
+    display: none;
+}
+
+.submit_btn{
+    color: black;
+    background-color: rgb(255, 101, 80);
+    width: 100px;
+    }
+    
+.submit_btn:hover{
+    color: black;
+    opacity: 0.5;
+}
+
+.next_btn{
+    color: black;
+    background-color: rgb(255, 101, 80);
+    width: 100px;
+    }
+    
+.next_btn:hover{
+    color: black;
+    opacity: 0.5;
+}
+
+.pre_btn{
+    color: black;
+    background-color: rgb(255, 101, 80);
+    width: 100px;
+    }
+    
+.pre_btn:hover{
+    color: black;
+    opacity: 0.5;
+}

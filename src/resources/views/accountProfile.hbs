@@ -1,0 +1,218 @@
+<title>Account</title>
+<link rel="stylesheet" href="/css/accountProfile.css">
+<link rel="stylesheet" href="/css/general.css">
+
+<div class="container-xl account-info-container">
+    <div class="row">
+        <div class="col-12 col-md-4 col-lg-3 my-3">
+            {{> customerAccountSidebar}}
+        </div>
+        <div class="col-12 col-md-8 col-lg-9 my-3">
+            <div class="col">
+                <h4 class="text-uppercase mb-4 mt-4">Thông tin tài khoản</h4>
+                <div class="mb-4 row">
+                    <label for="inputName" class="col-lg-3 col-form-label mb-1">Họ tên</label>
+                    <div class="col-lg-7">
+                        <input type="text" class="form-control mb-2" id="inputName" value="{{user.fullname}}">
+                        <div class="inputName-error text-error"></div>
+                    </div>
+                </div>
+                <div class="mb-4 row">
+                    <label for="inputEmail" class="col-lg-3 col-form-label mb-1">Email</label>
+                    <div class="col-lg-7">
+                        <input type="email" class="form-control mb-2" id="inputEmail" value="{{user.mail}}">
+                        <div class="inputEmail-error text-error"></div>
+                    </div>
+                </div>
+                <div class="mb-4 row">
+                    <label for="inputPhone" class="col-lg-3 col-form-label mb-1">Số điện thoại</label>
+                    <div class="col-lg-7">
+                        <input type="text" class="form-control mb-2" id="inputPhone" value="{{user.phone}}" onkeypress="return isNumber(event)" onpaste="return false;">
+                        <div class="inputPhone-error text-error"></div>
+                    </div>
+                </div>
+                <div class="mb-4 row">
+                    <label for="inputAddress" class="col-lg-3 col-form-label mb-1">Địa chỉ</label>
+                    <div class="col-lg-7">
+                        <input type="tel" class="form-control mb-2" id="inputAddress" value="{{user.address}}">
+                        <div class="inputAddress-error text-error"></div>
+                    </div>
+                </div>
+                <div>
+                    <button type="button" class="btn btn-link btn-change-password text-decoration-none text--primary mb-3">Thay đổi mật khẩu</button>
+                </div>
+                <div class="change-password-section d-none">
+                    <div class="mb-4 row">
+                        <label for="inputPassword" class="col-lg-3 col-form-label mb-1">Mật khẩu cũ</label>
+                        <div class="col-lg-5">
+                            <input type="password" class="form-control mb-2" id="inputPassword">
+                            <div class="inputPassword-error text-error"></div>
+                        </div>
+                    </div>
+                    <div class="mb-4 row">
+                        <label for="inputNewPassword" class="col-lg-3 col-form-label mb-1">Mật khẩu mới</label>
+                        <div class="col-lg-5">
+                            <input type="password" class="form-control mb-2" id="inputNewPassword">
+                            <div class="inputNewPassword-error text-error"></div>
+                        </div>
+                    </div>
+                    <div class="mb-4 row">
+                        <label for="inputConfirmPassword" class="col-lg-3 col-form-label mb-1">Nhập lại mật khẩu</label>
+                        <div class="col-lg-5">
+                            <input type="password" class="form-control mb-2" id="inputConfirmPassword">
+                            <div class="inputConfirmPassword-error text-error"></div>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-update border-0">Cập Nhật Tài Khoản</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    const sidebarItemProfile = document.getElementById('account_sidebar__profile');
+    sidebarItemProfile.classList.add('account-sidebar__item--active');
+
+    const inputName = document.getElementById('inputName');
+    const inputNameError = document.querySelector('.inputName-error');
+    const inputEmail = document.getElementById('inputEmail');
+    const inputEmailError = document.querySelector('.inputEmail-error');
+    const inputPhone = document.getElementById('inputPhone');
+    const inputPhoneError = document.querySelector('.inputPhone-error');
+    const inputAddress = document.getElementById('inputAddress');
+    const inputAddressError = document.querySelector('.inputAddress-error');
+    const inputPassword = document.getElementById('inputPassword');
+    const inputPasswordError = document.querySelector('.inputPassword-error');
+    const inputNewPassword = document.getElementById('inputNewPassword');
+    const inputNewPasswordError = document.querySelector('.inputNewPassword-error');
+    const inputConfirmPassword = document.getElementById('inputConfirmPassword');
+    const inputConfirmPasswordError = document.querySelector('.inputConfirmPassword-error');
+    const changePasswordbtn = document.querySelector('.btn-change-password');
+    const changePasswordSection = document.querySelector('.change-password-section');
+    const btnUpdate = document.querySelector('.btn-update');
+
+    changePasswordbtn.addEventListener('click', (e) => {
+        if (changePasswordSection.classList.contains('d-none')) {
+            changePasswordSection.classList.remove('d-none');
+        }
+        else {
+            changePasswordSection.classList.add('d-none');
+        }
+    });
+
+    btnUpdate.addEventListener('click', async () => {
+        const newName = inputName.value;
+        const newEmail = inputEmail.value;
+        const newPhone = inputPhone.value;
+        const newAddress = inputAddress.value;
+        var oldPassword = inputPassword.value;
+        var newPassword = inputNewPassword.value;
+        const confirmPassword = inputConfirmPassword.value;
+        var inputValidated = true;
+        inputNameError.textContent = '';
+        inputEmailError.textContent = '';
+        inputPhoneError.textContent = '';
+        inputAddressError.textContent = '';
+        inputPasswordError.textContent = '';
+        inputNewPasswordError.textContent = '';
+        inputConfirmPasswordError.textContent = '';
+        try {
+            if (newName === '') {
+                inputNameError.textContent = 'Vui lòng nhập họ tên';
+                inputValidated = false;
+            }
+            if (newEmail === '') {
+                inputEmailError.textContent = 'Vui lòng nhập email';
+                inputValidated = false;
+            }
+            if (newPhone === '') {
+                inputPhoneError.textContent = 'Vui lòng nhập số điện thoại';
+                inputValidated = false;
+            }
+
+            if (inputValidated) {
+                if (changePasswordSection.classList.contains('d-none')) {
+                    oldPassword = '';
+                    newPassword = '';
+                    const res = await fetch('/account/profile', {
+                        method: 'POST',
+                        body: JSON.stringify({ newName, newEmail, newPhone, newAddress, oldPassword, newPassword }),
+                        headers: {'Content-Type': 'application/json'}
+                    });
+                    const data = await res.json();
+                    if (data) {
+                        if(data.info) {
+                            console.log('update account successful');
+                            console.log(data.info);
+                            inputName.value = data.info.newName;
+                            inputEmail.value = data.info.newEmail;
+                            inputPhone.value = data.info.newPhone;
+                            inputAddress.value = data.info.newAddress;
+                            showAlertChicPet('alert-success', 'Cập nhật thông tin thành công');
+                        }
+                        else if (data.error) {
+                            console.log(data.error);
+                            showAlertChicPet('alert-danger', 'Cập nhật thông tin thất bại, vui lòng thử lại');
+                        }
+                    }
+                }
+                else {
+                    if (oldPassword === '') inputPasswordError.textContent = 'Vui lòng nhập mật khẩu cũ';
+                    else if (newPassword === '') inputNewPasswordError.textContent = 'Vui lòng nhập mật khẩu mới';
+                    else if (newPassword.length < 6) inputNewPasswordError.textContent = 'Mật khẩu phải có ít nhất 6 ký tự';
+                    else if (confirmPassword === '') inputConfirmPasswordError.textContent = 'Vui lòng nhập lại mật khẩu';
+                    else if (newPassword !== confirmPassword) {
+                        inputConfirmPasswordError.textContent = 'Nhập lại mật khẩu không chính xác';
+                    }
+                    else {
+                        const res = await fetch('/account/profile', {
+                            method: 'POST',
+                            body: JSON.stringify({ newName, newEmail, newPhone, newAddress, oldPassword, newPassword }),
+                            headers: {'Content-Type': 'application/json'}
+                        });
+                        const data = await res.json();
+                        if (data) {
+                            if(data.info) {
+                                console.log('update account successful');
+                                console.log(data.info);
+                                inputName.value = data.info.newName;
+                                inputEmail.value = data.info.newEmail;
+                                inputPhone.value = data.info.newPhone;
+                                inputAddress.value = data.info.newAddress;
+                                showAlertChicPet('alert-success', 'Cập nhật thông tin thành công');
+                            }
+                            else if (data.error.password) {
+                                console.log(data.error);
+                                inputPasswordError.textContent = data.error.password;
+                            }
+                            else if (data.error) {
+                                console.log(data.error);
+                                showAlertChicPet('alert-danger', 'Cập nhật thông tin thất bại, vui lòng thử lại');
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        catch(err) {
+            console.log(err);
+            showAlertChicPet('alert-danger', 'Cập nhật thông tin thất bại, vui lòng thử lại');
+        }
+    });
+</script>
+<script type="text/javascript">     
+    function isNumber(evt) {
+            evt = (evt) ? evt : window.event;
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            if ( (charCode > 31 && charCode < 48) || charCode > 57) {
+                return false;
+            }
+            return true;
+        }
+</script>
+<script>
+    document.getElementById("navbarDropdownMenuLink").classList.add("active");
+</script>

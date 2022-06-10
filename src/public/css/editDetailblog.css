@@ -1,0 +1,107 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+html{
+    font-family: Arial, Helvetica, sans-serif;
+    scroll-behavior: smooth;
+}
+/* .container-fluid{
+    padding: 0 10%;
+} */
+/*------------------------------------*/
+.content{
+    margin-top: 100px;
+    width: 100%;
+    height: 85vh;
+}
+
+.menu-bar button span{
+    color: black;
+}
+.menu-bar{
+    background-color: white;
+    border: solid 1px black;
+    position: relative;
+}
+.menu-bar .list-item ul,
+.menu-bar .list-item li,
+.menu-bar .list-item .btn
+{
+    color: black;
+    width: 100%;
+    text-align: left !important;
+}
+.list-item .btn i
+{
+    width: 30%;
+}
+.menu-bar .list-item .btn:hover{
+    background-color: rgb(255, 101, 80);
+    opacity: 1 !important;
+    color: white !important;
+}
+
+.post-content{
+    border-top: solid 1px black;
+    border-right: solid 1px black;
+    border-bottom: solid 1px black;
+
+}
+#editor{
+    height: 64vh;
+}
+#modal-inform .btn-viewBlog{
+    background-color: rgb(255, 101, 80);
+    color: white;
+}
+#modal-inform .btn-viewBlog:hover{
+    opacity: 0.8;
+}
+#modal-inform .btn-closeModal{
+    background-color: white;
+    color: black;
+    border: solid 1px transparent;
+}
+#modal-inform .btn-closeModal:hover{
+    border: solid 1px black;
+}
+/*------------------------------------------*/
+#modal-preview .previewModal-body{
+    padding: 30px 10%;
+    background-color: white !important;
+}
+#modal-preview .modal-footer{
+    background-color: white;
+}
+#modal-preview .blog-header{
+    padding-top: 30px;
+}
+#modal-preview .blog-category{
+    color: rgb(255, 101, 80);
+}
+#modal-preview .blog-description{
+    font-style: italic;
+    color: gray;
+    font-weight: 500;
+}
+#modal-preview .modal-footer button{
+    background-color: rgb(255, 101, 80);
+    color: white;
+}
+#modal-preview .blog-timeCreate{
+    font-style: italic;
+    font-size: smaller;
+    width: 95px;
+}
+#modal-preview .blog-timeCreate p{
+    overflow: hidden;
+    white-space: nowrap; 
+    text-overflow: unset;
+}
+/*------------------------------*/
+.error-text{
+    color: red;
+    font-size: smaller;
+}

@@ -1,0 +1,175 @@
+.search-form {
+    margin: 60px;
+}
+
+
+/* customer reviews*/
+
+.align-center {
+    text-align: center;
+}
+
+.hash-list {
+    display: block;
+    padding: 0;
+    margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+    .hash-list.cols-3>li:nth-last-child(-n+3) {
+        border-bottom: none;
+    }
+}
+
+@media (min-width: 768px) {
+    .hash-list.cols-3>li {
+        width: 33.3333%;
+    }
+}
+
+.hash-list>li {
+    display: block;
+    float: left;
+    border-right: 1px solid rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.pad-30,
+.pad-30-all>* {
+    padding: 30px;
+}
+
+img {
+    border: 0;
+}
+
+.mgb-20,
+.mgb-20-all>* {
+    margin-bottom: 20px;
+}
+
+.wpx-100,
+.wpx-100-after:after {
+    width: 100px;
+}
+
+.img-round,
+.img-rel-round {
+    border-radius: 50%;
+}
+
+.padb-30,
+.padb-30-all>* {
+    padding-bottom: 30px;
+}
+
+.mgb-40,
+.mgb-40-all>* {
+    margin-bottom: 40px;
+}
+
+.align-center {
+    text-align: center;
+}
+
+[class*="line-b"] {
+    position: relative;
+    padding-bottom: 20px;
+    border-color: #E6AF2A;
+}
+
+.fg-text-d,
+.fg-hov-text-d:hover,
+.fg-active-text-d.active {
+    color: #222;
+}
+
+.font-cond-b {
+    font-weight: 700 !important;
+}
+
+
+/*-------------------------------------*/
+
+.content {
+    width: 100%;
+}
+
+.content .card {
+    border: 0;
+    background-color: transparent;
+}
+
+.content .card:hover {
+    opacity: 0.8;
+}
+
+.content .card img {
+    border-top: solid 1px gray;
+    border-left: solid 1px gray;
+    border-right: solid 1px gray;
+}
+
+.content .card-body {
+    width: 100%;
+    border-bottom: solid 1px gray;
+    border-left: solid 1px gray;
+    border-right: solid 1px gray;
+}
+
+.content .card-title {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+}
+
+.content .card-text {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.content .card-body .btn-read {
+    background-color: rgb(255, 101, 80);
+    color: white;
+}
+
+.content .card-body .btn-read:hover {
+    opacity: 0.8;
+    color: black;
+}
+
+
+/*---------------------------------------------------*/
+
+.btn-allCatagory {
+    border: solid 1px black;
+}
+
+.btn-allCatagory:hover {
+    color: rgb(255, 80, 101);
+    border: solid 1px rgb(255, 80, 101);
+}
+
+.btn-createService {
+    border: solid 1px black;
+    text-decoration: none;
+    margin-right: 10px;
+}
+
+.btn-createService:hover {
+    color: rgb(255, 80, 101);
+    border: solid 1px rgb(255, 80, 101);
+}
+.stretched-link{
+    text-decoration: none;
+    border: solid 1px black;
+    text-align: center;
+    color: black;
+}
+.stretched-link:hover{
+    border-color: rgb(255, 80, 101);
+    color: rgb(255, 80, 101);
+}

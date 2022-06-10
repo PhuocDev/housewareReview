@@ -1,0 +1,161 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+html{
+    font-family: Arial, Helvetica, sans-serif;
+    scroll-behavior: smooth;
+}
+.container-fluid{
+    padding: 0;
+}
+/*--------------------------*/
+
+.blog-head img{
+    height: 650px;
+    margin-top: 90px;
+}
+.blog-body{
+    padding: 0 10%;
+
+}
+.carousel-control-prev{
+    margin-top: 90px !important;
+}
+.carousel-control-next{
+    margin-top: 90px !important;
+}
+.carousel-item img{
+    object-fit: cover;
+}
+/*-----------------------------*/
+.btn-collapse{
+    border: solid 1px black;
+}
+.card-body{
+    width: 100%;
+}
+.card-body .body1{
+    width: 100%;
+}
+.card-body button{
+    border: 0;
+    background-color: white;
+    width: 100%;
+    height: 100%;
+}
+/*-------------------------------*/
+.box
+{
+    text-align: center;
+    padding: 2px;
+    background-clip: border-box;
+}
+.box:hover{
+    background-color: rgb(255, 101, 80);
+    background-image: 
+    url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8nxrwHwAG1AK1n7JtmgAAAABJRU5ErkJggg==),
+    url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8nxrwHwAG1AK1n7JtmgAAAABJRU5ErkJggg==),
+    url('data:image/gif;base64,R0lGODlhAQABAPAAAP///////yH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==');
+    background-repeat: no-repeat;
+    background-size: 0 2px, 0 100%, 0% 2px;
+    background-position: top center, top center, bottom center;
+    -webkit-animation: drawBorderFromCenter 1s;
+
+}
+.box .active-btn{
+    border-bottom: solid 2px rgb(255, 101, 80);
+}
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes drawBorderFromCenter {
+    0% {
+      background-size: 0 2px, 0 0, 100% 100%;
+    }
+    20% {
+      background-size: 100% 2px, 100% 0, 100% 100%;
+    }
+    66%
+    {
+      background-size: 100% 2px, 100% 98%, 100% 100%;
+    }
+    99%
+    {
+      background-size: 100% 2px, 100% 98%, 0 2px;
+    }
+}
+/*---------------------------------------------------*/
+.btn-allCatagory{
+    border: solid 1px black;
+}
+.btn-allCatagory:hover{
+    color: rgb(255, 80, 101);
+    border: solid 1px rgb(255, 80, 101);
+}
+.btn-createBlog{
+    border: solid 1px black;
+    text-decoration: none;
+    margin-right: 10px;
+}
+.btn-createBlog:hover{
+    color: rgb(255, 80, 101);
+    border: solid 1px rgb(255, 80, 101);
+}
+
+/*-------------------------------------*/
+.content{
+    width: 100%;
+    
+}
+.content .card{
+    border: 0;
+    background-color: transparent;
+}
+.content .card:hover{
+    opacity: 0.8;
+}
+.content .card img{
+    border-top: solid 1px gray;
+    border-left: solid 1px gray;
+    border-right: solid 1px gray;
+}
+.content .card-body{
+    width: 100%;
+    border-bottom: solid 1px gray;
+    border-left: solid 1px gray;
+    border-right: solid 1px gray;
+}
+.content .card-title{
+     overflow: hidden;
+     display: -webkit-box;
+     -webkit-line-clamp: 1;
+     -webkit-box-orient: vertical;
+ }
+.content .card-text{
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+.content .card-body .btn-read{
+    background-color: rgb(255, 101, 80);
+    color: white;
+}
+.content .card-body .btn-read:hover{
+    opacity: 0.8;
+    color: black;
+}
+/* .content .card-body .btn-adjust{
+    border: solid 1px transparent;
+}
+.content .card-body .btn-adjust:hover{
+    border: solid 1px black;
+}
+
+.content .card-body .btn-delete{
+    border: solid 1px transparent;
+}
+.content .card-body .btn-delete:hover{
+    border: solid 1px black;
+} */

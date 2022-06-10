@@ -1,0 +1,94 @@
+.card-img-top {
+  width: 160px !important;
+  height: 160px !important;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.blog-nav {
+  margin-bottom: 32px;
+}
+
+.blog-nav a {
+  text-decoration: none;
+  color: #777;
+}
+
+.blog-nav a:hover {
+  color: #777;
+}
+
+.blog-nav img {
+  object-fit: contain;
+}
+
+.category-menu {
+  margin-bottom: 32px;
+}
+
+.category-menu-item {
+  background-color: rgb(255, 101, 80);
+  color: white;
+  padding: 24px;
+  border-radius: 12px;
+  text-decoration: none;
+  width: 100%;
+  display: block;
+  text-align: center;
+  font-size: 24px;
+}
+
+.category-menu-item:hover {
+  color: white;
+  background: rgb(243, 161, 10);
+}
+
+.article-title a {
+  font-size: 20px;
+}
+
+.article-reviews {
+  color: #777;
+}
+
+.sale-price {
+  font-weight: bold;
+  margin-right: 12px;
+}
+
+.regular-price {
+  margin-right: 12px;
+  text-decoration: line-through;
+  color: #777;
+}
+
+.discount-rate {
+  color: rgb(255, 101, 80);
+  font-weight: bold;
+}
+
+.article-top {
+  color: rgb(255, 101, 80);
+}
+
+.period-menu {
+  margin-bottom: 32px;
+}
+
+.period-menu-item {
+  border: 1px solid rgb(255, 101, 80);
+  color: rgb(255, 101, 80);
+  padding: 8px 24px;
+  border-radius: 12px;
+  text-decoration: none;
+  width: 100%;
+  display: block;
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.period-menu-item:hover {
+  color: white;
+  background: rgb(255, 101, 80);
+}
