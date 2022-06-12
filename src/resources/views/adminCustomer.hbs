@@ -9,7 +9,7 @@
         </div>
         <div class="col-12 col-md-8 col-lg-9 my-3">
             <div class="row justify-content-between">
-                <h4 class="text-uppercase mb-4 mt-4 w-auto">Danh sách đơn hàng</h4>
+                <h4 class="text-uppercase mb-4 mt-4 w-auto">Danh sách thành viên</h4>
                 <button type="button" class="btn btn-search">Tìm kiếm</button>
             </div>
             <div class="admin-order-search-container">
@@ -17,7 +17,7 @@
                     <div class="col-6">
                         <div class="row">
                             <div class="col-1"></div>
-                            <label for="inputCustomerCode" class="col-3 col-form-label">Mã KH</label>
+                            <label for="inputCustomerCode" class="col-3 col-form-label">Mã TV</label>
                             <div class="col-7">
                                 <input type="text" class="form-control col-form-label" id="inputCustomerCode">
                             </div>
@@ -59,7 +59,7 @@
                     <thead>
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col">Mã KH</th>
+                            <th scope="col">Mã TV</th>
                             <th scope="col">Họ tên</th>
                             <th scope="col">Số điện thoại</th>
                             <th scope="col">Email</th>
@@ -72,15 +72,15 @@
             </div>
             <div class="admin-customer-detail-container d-none">
                 <div class="customer-detail-header text-center pb-4">
-                    <h2 class="text-uppercase customer-detail-header__title">Thông tin khách hàng</h2>
+                    <h2 class="text-uppercase customer-detail-header__title">Thông tin thành viên</h2>
                     <div class="my-3">
-                        Dưới đây là thông tin khách hàng 
+                        Dưới đây là thông tin thành viên 
                         <span class="customer-detail-header__customer-code"></span>
                     </div>
                 </div>
                 <div class="customer-detail-info mt-4">
                     <div class="row my-3">
-                        <label for="customer-name" class="col-3">Tên khách hàng:</label>
+                        <label for="customer-name" class="col-3">Tên thành viên:</label>
                         <div class="col-9">
                             <p id="customer-name"></p>
                         </div>
@@ -210,7 +210,7 @@
     }
 
     btnDelete.addEventListener('click', async () => {
-        if (confirm('Bạn có chắc muốn xóa khách hàng ' + data.customerList[currentIndex].userCode + '?')) {
+        if (confirm('Bạn có chắc muốn xóa thành viên ' + data.customerList[currentIndex].userCode + '?')) {
             try {
                 const userCodeToDelete = data.customerList[currentIndex].userCode;
                 const res = await fetch('/account/admin-delete-customer', {
@@ -222,17 +222,17 @@
                 if (data) {
                     if (data.status === 200) {
                         console.log('delete customer successful');
-                        showAlertChicPet('alert-success', 'Xóa khách hàng thành công');
+                        showAlertChicPet('alert-success', 'Xóa thành viên thành công');
                         btnSearchOnClick();
                     }
                     else if (data.error) {
                         console.log(data.error);
-                        showAlertChicPet('alert-danger', 'Xóa khách hàng thất bại, vui lòng thử lại');
+                        showAlertChicPet('alert-danger', 'Xóa thành viên thất bại, vui lòng thử lại');
                     }
                 }
             }
             catch(err) {
-                showAlertChicPet('alert-danger', 'Xóa khách hàng thất bại, vui lòng thử lại');
+                showAlertChicPet('alert-danger', 'Xóa thành viên thất bại, vui lòng thử lại');
             }
         }
     });
