@@ -12,7 +12,7 @@ const app = express();
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 const port = 3000;
 const moment = require("moment");
-const { startCouponCrons } = require("./crons/coupons.cron");
+const { startCrons } = require("./crons/coupons.cron");
 const { startBestsellerCrons } = require("./crons/bestsellers.cron");
 const paginate = require("handlebars-paginate");
 
@@ -137,6 +137,8 @@ route(app);
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 
-  // startCouponCrons();
-  // startBestsellerCrons();
+  //startCouponCrons();
+  
+  //startBestsellerCrons();
+  //startCrons();
 });

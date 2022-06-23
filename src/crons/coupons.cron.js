@@ -62,7 +62,7 @@ const fetchCoupons = async (provider) => {
   }
 };
 
-const startCrons = () => {
+const startCrons = async () => {
   cron.schedule("*/5 * * * *", () => {
     fetchCoupons(PROVIDERS.TIKI);
   });

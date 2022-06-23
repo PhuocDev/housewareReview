@@ -164,41 +164,41 @@ const fetchItems = async (period, category, page) => {
 const startBestsellerCrons = async () => {
   const years = [2020, 2019];
 
-  // for (let i = 0; i < CATEGORIES.length; i++) {
-  //   // cron.schedule("0 0 * * SUN", async () => {
-  //   await fetchItems(
-  //     {
-  //       unit: "week",
-  //     },
-  //     CATEGORIES[i]
-  //   );
-  //   // });
-  // }
+  for (let i = 0; i < CATEGORIES.length; i++) {
+    cron.schedule("0 0 * * SUN", async () => {
+    await fetchItems(
+      {
+        unit: "week",
+      },
+      CATEGORIES[i]
+    );
+     });
+  }
 
-  // for (let i = 0; i < CATEGORIES.length; i++) {
-  //   // cron.schedule("0 0 1 * *", async () => {
-  //   await fetchItems(
-  //     {
-  //       unit: "month",
-  //     },
-  //     CATEGORIES[i]
-  //   );
-  //   // });
-  // }
+  for (let i = 0; i < CATEGORIES.length; i++) {
+     cron.schedule("0 0 1 * *", async () => {
+    await fetchItems(
+      {
+        unit: "month",
+      },
+      CATEGORIES[i]
+    );
+     });
+  }
 
-  // for (let i = 0; i < years.length; i++) {
-  //   for (let j = 0; j < CATEGORIES.length; j++) {
-  //     // cron.schedule("0 0 1 1 *", async () => {
-  //     await fetchItems(
-  //       {
-  //         unit: "year",
-  //         value: years[i],
-  //       },
-  //       CATEGORIES[i]
-  //     );
-  //     // });
-  //   }
-  // }
+  for (let i = 0; i < years.length; i++) {
+    for (let j = 0; j < CATEGORIES.length; j++) {
+       cron.schedule("0 0 1 1 *", async () => {
+      await fetchItems(
+        {
+          unit: "year",
+          value: years[i],
+        },
+        CATEGORIES[i]
+      );
+       });
+    }
+  }
 };
 
 module.exports = {
